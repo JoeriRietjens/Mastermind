@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import nl.fhict.s3.mastermindlogin.entity.User;
-import nl.fhict.s3.mastermindlogin.exception.UserNotFoundException;
+import nl.fhict.s3.mastermindlogin.exception.IncorrectLoginException;
 import nl.fhict.s3.mastermindlogin.repository.UserRepository;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -16,7 +16,7 @@ import nl.fhict.s3.mastermindlogin.repository.UserRepository;
 public class LoginController {
     private UserRepository repository;
 
-    public LoginController(UserRepository repository) {
+    LoginController(UserRepository repository) {
         this.repository = repository;
     }
     
@@ -25,12 +25,12 @@ public class LoginController {
         String postedUsername = user.getUsername();
         String postedPassword = user.getPassword();
 
-        User validUser = repository.findByUsername(postedUsername).orElseThrow(UserNotFoundException::new);
+        User validUser = repository.findByUsername(postedUsername).orElseThrow(IncorrectLoginException::new);
 
         if(validUser.getPassword().equals(postedPassword)) {
             return validUser;
+        } else {
+            throw new IncorrectLoginException();
         }
-
-        return null;
     }
 }
