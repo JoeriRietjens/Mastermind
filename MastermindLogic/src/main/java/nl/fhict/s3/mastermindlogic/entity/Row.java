@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Row {
 
     private final int id;
-    public ArrayList<Colour> colours;
-    public ArrayList<Clue> clues;
+    public ArrayList<Colour> colours; //Make array of this list Perhaps 4
+    public ArrayList<Clue> clues; //Make array of this list Perhaps 4
     public int getId() {
         return id;
     }

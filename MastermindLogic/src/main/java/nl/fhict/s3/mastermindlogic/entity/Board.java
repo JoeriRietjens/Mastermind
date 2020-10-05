@@ -5,7 +5,8 @@ import java.util.ArrayList;
 public class Board {
 
     private final int id;
-    public ArrayList<Colour> code;
+    public ArrayList<Colour> code; //Make array of this list Perhaps 4
+    public ArrayList<Row> rows; //Make array of this list Perhaps 10
 
     public int getId() {
         return id;
