@@ -12,7 +12,7 @@ import nl.fhict.s3.mastermindlogin.repository.UserRepository;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/user")
+@RequestMapping(value = {"/user", "/users"})
 public class UserController {
     private UserRepository repository;
 
