@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MastermindloginApplication {
+public class MastermindLoginApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MastermindloginApplication.class, args);
+		SpringApplication.run(MastermindLoginApplication.class, args);
 	}
 
 }
