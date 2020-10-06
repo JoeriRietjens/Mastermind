@@ -12,8 +12,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: mvn verify
-      uses: xlui/action-maven-cli/jdk11@master
-      id: test
+    - uses: actions/setup-java@v1
       with:
-        lifecycle: verify
+        java-version: 11
+        java-package: jdk
+    
+    - name: Maven verify loginservice
+      run: mvn verify --file LoginRestService/pom.xml
+    
+    - name: Maven verify logicservice
+      run: mvn verify --file MastermindLogic/pom.xml
