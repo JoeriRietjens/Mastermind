@@ -16,13 +16,13 @@ import nl.fhict.s3.mastermindlogin.repository.UserRepository;
 public class UserController {
     private UserRepository repository;
 
-    UserController(UserRepository repository) {
+    public UserController(UserRepository repository) {
         this.repository = repository;
     }
 
     @GetMapping("/test")
     public User getTestUser() {
-        return new User("testUsername","testPassword");
+        return new User("testUsername", "testPassword");
     }
     
     @PostMapping
