@@ -12,8 +12,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 11
+    - name: mvn verify
       uses: xlui/action-maven-cli/jdk11@master
       id: test
       with:
-        lifecycle: test
+        lifecycle: verify
