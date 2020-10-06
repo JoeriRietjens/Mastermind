@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Data
@@ -11,7 +13,8 @@ import lombok.Data;
 public class User {
     private @Id @GeneratedValue Long id;
     private String username;
-    private String password;
+    @JsonIgnore
+    private String password; // JsonIgnore makes sure password is not returned
 
     public User() {}
 
