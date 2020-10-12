@@ -18,4 +18,4 @@ jobs:
         java-package: jdk
     
     - name: Maven verify logicservice
-      run: mvn verify --file MastermindLogic/pom.xml
+      run: mvn verify -B --file MastermindLogic/pom.xml
