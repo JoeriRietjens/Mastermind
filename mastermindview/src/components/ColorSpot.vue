@@ -12,8 +12,8 @@ export default {
 
 <style scoped>
 .dot {
-  height: 25px;
-  width: 25px;
+  height: 40px;
+  width: 40px;
   background-color: #bbb;
   border-radius: 50%;
   display: inline-block;

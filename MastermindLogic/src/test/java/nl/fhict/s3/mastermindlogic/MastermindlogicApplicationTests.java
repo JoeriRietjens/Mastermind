@@ -1,5 +1,6 @@
 package nl.fhict.s3.mastermindlogic;
 
+import nl.fhict.s3.mastermindlogic.entity.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -24,10 +25,31 @@ class MastermindlogicApplicationTests {
 	{
 		//player setup a color pallet.
 	}
+  
 	@Test
+	void testGuessCodeOfOpponent() {
+		Game game = new Game(1);
+		Board board1 = new Board(1, new Colour[]{new Colour(EPinColour.RED),
+													new Colour(EPinColour.YELLOW),
+													new Colour(EPinColour.GREEN),
+													new Colour(EPinColour.BlUE)});
+
+		Board board2 = new Board(2, new Colour[]{new Colour(EPinColour.ORANGE),
+													new Colour(EPinColour.BlUE),
+													new Colour(EPinColour.YELLOW),
+													new Colour(EPinColour.PURPLE)});
+
+		Player player1 = new Player(1, "JohnDoe", "secret", board1);
+		Player player2 = new Player(2, "KarenMiles", "secret", board2);
+
+		player1.board.guessCode(EPinColour.BlUE, EPinColour.BlUE, EPinColour.BlUE,EPinColour.BlUE);
+  }
+  
+  @Test
 	void colorTwoPinsRight()
 	{
 		//only two colors are right on the board. the result is that 2 pins are right.
+
 	}
 
 }

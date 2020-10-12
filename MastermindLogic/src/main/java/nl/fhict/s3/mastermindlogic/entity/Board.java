@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Board {
 
     private final int id;
-    public Colour[] code = new Colour[4];
-    public Row[] rows = new Row[10];
+    public Colour[] code = new Colour[3];
+    public Row[] rows = new Row[9];
 
     public int getId() {
         return id;
@@ -15,4 +15,13 @@ public class Board {
     public Board(int id) {
         this.id = id;
     }
+     public Board(int id, Colour[] code){
+        this.id = id;
+        this.code = code;
+     }
+
+     public void guessCode(EPinColour ePinColour1,EPinColour ePinColour2, EPinColour ePinColour3, EPinColour ePinColour4){
+
+     }
+
 }

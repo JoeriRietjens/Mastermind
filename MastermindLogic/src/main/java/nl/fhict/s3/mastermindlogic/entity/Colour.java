@@ -2,15 +2,14 @@ package nl.fhict.s3.mastermindlogic.entity;
 
 public class Colour {
 
-    private final int id;
-    public final Colour colour;
+    //private final int id;
+    public final EPinColour colour;
 
-    public int getId() {
+    /*public int getId() {
         return id;
-    }
+    }*/
 
-    public Colour(int id, Colour colour) {
-        this.id = id;
+    public Colour(EPinColour colour) {
         this.colour = colour;
     }
 }
