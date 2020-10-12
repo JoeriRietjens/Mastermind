@@ -20,8 +20,8 @@ export default {
 
 <style scoped>
 .dot {  
-    height: 25px;
-    width: 25px;
+    height: 40px;
+    width: 40px;
     border-radius: 50%;
     display: inline-block;
     border: groove;

@@ -1,16 +1,16 @@
 <template>
     <div class="board">
-        <BoardRow></BoardRow>
-        <BoardRow></BoardRow>
-        <BoardRow></BoardRow>
-        <BoardRow></BoardRow>
-        <BoardRow></BoardRow>
-        <BoardRow></BoardRow>
-        <BoardRow></BoardRow>
-        <BoardRow></BoardRow>
-        <BoardRow></BoardRow>
-        <BoardRow></BoardRow>
-        <Code></Code>
+        <BoardRow class="row"></BoardRow>
+        <BoardRow class="row"></BoardRow>
+        <BoardRow class="row"></BoardRow>
+        <BoardRow class="row"></BoardRow>
+        <BoardRow class="row"></BoardRow>
+        <BoardRow class="row"></BoardRow>
+        <BoardRow class="row"></BoardRow>
+        <BoardRow class="row"></BoardRow>
+        <BoardRow class="row"></BoardRow>
+        <BoardRow class="row"></BoardRow>
+        <Code class="row"></Code>
     </div>
 </template>
 
@@ -29,5 +29,10 @@ export default {
 
 <style scoped>
 .board {border-style: ridge;}
+
+.row {
+    position: relative;
+    display: inline-block;
+}
 
 </style>
