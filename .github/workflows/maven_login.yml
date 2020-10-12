@@ -18,4 +18,4 @@ jobs:
         java-package: jdk
     
     - name: Maven verify loginservice
-      run: mvn verify --file LoginRestService/pom.xml
+      run: mvn verify -B --file LoginRestService/pom.xml
