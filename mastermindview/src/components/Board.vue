@@ -10,7 +10,7 @@
         <BoardRow class="row"></BoardRow>
         <BoardRow class="row"></BoardRow>
         <BoardRow class="row"></BoardRow>
-        <Code class="row"></Code>
+        <Code class="row" id="code"></Code>
     </div>
 </template>
 
@@ -28,11 +28,19 @@ export default {
 </script>
 
 <style scoped>
-.board {border-style: ridge;}
+.board {
+    border-style: ridge;
+    width: 750px;
+    height: 250px;
+}
 
 .row {
     position: relative;
     display: inline-block;
+    padding: 5px 10px;
 }
 
+#code {
+    top: -20px;
+}
 </style>

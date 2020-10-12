@@ -1,8 +1,12 @@
 <template>
   <div class="home">
-    <Board></Board>
-    <Board></Board>
+    <div class="homeElements">
+    <Board class="board"></Board>
+    <Board class="board"></Board>
+    </div>
+    <div class="homeElements colors">
     <Colors></Colors>
+    </div>
   </div>
 </template>
 
@@ -19,3 +23,18 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.board {
+  margin: 10px;
+}
+
+.homeElements {
+  position: relative;
+  display: inline-block;
+}
+
+.colors {
+  top: -100px;
+}
+</style>
