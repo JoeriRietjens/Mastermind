@@ -1,11 +1,11 @@
 <template>
     <div>
-        <span class="dot" id="green"></span>
-        <span class="dot" id="yellow"></span>
-        <span class="dot" id="blue"></span>
-        <span class="dot" id="red"></span>
-        <span class="dot" id="white"></span>
-        <span class="dot" id="black"></span>
+        <span class="dot" id="green"></span> <br>
+        <span class="dot" id="yellow"></span> <br>
+        <span class="dot" id="blue"></span> <br>
+        <span class="dot" id="red"></span> <br>
+        <span class="dot" id="white"></span> <br>
+        <span class="dot" id="black"></span> <br>
     </div>
 </template>
 
