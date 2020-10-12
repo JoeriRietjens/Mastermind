@@ -4,6 +4,9 @@ import nl.fhict.s3.mastermindlogic.entity.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @SpringBootTest
 class MastermindlogicApplicationTests {
 	
@@ -24,6 +27,16 @@ class MastermindlogicApplicationTests {
 	void setupColorCode()
 	{
 		//player setup a color pallet.
+		Game game = new Game(1);
+		Board board1 = new Board(1, new Colour[]{new Colour(EPinColour.RED),
+				new Colour(EPinColour.YELLOW),
+				new Colour(EPinColour.GREEN),
+				new Colour(EPinColour.BlUE)});
+
+
+		Colour[] correctColorCode={new Colour(EPinColour.RED),new Colour( EPinColour.YELLOW),new Colour(EPinColour.GREEN),new Colour( EPinColour.BlUE)};
+		assertArrayEquals(board1.code,correctColorCode);
+
 	}
   
 	@Test
