@@ -5,12 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class MastermindlogicApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
-
-
+	
 	@Test
 	void testWongColorDecision()
 	{
