@@ -5,10 +5,14 @@
         <ColorSpot></ColorSpot>
         <ColorSpot></ColorSpot>
         <div class="Hints">
-            <HintSpot class="left"></HintSpot>
-            <HintSpot class="right"></HintSpot>
-            <HintSpot class="left"></HintSpot>
-            <HintSpot class="right"></HintSpot>
+            <div class="topRow">
+            <HintSpot class="hint"></HintSpot>
+            <HintSpot class="hint"></HintSpot>
+            </div>
+            <div class="bottomRow">
+            <HintSpot class="hint"></HintSpot>
+            <HintSpot class="hint"></HintSpot>
+            </div>
         </div>
     </div>
 </template>
@@ -27,7 +31,8 @@ export default {
 </script>
 
 <style scoped>
-.left {
-    float: left;
+.hint {
+    position: relative;
+    display: inline-block;
 }
 </style>
