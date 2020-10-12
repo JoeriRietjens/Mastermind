@@ -4,10 +4,12 @@
         <ColorSpot></ColorSpot>
         <ColorSpot></ColorSpot>
         <ColorSpot></ColorSpot>
-        <HintSpot></HintSpot>
-        <HintSpot></HintSpot>
-        <HintSpot></HintSpot>
-        <HintSpot></HintSpot>
+        <div class="Hints">
+            <HintSpot class="left"></HintSpot>
+            <HintSpot class="right"></HintSpot>
+            <HintSpot class="left"></HintSpot>
+            <HintSpot class="right"></HintSpot>
+        </div>
     </div>
 </template>
 
@@ -25,5 +27,7 @@ export default {
 </script>
 
 <style scoped>
-
+.left {
+    float: left;
+}
 </style>
