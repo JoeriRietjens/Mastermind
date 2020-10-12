@@ -23,8 +23,7 @@ class MastermindlogicApplicationTests {
 		Player player1 = new Player(1, "JohnDoe", "secret", board1);
 		Player player2 = new Player(2, "KarenMiles", "secret", board2);
 
-		player1.board.guessCode();
-
+		player1.board.guessCode(EPinColour.BlUE, EPinColour.BlUE, EPinColour.BlUE,EPinColour.BlUE);
 	}
 
 }
