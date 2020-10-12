@@ -24,4 +24,6 @@ public class Player {
         this.password = password;
         this.board = board;
     }
+
+
 }
