@@ -12,13 +12,10 @@ public class Board {
         return id;
     }
 
-    public Board(int id) {
-        this.id = id;
-    }
-     public Board(int id, Colour[] code){
+    public Board(int id, Colour[] code) {
         this.id = id;
         this.code = code;
-     }
+    }
 
      public void guessCode(EPinColour ePinColour1,EPinColour ePinColour2, EPinColour ePinColour3, EPinColour ePinColour4){
 

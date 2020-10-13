@@ -1,25 +1,25 @@
 <template>
     <div class="board">
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
         <Code class="row" id="code"></Code>
+        <BoardRow class="row"></BoardRow>
+        <BoardRow class="row"></BoardRow>
+        <BoardRow class="row"></BoardRow>
+        <BoardRow class="row"></BoardRow>
+        <BoardRow class="row"></BoardRow>
+        <BoardRow class="row"></BoardRow>
+        <BoardRow class="row"></BoardRow>
+        <BoardRow class="row"></BoardRow>
+        <BoardRow class="row"></BoardRow>
+        <BoardRow class="row"></BoardRow>
     </div>
 </template>
 
 <script>
 import BoardRow from '@/components/BoardRow.vue';
-import Code from '@/components/Code.vue'
+import Code from '@/components/Code.vue';
 
 export default {
-    name: 'MastermindBoard',
+    name: 'OpponentBoard',
     components: {
         BoardRow,
         Code,
