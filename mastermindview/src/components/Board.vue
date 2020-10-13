@@ -1,15 +1,15 @@
 <template>
     <div class="board">
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
+        <BoardRow class="row" v-on:SelectSpot="SelectSpot"></BoardRow>
+        <BoardRow class="row" v-on:SelectSpot="SelectSpot"></BoardRow>
+        <BoardRow class="row" v-on:SelectSpot="SelectSpot"></BoardRow>
+        <BoardRow class="row" v-on:SelectSpot="SelectSpot"></BoardRow>
+        <BoardRow class="row" v-on:SelectSpot="SelectSpot"></BoardRow>
+        <BoardRow class="row" v-on:SelectSpot="SelectSpot"></BoardRow>
+        <BoardRow class="row" v-on:SelectSpot="SelectSpot"></BoardRow>
+        <BoardRow class="row" v-on:SelectSpot="SelectSpot"></BoardRow>
+        <BoardRow class="row" v-on:SelectSpot="SelectSpot"></BoardRow>
+        <BoardRow class="row" v-on:SelectSpot="SelectSpot"></BoardRow>
         <Code class="row" id="code"></Code>
     </div>
 </template>
@@ -23,6 +23,11 @@ export default {
     components: {
         BoardRow,
         Code,
+    },
+    methods: {
+        SelectSpot(obj) {
+            this.$emit("SelectSpot", obj)
+        }
     }
 }
 </script>
