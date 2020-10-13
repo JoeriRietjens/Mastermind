@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class MastermindlogicApplicationTests {
 	
 	@Test
-	void testWongColorDecision()
+	void testWongColorDecisionOpponent()
 	{
 		//2 player game one make a guess but it is wrong.
 	}
