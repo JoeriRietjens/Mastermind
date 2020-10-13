@@ -72,4 +72,26 @@ class MastermindlogicApplicationTests {
 
 		assertEquals(expected, actual);
 	}
+
+	@Test
+	void testDoubleColorColorCode_ShouldReturnEqual() {
+		Colour[] code = {new Colour(EPinColour.BlUE), new Colour(EPinColour.BlUE), new Colour(EPinColour.GREEN), new Colour(EPinColour.ORANGE)};
+		Board board = new Board(1, code);
+
+		int expected = 4;
+		int actual = code.length;
+
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	void testNotDoubleColorColorCode_ShouldReturnEqual() {
+		Colour[] code = {new Colour(EPinColour.BlUE), new Colour(EPinColour.YELLOW), new Colour(EPinColour.GREEN), new Colour(EPinColour.ORANGE)};
+		Board board = new Board(1, code);
+
+		int expected = 4;
+		int actual = code.length;
+
+		assertEquals(expected, actual);
+	}
 }
