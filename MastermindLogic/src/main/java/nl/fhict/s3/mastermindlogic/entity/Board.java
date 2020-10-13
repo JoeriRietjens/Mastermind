@@ -12,8 +12,9 @@ public class Board {
         return id;
     }
 
-    public Board(int id) {
+    public Board(int id, Colour[] code) {
         this.id = id;
+        this.code = code;
     }
      public Board(int id, Colour[] code){
         this.id = id;

@@ -3,7 +3,16 @@ package nl.fhict.s3.mastermindlogic.entity;
 public class Clue {
 
     private final int id;
-    public final EClueColour eClueColour;
+
+    public nl.fhict.s3.mastermindlogic.entity.EClueColour geteClueColour() {
+        return eClueColour;
+    }
+
+    private void seteClueColour(nl.fhict.s3.mastermindlogic.entity.EClueColour eClueColour) {
+        this.eClueColour = eClueColour;
+    }
+
+    private EClueColour eClueColour;
 
     public int getId() {
         return id;
@@ -11,6 +20,6 @@ public class Clue {
 
     public Clue(int id, EClueColour eClueColour) {
         this.id = id;
-        this.eClueColour = eClueColour;
+        seteClueColour(eClueColour);
     }
 }
