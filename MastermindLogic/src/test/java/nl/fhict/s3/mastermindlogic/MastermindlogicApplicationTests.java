@@ -94,4 +94,14 @@ class MastermindlogicApplicationTests {
 
 		assertEquals(expected, actual);
 	}
+
+	@Test
+	void testCodeCheck_ShouldReturnEqual() {
+		Colour[] code = {new Colour(EPinColour.BlUE), new Colour(EPinColour.YELLOW), new Colour(EPinColour.GREEN), new Colour(EPinColour.ORANGE)};
+		Board board = new Board(1, code);
+
+		board.guessCode(EPinColour.YELLOW, EPinColour.GREEN, EPinColour.PURPLE, EPinColour.RED);
+
+		// Assert the expected pin result as feedback to the player.
+	}
 }
