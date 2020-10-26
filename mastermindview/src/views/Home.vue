@@ -2,7 +2,7 @@
   <div class="home">
     <h2> Your own bord </h2>
     <Board class="board" v-on:SelectSpot="SelectSpot"></Board>
-    <Colors></Colors>
+    <Colors v-on:SetColor="ChangeColor"></Colors>
     <h2> Your opponents board </h2>
     <OpponentBoard class="board"></OpponentBoard>
   </div>
@@ -29,6 +29,9 @@ export default {
   methods: {
     SelectSpot(obj){
         this.SelectedSpot = obj;
+    },
+    ChangeColor(color){
+      this.SelectedSpot.data.color = color;
     }
   }
 }
