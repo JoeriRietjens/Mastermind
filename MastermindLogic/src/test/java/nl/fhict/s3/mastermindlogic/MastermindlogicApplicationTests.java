@@ -59,6 +59,7 @@ class MastermindlogicApplicationTests {
 		int expected = 4;
 		int actual = code.length;
 
+
 		assertNotEquals(expected, actual);
 	}
 
