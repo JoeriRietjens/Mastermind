@@ -1,14 +1,14 @@
 <template>
     <div>
         <div class="row">
-            <span class="dot" id="green"></span> <br>
-            <span class="dot" id="yellow"></span> <br>
-            <span class="dot" id="blue"></span> <br>
+            <span class="dot" id="green" v-bind:value="SelectedColor" v-on:click="SelectColor"></span>
+            <span class="dot" id="yellow" v-bind="SelectedColor" v-on:click="SelectColor"></span>
+            <span class="dot" id="blue" v-bind="SelectedColor" v-on:click="SelectColor"></span>
         </div>
         <div class="row">
-            <span class="dot" id="red"></span> <br>
-            <span class="dot" id="white"></span> <br>
-            <span class="dot" id="black"></span> <br>
+            <span class="dot" id="red" v-bind="SelectedColor" v-on:click="SelectColor"></span>
+            <span class="dot" id="white" v-bind="SelectedColor" v-on:click="SelectColor"></span>
+            <span class="dot" id="black" v-bind="SelectedColor" v-on:click="SelectColor"></span>
         </div>
     </div>
 </template>
@@ -18,6 +18,16 @@
 export default {
     name: 'Colors',
     components: {
+    },
+    data() {
+        return {
+            SelectedColor: null,
+        }
+    },
+    methods: {
+        SelectColor() {
+            this.$emit("SetColor", this.SelectedColor);
+        }
     }
 }
 </script>
