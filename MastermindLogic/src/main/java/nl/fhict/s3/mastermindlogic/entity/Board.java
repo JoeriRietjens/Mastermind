@@ -29,7 +29,7 @@ public class Board implements IBoard{
     @Override
     public Row checkRow(Row rowToCheck) {
         EClueColour clues[]=new EClueColour[4];
-        clues=getClues(row.code);
+        clues=getClues(rowToCheck.code);
         for (int i=0;i<clues.length;i++)
         {
             rowToCheck.clues[i].seteClueColour(clues[i]);
@@ -39,13 +39,6 @@ public class Board implements IBoard{
     public Row guessCode(EPinColour colour1, EPinColour colour2, EPinColour colour3, EPinColour colour4){
         return new Row(1);
     }
-
-    //we nee a solution for this.
-     public boolean guessCode(EPinColour ePinColour1,EPinColour ePinColour2, EPinColour ePinColour3, EPinColour ePinColour4)
-     {
-        return true;
-     }
-
 
     //only for sake for testing. Need a way around it.
      public EClueColour[] getClues(Colour[] input)
