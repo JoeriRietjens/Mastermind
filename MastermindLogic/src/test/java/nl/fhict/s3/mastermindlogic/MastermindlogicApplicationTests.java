@@ -66,6 +66,32 @@ class MastermindlogicApplicationTests {
 	}
 
 	@Test
+	void TestColourChecking()
+	{
+		Game game =new Game(1);
+		Board board1=new Board(1,new Colour[]{new Colour(EPinColour.BlUE), new Colour(EPinColour.YELLOW), new Colour(EPinColour.GREEN), new Colour(EPinColour.ORANGE)});
+		Player player1 = new Player(1, "JohnDoe", "secret", board1);
+
+		EClueColour[] clues=new EClueColour[4];
+		Colour[] input=new Colour[]{new Colour(EPinColour.RED),new Colour(EPinColour.PURPLE),new Colour(EPinColour.GREEN),new Colour(EPinColour.BlUE)};
+		EClueColour[] cluesExpect=new EClueColour[]{EClueColour.BLANK,EClueColour.BLANK,EClueColour.BLACK,EClueColour.WHITE};
+		clues= board1.GetClues(input);
+		assertArrayEquals(cluesExpect,clues);
+	}
+
+	@Test
+	void TestInputColour()
+	{
+		Game game = new Game(1);
+		Board board1 = new Board(1, new Colour[]{new Colour(EPinColour.RED),
+				new Colour(EPinColour.YELLOW),
+				new Colour(EPinColour.GREEN),
+				new Colour(EPinColour.BlUE)});
+		Player player1 = new Player(1, "JohnDoe", "secret", board1);
+	}
+
+
+	@Test
 	void testThreeEntitiesColorCode_ShouldReturnNotEqual() {
 		Colour[] code = {new Colour(EPinColour.BlUE), new Colour(EPinColour.YELLOW), new Colour(EPinColour.GREEN)};
 		Board board = new Board(1, code);
@@ -80,7 +106,6 @@ class MastermindlogicApplicationTests {
 	void testFourEntitiesColorCode_ShouldReturnEqual() {
 		Colour[] code = {new Colour(EPinColour.BlUE), new Colour(EPinColour.YELLOW), new Colour(EPinColour.GREEN), new Colour(EPinColour.ORANGE)};
 		Board board = new Board(1, code);
-
 		int expected = 4;
 		int actual = code.length;
 

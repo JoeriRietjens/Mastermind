@@ -4,6 +4,7 @@ public class Colour {
 
     //private final int id;
     private final EPinColour colour;
+    private Boolean isChecked;
 
 
     /*public int getId() {
@@ -30,5 +31,13 @@ public class Colour {
 
     public EPinColour getColour() {
         return colour;
+    }
+
+    public Boolean getChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(Boolean Checked) {
+        isChecked = Checked;
     }
 }
