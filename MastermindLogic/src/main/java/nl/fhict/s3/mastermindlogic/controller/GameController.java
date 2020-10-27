@@ -3,20 +3,12 @@ package nl.fhict.s3.mastermindlogic.controller;
 import nl.fhict.s3.mastermindlogic.entity.*;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 @RestController
 public class GameController {
-    private List<EPinColour> code = new ArrayList<EPinColour>();
-    private Board board;
-    public GameController(){
-        code.add(EPinColour.RED);
-        code.add(EPinColour.YELLOW);
-        code.add(EPinColour.GREEN);
-        code.add(EPinColour.BlUE);
-        board = new Board(0, (Colour[]) code.toArray());
+    private Game game;
+
+    public GameController() {
+        game = new Game();
     }
 
     @RequestMapping("/")
@@ -24,14 +16,19 @@ public class GameController {
         return "Greetings from Joeri & Bram";
     }
 
-//    @PostMapping("/guess/submit")
-//    public List<Clue> submitGuess(@RequestBody List<Colour> colours){
-//
-//    }
+    @PostMapping("/guess/submit")
+    public Row submitGuess(@RequestBody Row row, int playerId){
+        return game.players[playerId].board.checkRow(row);
+    }
     
-    @GetMapping("/guess/emptyrow")
+    @GetMapping("/emptyrow")
     public Row guessEmptyRow(){
         return new Row(0);
+    }
+
+    @GetMapping("/board/{id}")
+        public Board getBoard(@PathVariable int id){
+            return game.players[id].board;
     }
 
 }
