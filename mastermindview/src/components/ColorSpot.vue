@@ -1,6 +1,6 @@
 <template>
   <div>
-      <span class="dot" id="ColorSpot" v-on:click="SelectSpot" selected="false"></span>
+      <span class="dot" v-on:click="SelectSpot" :id="SpotId" :selected="selected"></span>
   </div>
 </template>
 
@@ -10,22 +10,24 @@ export default {
     data() {
       return {
         Color: 'grey',
-        SelectedNr: '',
+        selected: false,
       }
     },
+    props: ['SpotId'],
     methods: {
       SelectSpot() {
+        this.selected = true;
         this.$emit("SelectSpot", this);
       }
     },
     watch: {
       Color: function() {
-          document.querySelector(':focus').style.backgroundColor = this.Color;
+        console.log(this.$parent.$parent.BoardId)
+        document.querySelector('#' + this.$parent.$parent.BoardId).querySelector('#' + this.$parent.RowId).querySelector('#' + this.SpotId).style.backgroundColor = this.Color;
       }
     }
 }
 </script>
-
 
 <style scoped>
 .dot {

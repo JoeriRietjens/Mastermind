@@ -1,9 +1,9 @@
 <template>
-    <div>
-        <ColorSpot v-on:SelectSpot="SelectSpot"></ColorSpot>
-        <ColorSpot v-on:SelectSpot="SelectSpot"></ColorSpot>
-        <ColorSpot v-on:SelectSpot="SelectSpot"></ColorSpot>
-        <ColorSpot v-on:SelectSpot="SelectSpot"></ColorSpot>
+    <div :id="RowId">
+        <ColorSpot v-on:SelectSpot="SelectSpot" SpotId="SpotOne"></ColorSpot>
+        <ColorSpot v-on:SelectSpot="SelectSpot" SpotId="SpotTwo"></ColorSpot>
+        <ColorSpot v-on:SelectSpot="SelectSpot" SpotId="SpotThree"></ColorSpot>
+        <ColorSpot v-on:SelectSpot="SelectSpot" SpotId="SpotFour"></ColorSpot>
         <div class="Hints">
             <div class="topRow">
             <HintSpot class="hintSpot"></HintSpot>
@@ -27,11 +27,17 @@ export default {
         ColorSpot,
         HintSpot,
     },
+    Data() {
+        return {
+            
+        }
+    },
+    props: ['RowId'],
     methods: {
         SelectSpot(obj) {
             this.$emit("SelectSpot", obj)
         }
-    }
+    },
 }
 </script>
 

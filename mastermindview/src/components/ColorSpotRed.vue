@@ -10,7 +10,6 @@ export default {
     data() {
       return {
         Color: 'red',
-
       }
     },
     methods: {
