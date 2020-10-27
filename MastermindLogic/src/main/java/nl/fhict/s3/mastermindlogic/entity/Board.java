@@ -26,7 +26,7 @@ public class Board implements IBoard{
     public Row checkRow(Row rowToCheck) {
         return null;
     }
-    public void guessCode(EPinColour colour1, EPinColour colour2, EPinColour colour3, EPinColour colour4){
-
+    public Row guessCode(EPinColour colour1, EPinColour colour2, EPinColour colour3, EPinColour colour4){
+        return new Row(1);
     }
 }
