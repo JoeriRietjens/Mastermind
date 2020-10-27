@@ -8,7 +8,7 @@ public class Clue {
         return eClueColour;
     }
 
-    private void seteClueColour(nl.fhict.s3.mastermindlogic.entity.EClueColour eClueColour) {
+    protected void seteClueColour(nl.fhict.s3.mastermindlogic.entity.EClueColour eClueColour) {
         this.eClueColour = eClueColour;
     }
 
