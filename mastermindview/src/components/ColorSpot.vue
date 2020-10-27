@@ -1,6 +1,6 @@
 <template>
   <div>
-      <span class="dot" v-on:click="SelectSpot"></span>
+      <span class="dot" id="ColorSpot" v-on:click="SelectSpot" selected="false"></span>
   </div>
 </template>
 
@@ -10,16 +10,22 @@ export default {
     data() {
       return {
         Color: 'grey',
-
+        SelectedNr: '',
       }
     },
     methods: {
       SelectSpot() {
         this.$emit("SelectSpot", this);
       }
+    },
+    watch: {
+      Color: function() {
+          document.querySelector(':focus').style.backgroundColor = this.Color;
+      }
     }
 }
 </script>
+
 
 <style scoped>
 .dot {

@@ -6,12 +6,12 @@
         <ColorSpot v-on:SelectSpot="SelectSpot"></ColorSpot>
         <div class="Hints">
             <div class="topRow">
-            <HintSpot class="hint"></HintSpot>
-            <HintSpot class="hint"></HintSpot>
+            <HintSpot class="hintSpot"></HintSpot>
+            <HintSpot class="hintSpot"></HintSpot>
             </div>
             <div class="bottomRow">
-            <HintSpot class="hint"></HintSpot>
-            <HintSpot class="hint"></HintSpot>
+            <HintSpot class="hintSpot"></HintSpot>
+            <HintSpot class="hintSpot"></HintSpot>
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style scoped>
-.hint {
+.hintSpot {
     position: relative;
     display: inline-block;
 }
