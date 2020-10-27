@@ -1,12 +1,23 @@
 <template>
   <div>
-      <span class="dot"></span>
+      <span class="dot" v-on:click="SelectSpot"></span>
   </div>
 </template>
 
 <script>
 export default {
     name: 'ColorSpot',
+    data() {
+      return {
+        Color: 'grey',
+
+      }
+    },
+    methods: {
+      SelectSpot() {
+        this.$emit("SelectSpot", this);
+      }
+    }
 }
 </script>
 

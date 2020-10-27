@@ -1,14 +1,10 @@
 <template>
   <div class="home">
-    <div class="homeElements">
-      <h2> Your own bord </h2>
-      <Board class="board"></Board>
-      <h2> Your opponents board </h2>
-      <OpponentBoard class="board"></OpponentBoard>
-    </div>
-    <div class="homeElements colors">
-      <Colors></Colors>
-    </div>
+    <h2> Your own bord </h2>
+    <Board class="board" v-on:SelectSpot="SelectSpot"></Board>
+    <Colors></Colors>
+    <h2> Your opponents board </h2>
+    <OpponentBoard class="board"></OpponentBoard>
   </div>
 </template>
 
@@ -24,6 +20,16 @@ export default {
     Board,
     Colors,
     OpponentBoard,
+  },
+  data() {
+    return {
+      SelectedSpot: null,
+    }
+  },
+  methods: {
+    SelectSpot(obj){
+        this.SelectedSpot = obj;
+    }
   }
 }
 </script>
@@ -46,6 +52,8 @@ export default {
     border-style: ridge;
     width: 750px;
     height: 250px;
+    position: relative;
+    display: inline-block;
 }
 
 .row {
