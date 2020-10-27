@@ -75,7 +75,7 @@ class MastermindlogicApplicationTests {
 		EClueColour[] clues=new EClueColour[4];
 		Colour[] input=new Colour[]{new Colour(EPinColour.RED),new Colour(EPinColour.PURPLE),new Colour(EPinColour.GREEN),new Colour(EPinColour.BlUE)};
 		EClueColour[] cluesExpect=new EClueColour[]{EClueColour.BLANK,EClueColour.BLANK,EClueColour.BLACK,EClueColour.WHITE};
-		clues= board1.GetClues(input);
+		clues= board1.getClues(input);
 		assertArrayEquals(cluesExpect,clues);
 	}
 

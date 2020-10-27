@@ -18,19 +18,26 @@ public class Board {
     }
 
 
-    public Row(Row row)
+    public Row checkRow(Row row)
     {
-        
+        EClueColour clues[]=new EClueColour[4];
+        clues=getClues(row.code);
+        for (int i=0;i<clues.length;i++)
+        {
+            row.clues[i].seteClueColour(clues[i]);
+        }
+        return row;
     }
 
+    //we nee a solution for this.
      public boolean guessCode(EPinColour ePinColour1,EPinColour ePinColour2, EPinColour ePinColour3, EPinColour ePinColour4)
      {
         return true;
      }
 
 
-
-     public EClueColour[] GetClues(Colour[] input)
+    //only for sake for testing. Need a way around it.
+     public EClueColour[] getClues(Colour[] input)
      {
          Colour[] tempColour=new Colour[4];
          System.arraycopy(code,0,tempColour,0,code.length);
