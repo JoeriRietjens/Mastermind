@@ -1,12 +1,16 @@
 package nl.fhict.s3.mastermindlogic.entity;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class Board {
+public class Board implements IBoard{
 
     private final int id;
-    public Colour[] code=new Colour[4];
-    public Row[] rows = new Row[9];
+
+    public Colour[] code = new Colour[4];
+    public Row[] rows = new Row[10];
+
+
 
     public int getId() {
         return id;
@@ -18,15 +22,22 @@ public class Board {
     }
 
 
-    public Row checkRow(Row row)
-    {
+    public Board() {
+        id = 0;
+    }
+
+    @Override
+    public Row checkRow(Row rowToCheck) {
         EClueColour clues[]=new EClueColour[4];
         clues=getClues(row.code);
         for (int i=0;i<clues.length;i++)
         {
-            row.clues[i].seteClueColour(clues[i]);
+            rowToCheck.clues[i].seteClueColour(clues[i]);
         }
-        return row;
+        return rowToCheck;
+    }
+    public Row guessCode(EPinColour colour1, EPinColour colour2, EPinColour colour3, EPinColour colour4){
+        return new Row(1);
     }
 
     //we nee a solution for this.
@@ -100,6 +111,4 @@ public class Board {
              System.out.println("Index: "+i+" Clue: "+ clues[i]);
          }
      }
-
-
 }
