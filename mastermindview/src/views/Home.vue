@@ -31,7 +31,7 @@ export default {
         this.SelectedSpot = obj;
     },
     ChangeColor(color){
-      this.SelectedSpot.data.color = color;
+      this.SelectedSpot.$data.Color = color;
     }
   }
 }
