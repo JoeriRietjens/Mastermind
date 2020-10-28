@@ -1,16 +1,16 @@
 <template>
-    <div class="board">
+    <div class="board" :id="BoardId">
         <Code class="row" id="code"></Code>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
-        <BoardRow class="row"></BoardRow>
+        <BoardRow class="row" RowId="RowOne"></BoardRow>
+        <BoardRow class="row" RowId="RowOne"></BoardRow>
+        <BoardRow class="row" RowId="RowOne"></BoardRow>
+        <BoardRow class="row" RowId="RowOne"></BoardRow>
+        <BoardRow class="row" RowId="RowOne"></BoardRow>
+        <BoardRow class="row" RowId="RowOne"></BoardRow>
+        <BoardRow class="row" RowId="RowOne"></BoardRow>
+        <BoardRow class="row" RowId="RowOne"></BoardRow>
+        <BoardRow class="row" RowId="RowOne"></BoardRow>
+        <BoardRow class="row" RowId="RowOne"></BoardRow>
     </div>
 </template>
 
@@ -23,7 +23,8 @@ export default {
     components: {
         BoardRow,
         Code,
-    }
+    },
+    props: ['BoardId'],
 }
 </script>
 

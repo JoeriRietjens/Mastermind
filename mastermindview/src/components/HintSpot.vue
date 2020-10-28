@@ -1,6 +1,6 @@
 <template>
     <div>
-      <span class="dot"></span>
+      <span class="hint"></span>
     </div>
 </template>
 
@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style scoped>
-.dot {
+.hint {
   height: 10px;
   width: 10px;
   background-color: #bbb;

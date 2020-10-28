@@ -1,10 +1,10 @@
 <template>
   <div class="home">
     <h2> Your own bord </h2>
-    <Board class="board" v-on:SelectSpot="SelectSpot"></Board>
-    <Colors></Colors>
+    <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
+    <Colors v-on:SetColor="ChangeColor"></Colors>
     <h2> Your opponents board </h2>
-    <OpponentBoard class="board"></OpponentBoard>
+    <OpponentBoard class="board" BoardId="OpponentBoard"></OpponentBoard>
   </div>
 </template>
 
@@ -28,7 +28,11 @@ export default {
   },
   methods: {
     SelectSpot(obj){
-        this.SelectedSpot = obj;
+      this.SelectedSpot = obj;
+      this.SelectedSpot.$data.selected = false;
+    },
+    ChangeColor(color){
+      this.SelectedSpot.$data.Color = color;
     }
   }
 }
