@@ -3,6 +3,7 @@
     <h2> Your own bord </h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
+    <button v-on:click="postGuess">Confirm guess</button>
     <h2> Your opponents board </h2>
     <OpponentBoard class="board" BoardId="OpponentBoard"></OpponentBoard>
   </div>
@@ -24,6 +25,7 @@ export default {
   data() {
     return {
       SelectedSpot: null,
+      currentRow: 'RowOne',
     }
   },
   methods: {
@@ -33,6 +35,39 @@ export default {
     },
     ChangeColor(color){
       this.SelectedSpot.$data.Color = color;
+    },
+    postGeuss(){
+      //postcall
+      document.querySelector('#' + this.currentRow);
+      setNextRow();
+    },
+    setNextRow(){
+      switch (this.currentRow){
+        case 'RowOne':
+          this.currentRow = 'RowTwo';
+          break;
+        case 'RowTwo':
+          this.currentRow = 'RowThree';
+          break;
+        case 'RowThree':
+          this.currentRow = 'RowFour';
+          break;
+        case 'RowFour':
+          this.currentRow = 'RowFive';
+          break;
+        case 'RowFive':
+          this.currentRow = 'RowSix';
+          break;
+        case 'RowThree':
+          this.currentRow = 'RowFour';
+          break;
+        case 'RowThree':
+          this.currentRow = 'RowFour';
+          break;
+        case 'RowThree':
+          this.currentRow = 'RowFour';
+          break;
+      }
     }
   }
 }
