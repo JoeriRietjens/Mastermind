@@ -38,7 +38,15 @@ export default {
     },
     postGeuss(){
       //postcall
-      document.querySelector('#' + this.currentRow);
+      //document.querySelector('#' + this.currentRow);
+      row:{
+        document.querySelector('#' + this.currentRow).querySelector('#SpotOne').Color,
+        document.querySelector('#' + this.currentRow).querySelector('#SpotTwo').Color,
+        document.querySelector('#' + this.currentRow).querySelector('#SpotThree').Color,
+        document.querySelector('#' + this.currentRow).querySelector('#SpotFour').Color;
+      }
+      console.log(document.querySelector('#' + this.currentRow).querySelector('#SpotOne').Color)
+      
       setNextRow();
     },
     setNextRow(){
