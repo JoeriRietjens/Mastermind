@@ -38,13 +38,20 @@ export default {
     },
     PostGuess(){
       console.log("Guess confirmed");
-      //postcall
-      document.querySelector('#' + this.currentRow);
       
-      document.querySelector('#' + this.currentRow).querySelector('#HintOne').style.backgroundColor = hints[0];
-      document.querySelector('#' + this.currentRow).querySelector('#HintTwo').style.backgroundColor = hints[1];
-      document.querySelector('#' + this.currentRow).querySelector('#HintThree').style.backgroundColor = hints[2];
-      document.querySelector('#' + this.currentRow).querySelector('#HintFour').style.backgroundColor = hints[3];
+      //row:{
+      //  document.querySelector('#' + this.currentRow).querySelector('#SpotOne').Color,
+      //  document.querySelector('#' + this.currentRow).querySelector('#SpotTwo').Color,
+      //  document.querySelector('#' + this.currentRow).querySelector('#SpotThree').Color,
+      //  document.querySelector('#' + this.currentRow).querySelector('#SpotFour').Color;
+      //}
+      console.log(this.PlayerBoard.BoardRow.ColorSpot[0].$data.Color)
+      
+      //axios.post();
+      //document.querySelector('#' + this.currentRow).querySelector('#HintOne').style.backgroundColor = hints[0];
+      //document.querySelector('#' + this.currentRow).querySelector('#HintTwo').style.backgroundColor = hints[1];
+      //document.querySelector('#' + this.currentRow).querySelector('#HintThree').style.backgroundColor = hints[2];
+      //document.querySelector('#' + this.currentRow).querySelector('#HintFour').style.backgroundColor = hints[3];
       this.setNextRow();
     },
     setNextRow(){

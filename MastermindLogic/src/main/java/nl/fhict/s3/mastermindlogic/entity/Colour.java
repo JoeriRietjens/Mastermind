@@ -2,15 +2,42 @@ package nl.fhict.s3.mastermindlogic.entity;
 
 public class Colour {
 
-    private final int id;
-    public final Colour colour;
+    //private final int id;
+    private final EPinColour colour;
+    private Boolean isChecked;
 
-    public int getId() {
+
+    /*public int getId() {
         return id;
+    }*/
+
+    public Colour(EPinColour colour) {
+        this.colour = colour;
     }
 
-    public Colour(int id, Colour colour) {
-        this.id = id;
-        this.colour = colour;
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this) {
+            return true;
+        }
+
+        if(obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        Colour toCheck = (Colour) obj;
+        return (toCheck.getColour() == this.getColour());
+    }
+
+    public EPinColour getColour() {
+        return colour;
+    }
+
+    public Boolean getChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(Boolean Checked) {
+        isChecked = Checked;
     }
 }

@@ -18,4 +18,4 @@ jobs:
         java-package: jdk
     
     - name: Maven verify logicservice
-      run: mvn verify --file MastermindLogic/pom.xml
+      run: mvn verify -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn --file MastermindLogic/pom.xml

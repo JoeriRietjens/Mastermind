@@ -13,8 +13,10 @@ public class Game {
         return id;
     }
 
+    public Game() {
+        this.id = 0;
+    }
     public Game(int id) {
         this.id = id;
     }
-
 }
