@@ -3,7 +3,7 @@
     <h2> Your own bord </h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
-    <button v-on:click="postGuess">Confirm guess</button>
+    <button v-on:Click="postGuess">Confirm guess</button>
     <h2> Your opponents board </h2>
     <OpponentBoard class="board" BoardId="OpponentBoard"></OpponentBoard>
   </div>
@@ -37,6 +37,7 @@ export default {
       this.SelectedSpot.$data.Color = color;
     },
     postGeuss(){
+      console.log("Guess confirmed")
       //postcall
       document.querySelector('#' + this.currentRow);
       setNextRow();
@@ -58,14 +59,20 @@ export default {
         case 'RowFive':
           this.currentRow = 'RowSix';
           break;
-        case 'RowThree':
-          this.currentRow = 'RowFour';
+        case 'RowSix':
+          this.currentRow = 'RowSeven';
           break;
-        case 'RowThree':
-          this.currentRow = 'RowFour';
+        case 'RowSeven':
+          this.currentRow = 'RowEight';
           break;
-        case 'RowThree':
-          this.currentRow = 'RowFour';
+        case 'RowEight':
+          this.currentRow = 'RowNine';
+          break;
+        case 'RowNine':
+          this.currentRow = 'RowTen';
+          break;
+        case 'RowTen':
+          youlost();
           break;
       }
     }

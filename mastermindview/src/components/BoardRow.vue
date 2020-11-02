@@ -6,12 +6,12 @@
         <ColorSpot v-on:SelectSpot="SelectSpot" SpotId="SpotFour"></ColorSpot>
         <div class="Hints">
             <div class="topRow">
-            <HintSpot class="hintSpot"></HintSpot>
-            <HintSpot class="hintSpot"></HintSpot>
+            <HintSpot class="hintSpot" HintId="HintOne"></HintSpot>
+            <HintSpot class="hintSpot" HintId="HintTwo"></HintSpot>
             </div>
             <div class="bottomRow">
-            <HintSpot class="hintSpot"></HintSpot>
-            <HintSpot class="hintSpot"></HintSpot>
+            <HintSpot class="hintSpot" HintId="HintThree"></HintSpot>
+            <HintSpot class="hintSpot" HintId="HintFour"></HintSpot>
             </div>
         </div>
     </div>
