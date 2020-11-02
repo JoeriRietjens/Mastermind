@@ -1,8 +1,5 @@
 package nl.fhict.s3.mastermindlogic.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Board implements IBoard{
 
     private final int id;
