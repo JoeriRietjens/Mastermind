@@ -6,7 +6,17 @@
 
 <script>
 export default {
-    name: 'HintSpot'
+    name: 'HintSpot',
+    data() {
+      return {
+        Color: 'grey',
+      }
+    },
+    watch: {
+      Color: function() {
+        document.querySelector('#' + this.$parent.$parent.BoardId).querySelector('#' + this.$parent.RowId).querySelector('#' + this.HintId).style.backgroundColor = this.Color;
+      }
+    }
 }
 </script>
 
@@ -19,4 +29,6 @@ export default {
   display: inline-block;
   border: groove;
 }
+
+
 </style>
