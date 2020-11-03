@@ -29,6 +29,9 @@ export default {
         SelectSpot() {
             this.$emit("SelectSpot", null);
         }
+    },
+    created: function () {
+        this.$store.commit('setOpponentBoard', {state: this.$store.state, board: this})
     }
 }
 </script>

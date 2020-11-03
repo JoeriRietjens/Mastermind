@@ -3,7 +3,7 @@
     <h2> Your own bord </h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
-    <button v-on:Click="postGuess" class="myButton">Confirm guess</button>
+    <button v-on:click="PostGuess" class="myButton">Confirm guess</button>
     <h2> Your opponents board </h2>
     <OpponentBoard class="board" BoardId="OpponentBoard" v-on:SelectSpot="SelectSpot"></OpponentBoard>
   </div>
@@ -46,9 +46,9 @@ export default {
       //  document.querySelector('#' + this.currentRow).querySelector('#SpotThree').Color,
       //  document.querySelector('#' + this.currentRow).querySelector('#SpotFour').Color;
       //}
-      //console.log(this.PlayerBoard.RowOne.SpotOne.$data.Color)
+      console.log(this.$store.getColorSpots(this.currentRow))
       
-      axios.post('/localhost/guess/submit/', null)
+      axios.post('http://localhost:8080/guess/submit/', null)
         .then()
         .catch(error => console.log(error));
       //document.querySelector('#' + this.currentRow).querySelector('#HintOne').style.backgroundColor = hints[0];

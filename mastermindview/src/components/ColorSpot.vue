@@ -25,6 +25,9 @@ export default {
         console.log(this.$parent.$parent.BoardId)
         document.querySelector('#' + this.$parent.$parent.BoardId).querySelector('#' + this.$parent.RowId).querySelector('#' + this.SpotId).style.backgroundColor = this.Color;
       }
+    },
+    created: function () {
+        this.$store.commit('addColorSpot', {state: this.$store.state, colorspot: this})
     }
 }
 </script>
