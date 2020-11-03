@@ -3,7 +3,7 @@
     <h2> Your own bord </h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
-    <button v-on:click="PostGuess">Confirm guess</button>
+    <button v-on:Click="postGuess" class="myButton">Confirm guess</button>
     <h2> Your opponents board </h2>
     <OpponentBoard class="board" BoardId="OpponentBoard" v-on:SelectSpot="SelectSpot"></OpponentBoard>
   </div>
@@ -99,6 +99,33 @@ export default {
 .board {
   margin: 10px;
 }
+
+.myButton {
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+	background-color:	#888888;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+	color:#666666;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+	background-color:#f6f6f6;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+        
 
 .homeElements {
   position: relative;
