@@ -14,6 +14,7 @@
 import Board from '@/components/Board.vue';
 import Colors from '@/components/Colors.vue';
 import OpponentBoard from '@/components/OpponentBoard.vue';
+import axios from 'axios';
 
 export default {
   name: 'Home',
@@ -45,9 +46,11 @@ export default {
       //  document.querySelector('#' + this.currentRow).querySelector('#SpotThree').Color,
       //  document.querySelector('#' + this.currentRow).querySelector('#SpotFour').Color;
       //}
-      console.log(this.PlayerBoard.BoardRow.ColorSpot[0].$data.Color)
+      //console.log(this.PlayerBoard.RowOne.SpotOne.$data.Color)
       
-      //axios.post();
+      axios.post('/localhost/guess/submit/', null)
+        .then()
+        .catch(error => console.log(error));
       //document.querySelector('#' + this.currentRow).querySelector('#HintOne').style.backgroundColor = hints[0];
       //document.querySelector('#' + this.currentRow).querySelector('#HintTwo').style.backgroundColor = hints[1];
       //document.querySelector('#' + this.currentRow).querySelector('#HintThree').style.backgroundColor = hints[2];
