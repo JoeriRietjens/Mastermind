@@ -5,7 +5,7 @@
     <Colors v-on:SetColor="ChangeColor"></Colors>
     <button v-on:click="PostGuess">Confirm guess</button>
     <h2> Your opponents board </h2>
-    <OpponentBoard class="board" BoardId="OpponentBoard"></OpponentBoard>
+    <OpponentBoard class="board" BoardId="OpponentBoard" v-on:SelectSpot="SelectSpot"></OpponentBoard>
   </div>
 </template>
 
