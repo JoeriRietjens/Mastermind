@@ -7,8 +7,6 @@ public class Board implements IBoard{
     public Colour[] code = new Colour[4];
     public Row[] rows = new Row[10];
 
-
-
     public int getId() {
         return id;
     }
@@ -18,9 +16,18 @@ public class Board implements IBoard{
         this.code = code;
     }
 
-
     public Board() {
         id = 0;
+    }
+
+    public Board(int id) {
+        this.id = id;
+    }
+
+    public void createCode(Colour[] codeCreation) {
+        for (int i = 0; i < codeCreation.length; i++) {
+            code[i] = codeCreation[i];
+        }
     }
 
     @Override

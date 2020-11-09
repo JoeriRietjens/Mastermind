@@ -27,6 +27,21 @@ class MastermindlogicApplicationTests {
 	}
 
 	@Test
+	void testCodeCreation() {
+		//player setup a color pallet.
+		Game game = new Game(1);
+		Board board1 = new Board(1);
+		Colour[] codeExpected = {new Colour(EPinColour.RED),
+								 new Colour(EPinColour.YELLOW),
+								 new Colour(EPinColour.GREEN),
+								 new Colour(EPinColour.BlUE)};
+		board1.createCode(codeExpected);
+
+		Colour[] codeActual = board1.code;
+		assertArrayEquals(codeExpected, codeActual);
+	}
+
+	@Test
 	void setupColorCode() {
 		//player setup a color pallet.
 		Game game = new Game(1);
