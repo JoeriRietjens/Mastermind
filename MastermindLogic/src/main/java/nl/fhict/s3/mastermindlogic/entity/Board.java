@@ -20,7 +20,7 @@ public class Board implements IBoard{
         id = 0;
     }
 
-    /*public Board(int id) {
+    public Board(int id) {
         this.id = id;
     }
 
@@ -28,7 +28,7 @@ public class Board implements IBoard{
         for (int i = 0; i < codeCreation.length; i++) {
             code[i] = codeCreation[i];
         }
-    }*/
+    }
 
     @Override
     public Row checkRow(Row rowToCheck) {
