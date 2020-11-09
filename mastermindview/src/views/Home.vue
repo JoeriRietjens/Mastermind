@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h2> Your own bord </h2>
+    <h2> Your own board </h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
     <button v-on:click="PostGuess" class="myButton">Confirm guess</button>
@@ -40,21 +40,15 @@ export default {
     PostGuess(){
       console.log("Guess confirmed");
       
-      //row:{
-      //  document.querySelector('#' + this.currentRow).querySelector('#SpotOne').Color,
-      //  document.querySelector('#' + this.currentRow).querySelector('#SpotTwo').Color,
-      //  document.querySelector('#' + this.currentRow).querySelector('#SpotThree').Color,
-      //  document.querySelector('#' + this.currentRow).querySelector('#SpotFour').Color;
-      //}
-      console.log(this.$store.getColorSpots(this.currentRow))
+      var Row = this.$children[0].$children.find(child => {return child.RowId == this.currentRow});
+      var colors = [ 
+        Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color ];
+      console.log(colors);
       
-      axios.post('http://localhost:8080/guess/submit/', null)
+      axios.post('http://localhost:8080/guess/submit/', colors)
         .then()
         .catch(error => console.log(error));
-      //document.querySelector('#' + this.currentRow).querySelector('#HintOne').style.backgroundColor = hints[0];
-      //document.querySelector('#' + this.currentRow).querySelector('#HintTwo').style.backgroundColor = hints[1];
-      //document.querySelector('#' + this.currentRow).querySelector('#HintThree').style.backgroundColor = hints[2];
-      //document.querySelector('#' + this.currentRow).querySelector('#HintFour').style.backgroundColor = hints[3];
+      
       this.setNextRow();
     },
     setNextRow(){

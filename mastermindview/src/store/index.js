@@ -23,9 +23,10 @@ export default new Vuex.Store({
   modules: {
   },
   getters: {
-    getColorSpotsColors: (state) => (row) => {
-      Spots: state.colorspots.findAll(colorspot => colorspot.$parent.$parent.BaordId == 'PlayerBoard' && colorspot.$parent.RowId == row);
-      return {Spots[0].$data.Color, Spots[1].$data.Color, Spots[2].$data.Color, Spots[3].$data.Color};;
-    }
+    //getColorSpotsColors: (state) => (row) => {
+      //Spots = state.colorspots.findAll(colorspot => colorspot.$parent.$parent.BaordId == 'PlayerBoard' && colorspot.$parent.RowId == row);
+      //console.log(Spots);
+    //  return;
+    //}
   }
 })
