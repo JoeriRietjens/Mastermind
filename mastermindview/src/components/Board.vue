@@ -16,7 +16,7 @@
 
 <script>
 import BoardRow from '@/components/BoardRow.vue';
-import Code from '@/components/Code.vue'
+import Code from '@/components/Code.vue';
 
 export default {
     name: 'MastermindBoard',
@@ -27,7 +27,10 @@ export default {
     methods: {
         SelectSpot(obj) {
             this.$emit("SelectSpot", obj)
-        }
+        },
+        //CreateCode(obj) {
+            //this.$emit(this.SelectSpot, obj)
+        //}
     },
     props: ['BoardId'],
 }

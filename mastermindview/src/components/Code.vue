@@ -14,6 +14,11 @@ export default {
     name: 'Code',
     components: {
         ColorSpot,
+    },
+    methods: {
+        //CreateCode(selectedColor) {
+            //this.$emit(this.SelectSpot, obj)
+        //}
     }
 }
 </script>

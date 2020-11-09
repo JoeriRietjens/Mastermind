@@ -36,6 +36,11 @@ export default {
     ChangeColor(color){
       this.SelectedSpot.$data.Color = color;
     },
+    //CreateCode() {
+      //this.CreateCode.$data.Color = color;
+      //this.CreateCode.$data.selected = true;
+      //this.OpponentBoard.CreateCode
+    //},
     postGeuss(){
       console.log("Guess confirmed")
       //postcall
