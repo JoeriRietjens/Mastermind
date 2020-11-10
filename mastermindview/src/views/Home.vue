@@ -44,8 +44,11 @@ export default {
       var colors = [ 
         Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color ];
       console.log(colors);
+      var row = 'bleh';
+      axios.get('http://localhost:8080/emptyrow/').then(response => this.row = response.data).catch(error => console.log(error));
       
-      axios.post('http://localhost:8080/guess/submit/', colors)
+      console.log(row);
+      axios.post('http://localhost:8080/guess/submit/', [colors, 1])
         .then()
         .catch(error => console.log(error));
       

@@ -2,6 +2,9 @@ package nl.fhict.s3.mastermindlogic.controller;
 
 import nl.fhict.s3.mastermindlogic.entity.*;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @CrossOrigin(origins = "https://localhost:8081", allowedHeaders = "*")
 @RestController
 public class GameController {
@@ -17,8 +20,8 @@ public class GameController {
     }
 
     @PostMapping("/guess/submit")
-    public Row submitGuess(@RequestBody Row row, int playerId){
-        return game.players[playerId].board.checkRow(row);
+    public Row submitGuess(@RequestBody Row row, int rownumber){
+//        return game.players[playerId].board.checkRow(row);
     }
     
     @GetMapping("/emptyrow")
