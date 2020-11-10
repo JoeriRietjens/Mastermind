@@ -39,7 +39,7 @@ export default {
       this.SelectedSpot = SelectSpot;
       
     },
-    PostGeuss(){
+    PostGuess(){
       console.log("Guess confirmed")
       //postcall
       //document.querySelector('#' + this.currentRow);

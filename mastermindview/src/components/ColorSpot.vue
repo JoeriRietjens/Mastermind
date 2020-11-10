@@ -22,7 +22,9 @@ export default {
     },
     watch: {
       Color: function() {
-        console.log(this.$parent.$parent.BoardId)
+        console.log(this.$parent.$parent.BoardId);
+        console.log(this.$parent.RowId);
+        console.log(this.SpotId);
         document.querySelector('#' + this.$parent.$parent.BoardId).querySelector('#' + this.$parent.RowId).querySelector('#' + this.SpotId).style.backgroundColor = this.Color;
       }
     }

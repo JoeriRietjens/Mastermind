@@ -1,6 +1,6 @@
 <template>
     <div class="board" :id="BoardId">
-        <Code v-on:SelectCodeSpot="CreateCode" class="row" id="code"></Code>
+        <Code v-on:SelectCodeSpot="CreateCode" class="row" RowId="code"></Code>
         <BoardRow class="row" RowId="RowOne"></BoardRow>
         <BoardRow class="row" RowId="RowOne"></BoardRow>
         <BoardRow class="row" RowId="RowOne"></BoardRow>

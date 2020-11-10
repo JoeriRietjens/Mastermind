@@ -1,9 +1,9 @@
 <template>
-  <div>
-      <ColorSpot v-on:SelectSpot="CreateCode"></ColorSpot>
-      <ColorSpot v-on:SelectSpot="CreateCode"></ColorSpot>
-      <ColorSpot v-on:SelectSpot="CreateCode"></ColorSpot>
-      <ColorSpot v-on:SelectSpot="CreateCode"></ColorSpot>
+  <div :id="RowId">
+      <ColorSpot v-on:SelectSpot="CreateCode" SpotId="SpotOne"></ColorSpot>
+      <ColorSpot v-on:SelectSpot="CreateCode" SpotId="SpotTwo"></ColorSpot>
+      <ColorSpot v-on:SelectSpot="CreateCode" SpotId="SpotThree"></ColorSpot>
+      <ColorSpot v-on:SelectSpot="CreateCode" SpotId="SpotFour"></ColorSpot>
   </div>
 </template>
 
@@ -15,6 +15,7 @@ export default {
     components: {
         ColorSpot,
     },
+    props: ['RowId'],
     methods: {
         CreateCode(ColorSpot) {
             this.$emit("SelectCodeSpot", ColorSpot)
