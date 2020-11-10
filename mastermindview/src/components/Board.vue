@@ -16,7 +16,7 @@
 
 <script>
 import BoardRow from '@/components/BoardRow.vue';
-import Code from '@/components/Code.vue'
+import Code from '@/components/Code.vue';
 
 export default {
     name: 'MastermindBoard',
