@@ -59,6 +59,7 @@ class MastermindlogicApplicationTests {
 	@Test
 	void testGuessCodeOfOpponent() {
 		Game game = new Game(1);
+		EClueColour[] clues=new EClueColour[4];
 		Board board1 = new Board(1, new Colour[]{new Colour(EPinColour.RED),
 				new Colour(EPinColour.YELLOW),
 				new Colour(EPinColour.GREEN),
@@ -71,8 +72,15 @@ class MastermindlogicApplicationTests {
 
 		Player player1 = new Player(1, "JohnDoe", "secret", board1);
 		Player player2 = new Player(2, "KarenMiles", "secret", board2);
+		Colour[] inPutPlayer2={new Colour(EPinColour.RED),
+				new Colour(EPinColour.BlUE),
+				new Colour(EPinColour.YELLOW),
+				new Colour(EPinColour.PURPLE)};
 
-		//player1.board.guessCode(EPinColour.BlUE, EPinColour.BlUE, EPinColour.BlUE, EPinColour.BlUE);
+		clues= player1.board.getClues(inPutPlayer2);
+		EClueColour[] cluesExpect=new EClueColour[]{EClueColour.BLACK,EClueColour.WHITE,EClueColour.WHITE,EClueColour.BLANK};
+		assertArrayEquals(cluesExpect,clues);
+
 	}
 
 	@Test
@@ -90,7 +98,7 @@ class MastermindlogicApplicationTests {
 		EClueColour[] clues=new EClueColour[4];
 		Colour[] input=new Colour[]{new Colour(EPinColour.GREEN),new Colour(EPinColour.PURPLE),new Colour(EPinColour.GREEN),new Colour(EPinColour.BlUE)};
 		EClueColour[] cluesExpect=new EClueColour[]{EClueColour.BLANK,EClueColour.BLANK,EClueColour.BLACK,EClueColour.WHITE};
-		clues= board1.getClues(input);
+		clues= player1.board.getClues(input);
 		assertArrayEquals(cluesExpect,clues);
 	}
 
@@ -150,13 +158,5 @@ class MastermindlogicApplicationTests {
 		assertEquals(expected, actual);
 	}
 
-	@Test
-	void testCodeCheck_ShouldReturnEqual() {
-		Colour[] code = {new Colour(EPinColour.BlUE), new Colour(EPinColour.YELLOW), new Colour(EPinColour.GREEN), new Colour(EPinColour.ORANGE)};
-		Board board = new Board(1, code);
 
-		board.guessCode(EPinColour.YELLOW, EPinColour.GREEN, EPinColour.PURPLE, EPinColour.RED);
-
-		// Assert the expected pin result as feedback to the player.
-	}
 }
