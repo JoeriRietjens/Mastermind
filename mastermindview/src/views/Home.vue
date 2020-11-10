@@ -1,5 +1,7 @@
 <template>
   <div class="home">
+
+    {{Row.id}}
     <h2> Your own board </h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
@@ -27,6 +29,7 @@ export default {
     return {
       SelectedSpot: null,
       currentRow: 'RowOne',
+      Row: {id: 10, code: [null, null, null, null], clues: [null, null, null, null]},
     }
   },
   methods: {
@@ -44,11 +47,13 @@ export default {
       var colors = [ 
         Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color ];
       console.log(colors);
-      var row = 'bleh';
-      axios.get('http://localhost:8080/emptyrow/').then(response => this.row = response.data).catch(error => console.log(error));
-      
-      console.log(row);
-      axios.post('http://localhost:8080/guess/submit/', [colors, 1])
+      console.log(this.Row.id);
+      console.log(this.Row.code);
+      axios.get('http://localhost:8080/emptyrow/').then( response => (this.Row = response.data)).catch(error => console.log(error));
+      console.log(this.Row.id);
+      this.Row.code = colors;
+      console.log(this.Row.code);
+      axios.post('http://localhost:8080/guess/submit/', [this.Row, 1])
         .then()
         .catch(error => console.log(error));
       

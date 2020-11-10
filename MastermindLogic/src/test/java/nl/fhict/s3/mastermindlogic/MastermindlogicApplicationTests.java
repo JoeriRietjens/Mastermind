@@ -6,8 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -33,7 +31,7 @@ class MastermindlogicApplicationTests {
 		Board board1 = new Board(1);
 		Colour[] codeExpected = {new Colour(EPinColour.RED),
 								 new Colour(EPinColour.YELLOW),
-								 new Colour(EPinColour.GREEN),
+								 new Colour(EPinColour.GREENYELLOW),
 								 new Colour(EPinColour.BlUE)};
 		board1.createCode(codeExpected);
 
@@ -47,11 +45,11 @@ class MastermindlogicApplicationTests {
 		Game game = new Game(1);
 		Board board1 = new Board(1, new Colour[]{new Colour(EPinColour.RED),
 				new Colour(EPinColour.YELLOW),
-				new Colour(EPinColour.GREEN),
+				new Colour(EPinColour.GREENYELLOW),
 				new Colour(EPinColour.BlUE)});
 
 
-		Colour[] correctColorCode={new Colour(EPinColour.RED),new Colour( EPinColour.YELLOW),new Colour(EPinColour.GREEN),new Colour( EPinColour.BlUE)};
+		Colour[] correctColorCode={new Colour(EPinColour.RED),new Colour( EPinColour.YELLOW),new Colour(EPinColour.GREENYELLOW),new Colour( EPinColour.BlUE)};
 		assertArrayEquals(board1.code,correctColorCode);
 
 	}
@@ -61,7 +59,7 @@ class MastermindlogicApplicationTests {
 		Game game = new Game(1);
 		Board board1 = new Board(1, new Colour[]{new Colour(EPinColour.RED),
 				new Colour(EPinColour.YELLOW),
-				new Colour(EPinColour.GREEN),
+				new Colour(EPinColour.GREENYELLOW),
 				new Colour(EPinColour.BlUE)});
 
 		Board board2 = new Board(2, new Colour[]{new Colour(EPinColour.ORANGE),
@@ -84,11 +82,11 @@ class MastermindlogicApplicationTests {
 	void TestColourChecking()
 	{
 		Game game =new Game(1);
-		Board board1=new Board(1,new Colour[]{new Colour(EPinColour.BlUE), new Colour(EPinColour.YELLOW), new Colour(EPinColour.GREEN), new Colour(EPinColour.ORANGE)});
+		Board board1=new Board(1,new Colour[]{new Colour(EPinColour.BlUE), new Colour(EPinColour.YELLOW), new Colour(EPinColour.GREENYELLOW), new Colour(EPinColour.ORANGE)});
 		Player player1 = new Player(1, "JohnDoe", "secret", board1);
 
 		EClueColour[] clues=new EClueColour[4];
-		Colour[] input=new Colour[]{new Colour(EPinColour.GREEN),new Colour(EPinColour.PURPLE),new Colour(EPinColour.GREEN),new Colour(EPinColour.BlUE)};
+		Colour[] input=new Colour[]{new Colour(EPinColour.GREENYELLOW),new Colour(EPinColour.PURPLE),new Colour(EPinColour.GREENYELLOW),new Colour(EPinColour.BlUE)};
 		EClueColour[] cluesExpect=new EClueColour[]{EClueColour.BLANK,EClueColour.BLANK,EClueColour.BLACK,EClueColour.WHITE};
 		clues= board1.getClues(input);
 		assertArrayEquals(cluesExpect,clues);
@@ -100,7 +98,7 @@ class MastermindlogicApplicationTests {
 		Game game = new Game(1);
 		Board board1 = new Board(1, new Colour[]{new Colour(EPinColour.RED),
 				new Colour(EPinColour.YELLOW),
-				new Colour(EPinColour.GREEN),
+				new Colour(EPinColour.GREENYELLOW),
 				new Colour(EPinColour.BlUE)});
 		Player player1 = new Player(1, "JohnDoe", "secret", board1);
 	}
@@ -108,7 +106,7 @@ class MastermindlogicApplicationTests {
 
 	@Test
 	void testThreeEntitiesColorCode_ShouldReturnNotEqual() {
-		Colour[] code = {new Colour(EPinColour.BlUE), new Colour(EPinColour.YELLOW), new Colour(EPinColour.GREEN)};
+		Colour[] code = {new Colour(EPinColour.BlUE), new Colour(EPinColour.YELLOW), new Colour(EPinColour.GREENYELLOW)};
 		Board board = new Board(1, code);
 
 		int expected = 4;
@@ -120,7 +118,7 @@ class MastermindlogicApplicationTests {
 
 	@Test
 	void testFourEntitiesColorCode_ShouldReturnEqual() {
-		Colour[] code = {new Colour(EPinColour.BlUE), new Colour(EPinColour.YELLOW), new Colour(EPinColour.GREEN), new Colour(EPinColour.ORANGE)};
+		Colour[] code = {new Colour(EPinColour.BlUE), new Colour(EPinColour.YELLOW), new Colour(EPinColour.GREENYELLOW), new Colour(EPinColour.ORANGE)};
 		Board board = new Board(1, code);
 		int expected = 4;
 		int actual = code.length;
@@ -130,7 +128,7 @@ class MastermindlogicApplicationTests {
 
 	@Test
 	void testDoubleColorColorCode_ShouldReturnEqual() {
-		Colour[] code = {new Colour(EPinColour.BlUE), new Colour(EPinColour.BlUE), new Colour(EPinColour.GREEN), new Colour(EPinColour.ORANGE)};
+		Colour[] code = {new Colour(EPinColour.BlUE), new Colour(EPinColour.BlUE), new Colour(EPinColour.GREENYELLOW), new Colour(EPinColour.ORANGE)};
 		Board board = new Board(1, code);
 
 		int expected = 4;
@@ -141,7 +139,7 @@ class MastermindlogicApplicationTests {
 
 	@Test
 	void testNotDoubleColorColorCode_ShouldReturnEqual() {
-		Colour[] code = {new Colour(EPinColour.BlUE), new Colour(EPinColour.YELLOW), new Colour(EPinColour.GREEN), new Colour(EPinColour.ORANGE)};
+		Colour[] code = {new Colour(EPinColour.BlUE), new Colour(EPinColour.YELLOW), new Colour(EPinColour.GREENYELLOW), new Colour(EPinColour.ORANGE)};
 		Board board = new Board(1, code);
 
 		int expected = 4;
@@ -152,10 +150,10 @@ class MastermindlogicApplicationTests {
 
 	@Test
 	void testCodeCheck_ShouldReturnEqual() {
-		Colour[] code = {new Colour(EPinColour.BlUE), new Colour(EPinColour.YELLOW), new Colour(EPinColour.GREEN), new Colour(EPinColour.ORANGE)};
+		Colour[] code = {new Colour(EPinColour.BlUE), new Colour(EPinColour.YELLOW), new Colour(EPinColour.GREENYELLOW), new Colour(EPinColour.ORANGE)};
 		Board board = new Board(1, code);
 
-		board.guessCode(EPinColour.YELLOW, EPinColour.GREEN, EPinColour.PURPLE, EPinColour.RED);
+		board.guessCode(EPinColour.YELLOW, EPinColour.GREENYELLOW, EPinColour.PURPLE, EPinColour.RED);
 
 		// Assert the expected pin result as feedback to the player.
 	}

@@ -5,7 +5,7 @@ public enum EPinColour {
     RED,
     ORANGE,
     YELLOW,
-    GREEN,
+    GREENYELLOW,
     BlUE,
     PURPLE,
 }
