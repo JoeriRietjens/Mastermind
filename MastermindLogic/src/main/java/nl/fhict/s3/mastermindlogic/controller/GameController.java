@@ -2,7 +2,7 @@ package nl.fhict.s3.mastermindlogic.controller;
 
 import nl.fhict.s3.mastermindlogic.entity.*;
 import org.springframework.web.bind.annotation.*;
-
+@CrossOrigin(origins = "https://localhost:8081", allowedHeaders = "*")
 @RestController
 public class GameController {
     private Game game;

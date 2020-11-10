@@ -30,6 +30,9 @@ export default {
         }
     },
     props: ['BoardId'],
+    created: function () {
+        this.$store.commit('setPlayerBoard', {state: this.$store.state, board: this})
+    }
 }
 </script>
 
