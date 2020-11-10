@@ -27,10 +27,7 @@ export default {
     methods: {
         SelectSpot(obj) {
             this.$emit("SelectSpot", obj)
-        },
-        //CreateCode(obj) {
-            //this.$emit(this.SelectSpot, obj)
-        //}
+        }
     },
     props: ['BoardId'],
 }

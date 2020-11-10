@@ -3,9 +3,9 @@
     <h2> Your own bord </h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
-    <button v-on:Click="postGuess" class="myButton">Confirm guess</button>
+    <button v-on:click="PostGuess" class="myButton">Confirm guess</button>
     <h2> Your opponents board </h2>
-    <OpponentBoard class="board" BoardId="OpponentBoard"></OpponentBoard>
+    <OpponentBoard v-on:CreateCode="CreateCode" class="board" BoardId="OpponentBoard"></OpponentBoard>
   </div>
 </template>
 
@@ -31,17 +31,15 @@ export default {
   methods: {
     SelectSpot(obj){
       this.SelectedSpot = obj;
-      this.SelectedSpot.$data.selected = false;
     },
     ChangeColor(color){
       this.SelectedSpot.$data.Color = color;
     },
-    //CreateCode() {
-      //this.CreateCode.$data.Color = color;
-      //this.CreateCode.$data.selected = true;
-      //this.OpponentBoard.CreateCode
-    //},
-    postGeuss(){
+    CreateCode(SelectSpot) {
+      this.SelectedSpot = SelectSpot;
+      
+    },
+    PostGeuss(){
       console.log("Guess confirmed")
       //postcall
       //document.querySelector('#' + this.currentRow);

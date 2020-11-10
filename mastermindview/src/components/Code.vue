@@ -1,9 +1,9 @@
 <template>
   <div>
-      <ColorSpot></ColorSpot>
-      <ColorSpot></ColorSpot>
-      <ColorSpot></ColorSpot>
-      <ColorSpot></ColorSpot>
+      <ColorSpot v-on:SelectSpot="CreateCode"></ColorSpot>
+      <ColorSpot v-on:SelectSpot="CreateCode"></ColorSpot>
+      <ColorSpot v-on:SelectSpot="CreateCode"></ColorSpot>
+      <ColorSpot v-on:SelectSpot="CreateCode"></ColorSpot>
   </div>
 </template>
 
@@ -16,9 +16,9 @@ export default {
         ColorSpot,
     },
     methods: {
-        //CreateCode(selectedColor) {
-            //this.$emit(this.SelectSpot, obj)
-        //}
+        CreateCode(ColorSpot) {
+            this.$emit("SelectCodeSpot", ColorSpot)
+        }
     }
 }
 </script>

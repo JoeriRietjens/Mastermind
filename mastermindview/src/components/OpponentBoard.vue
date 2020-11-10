@@ -1,6 +1,6 @@
 <template>
     <div class="board" :id="BoardId">
-        <Code class="row" id="code"></Code>
+        <Code v-on:SelectCodeSpot="CreateCode" class="row" id="code"></Code>
         <BoardRow class="row" RowId="RowOne"></BoardRow>
         <BoardRow class="row" RowId="RowOne"></BoardRow>
         <BoardRow class="row" RowId="RowOne"></BoardRow>
@@ -25,6 +25,11 @@ export default {
         Code,
     },
     props: ['BoardId'],
+    methods: {
+        CreateCode(SelectCodeSpot) {
+            this.$emit("CreateCode", SelectCodeSpot)
+        }
+    }
 }
 </script>
 
