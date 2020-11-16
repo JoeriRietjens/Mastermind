@@ -39,6 +39,9 @@ export default {
     CreateCode(SelectSpot) {
       this.SelectedSpot = SelectSpot;
     },
+    SubmitCode() {
+      axios.post('http://localhost:8080/code/submit', [colors, 1])
+    },
     PostGuess(){
       console.log("Guess confirmed")
       //postcall
