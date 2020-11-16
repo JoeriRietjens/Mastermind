@@ -9,7 +9,7 @@ export default {
     name: 'ColorSpotRed',
     data() {
       return {
-        Color: 'red',
+        Color: 'RED',
       }
     },
     methods: {

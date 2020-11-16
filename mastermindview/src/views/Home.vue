@@ -43,15 +43,19 @@ export default {
     },
     PostGuess(){
       console.log("Guess confirmed");
+      axios.get('http://localhost:8080/emptyrow/').then( response => this.SubmitGuess(response.data)).catch(error => console.log(error));
+      console.log(this.Row.id);
       
+    },
+    SubmitGuess(response){
+      console.log(response);
+      this.Row = response;
       var Row = this.$children[0].$children.find(child => {return child.RowId == this.currentRow});
       var colors = [ 
         Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color ];
-      axios.get('http://localhost:8080/emptyrow/').then( response => (this.Row = response.data)).catch(error => console.log(error));
-      console.log(this.Row.id);
       this.Row.code = colors;
       console.log(this.Row.code);
-      axios.post('http://localhost:8080/guess/submit/', [this.Row, 1])
+      axios.post('http://localhost:8080/guess/submit/1/', this.Row)
         .then()
         .catch(error => console.log(error));
       

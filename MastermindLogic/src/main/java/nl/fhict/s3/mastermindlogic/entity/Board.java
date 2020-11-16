@@ -45,8 +45,8 @@ public class Board implements IBoard {
     }
 
     //only for sake for testing. Need a way around it.
-    public EClueColour[] getClues(Colour[] input) {
-        Colour[] tempColour = new Colour[4];
+    public EClueColour[] getClues(EPinColour[] input) {
+        EPinColour[] tempColour = new EPinColour[4];
         System.arraycopy(code, 0, tempColour, 0, code.length);
         EClueColour[] clues = new EClueColour[4];
         clues = getBlackPins(clues, tempColour, input);
@@ -56,9 +56,9 @@ public class Board implements IBoard {
 
     }
 
-    private EClueColour[] getBlackPins(EClueColour[] clues, Colour[] tempColour, Colour[] input) {
+    private EClueColour[] getBlackPins(EClueColour[] clues, EPinColour[] tempColour, EPinColour[] input) {
         for (int i = 0; i < tempColour.length; i++) {
-            if (input[i].getColour() == tempColour[i].getColour()) {
+            if (input[i] == tempColour[i]) {
                 //black pin.
                 clues[i] = EClueColour.BLACK;
                 tempColour[i] = null;
@@ -70,7 +70,7 @@ public class Board implements IBoard {
         return clues;
     }
 
-    private EClueColour[] getWhitePins(EClueColour[] clues, Colour[] tempColour, Colour[] input) {
+    private EClueColour[] getWhitePins(EClueColour[] clues, EPinColour[] tempColour, EPinColour[] input) {
 
         for (int i = 0; i < tempColour.length; i++) {
             if (tempColour[i] == null) {
@@ -80,7 +80,7 @@ public class Board implements IBoard {
                 if (input[j] == null) {
                     continue;
                 }
-                if (tempColour[i].getColour() == input[j].getColour()) {
+                if (tempColour[i] == input[j]) {
                     clues[j] = EClueColour.WHITE;
                     tempColour[i] = null;
                     input[j] = null;
