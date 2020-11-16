@@ -9,7 +9,7 @@ export default {
     name: 'ColorSpotGreen',
     data() {
       return {
-        Color: 'greenyellow',
+        Color: 'LIME',
 
       }
     },
@@ -28,7 +28,7 @@ export default {
   border-radius: 50%;
   display: inline-block;
   border: groove;
-  background-color: greenyellow;
+  background-color: lime;
 }
 
 
