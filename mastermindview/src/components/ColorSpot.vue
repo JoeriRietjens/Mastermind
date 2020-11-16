@@ -1,6 +1,6 @@
 <template>
   <div>
-      <span class="dot" v-on:click="SelectSpot"></span>
+      <span class="dot" v-on:click="SelectSpot" :id="SpotId" :selected="selected"></span>
   </div>
 </template>
 
@@ -10,13 +10,26 @@ export default {
     data() {
       return {
         Color: 'grey',
-
+        selected: false,
       }
     },
+    props: ['SpotId'],
     methods: {
       SelectSpot() {
+        this.selected = true;
         this.$emit("SelectSpot", this);
       }
+    },
+    watch: {
+      Color: function() {
+        console.log(this.$parent.$parent.BoardId);
+        console.log(this.$parent.RowId);
+        console.log(this.SpotId);
+        document.querySelector('#' + this.$parent.$parent.BoardId).querySelector('#' + this.$parent.RowId).querySelector('#' + this.SpotId).style.backgroundColor = this.Color;
+      }
+    },
+    created: function () {
+        this.$store.commit('addColorSpot', {state: this.$store.state, colorspot: this})
     }
 }
 </script>

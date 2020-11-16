@@ -1,17 +1,27 @@
 <template>
     <div>
-      <span class="dot"></span>
+      <span class="hint"></span>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'HintSpot'
+    name: 'HintSpot',
+    data() {
+      return {
+        Color: 'grey',
+      }
+    },
+    watch: {
+      Color: function() {
+        document.querySelector('#' + this.$parent.$parent.BoardId).querySelector('#' + this.$parent.RowId).querySelector('#' + this.HintId).style.backgroundColor = this.Color;
+      }
+    }
 }
 </script>
 
 <style scoped>
-.dot {
+.hint {
   height: 10px;
   width: 10px;
   background-color: #bbb;
@@ -19,4 +29,6 @@ export default {
   display: inline-block;
   border: groove;
 }
+
+
 </style>
