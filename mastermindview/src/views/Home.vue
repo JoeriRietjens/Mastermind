@@ -4,6 +4,7 @@
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
     <button v-on:click="PostGuess" class="myButton">Confirm guess</button>
+    <button v-on:click="SubmitCode" class="myButton">Confirm code</button>
     <h2> Your opponents board </h2>
     <OpponentBoard v-on:CreateCode="CreateCode" class="board" BoardId="OpponentBoard"></OpponentBoard>
   </div>
@@ -40,7 +41,7 @@ export default {
       this.SelectedSpot = SelectSpot;
     },
     SubmitCode() {
-      axios.post('http://localhost:8080/code/submit', [colors, 1])
+      axios.post('http://localhost:8080/code/submit', Colors)
     },
     PostGuess(){
       console.log("Guess confirmed")
