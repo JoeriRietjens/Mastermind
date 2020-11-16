@@ -2,6 +2,7 @@
   <div class="home">
 
     {{Row.id}}
+    {{Row.code}}
     <h2> Your own board </h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
@@ -46,9 +47,6 @@ export default {
       var Row = this.$children[0].$children.find(child => {return child.RowId == this.currentRow});
       var colors = [ 
         Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color ];
-      console.log(colors);
-      console.log(this.Row.id);
-      console.log(this.Row.code);
       axios.get('http://localhost:8080/emptyrow/').then( response => (this.Row = response.data)).catch(error => console.log(error));
       console.log(this.Row.id);
       this.Row.code = colors;
