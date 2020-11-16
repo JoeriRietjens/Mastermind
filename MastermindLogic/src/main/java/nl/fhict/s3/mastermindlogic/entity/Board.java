@@ -4,14 +4,14 @@ public class Board implements IBoard {
 
     private final int id;
 
-    public Colour[] code = new Colour[4];
+    public EPinColour[] code = new EPinColour[4];
     public Row[] rows = new Row[10];
 
     public int getId() {
         return id;
     }
 
-    public Board(int id, Colour[] code) {
+    public Board(int id, EPinColour[] code) {
         this.id = id;
         this.code = code;
     }
@@ -24,7 +24,7 @@ public class Board implements IBoard {
         this.id = id;
     }
 
-    public void createCode(Colour[] codeCreation) {
+    public void createCode(EPinColour[] codeCreation) {
         for (int i = 0; i < codeCreation.length; i++) {
             code[i] = codeCreation[i];
         }
@@ -92,7 +92,7 @@ public class Board implements IBoard {
 
     private void sayClues(EClueColour[] clues) {
         for (int i = 0; i < clues.length; i++) {
-            System.out.println("Colour: " + code[i].getColour());
+            System.out.println("Colour: " + code[i]);
             System.out.println("Index: " + i + " Clue: " + clues[i]);
         }
     }

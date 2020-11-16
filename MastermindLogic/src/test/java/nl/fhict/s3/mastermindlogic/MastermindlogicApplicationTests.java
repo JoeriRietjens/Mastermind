@@ -29,13 +29,13 @@ class MastermindlogicApplicationTests {
 		//player setup a color pallet.
 		Game game = new Game(1);
 		Board board1 = new Board(1);
-		Colour[] codeExpected = {new Colour(EPinColour.RED),
-								 new Colour(EPinColour.YELLOW),
-								 new Colour(EPinColour.LIME),
-								 new Colour(EPinColour.BLUE)};
+		EPinColour[] codeExpected = {EPinColour.RED,
+								 EPinColour.YELLOW,
+								 EPinColour.LIME,
+								 EPinColour.BLUE};
 		board1.createCode(codeExpected);
 
-		Colour[] codeActual = board1.code;
+		EPinColour[] codeActual = board1.code;
 		assertArrayEquals(codeExpected, codeActual);
 	}
 
@@ -43,13 +43,13 @@ class MastermindlogicApplicationTests {
 	void setupColorCode() {
 		//player setup a color pallet.
 		Game game = new Game(1);
-		Board board1 = new Board(1, new Colour[]{new Colour(EPinColour.RED),
-				new Colour(EPinColour.YELLOW),
-				new Colour(EPinColour.LIME),
-				new Colour(EPinColour.BLUE)});
+		Board board1 = new Board(1, new EPinColour[]{EPinColour.RED,
+				EPinColour.YELLOW,
+				EPinColour.LIME,
+				EPinColour.BLUE});
 
 
-		Colour[] correctColorCode={new Colour(EPinColour.RED),new Colour( EPinColour.YELLOW),new Colour(EPinColour.LIME),new Colour( EPinColour.BLUE)};
+		EPinColour[] correctColorCode={EPinColour.RED, EPinColour.YELLOW, EPinColour.LIME, EPinColour.BLUE};
 		assertArrayEquals(board1.code,correctColorCode);
 
 	}
@@ -57,15 +57,15 @@ class MastermindlogicApplicationTests {
 	@Test
 	void testGuessCodeOfOpponent() {
 		Game game = new Game(1);
-		Board board1 = new Board(1, new Colour[]{new Colour(EPinColour.RED),
-				new Colour(EPinColour.YELLOW),
-				new Colour(EPinColour.LIME),
-				new Colour(EPinColour.BLUE)});
+		Board board1 = new Board(1, new EPinColour[]{EPinColour.RED,
+				EPinColour.YELLOW,
+				EPinColour.LIME,
+				EPinColour.BLUE});
 
-		Board board2 = new Board(2, new Colour[]{new Colour(EPinColour.ORANGE),
-				new Colour(EPinColour.BLUE),
-				new Colour(EPinColour.YELLOW),
-				new Colour(EPinColour.PURPLE)});
+		Board board2 = new Board(2, new EPinColour[]{EPinColour.ORANGE,
+				EPinColour.BLUE,
+				EPinColour.YELLOW,
+				EPinColour.PURPLE});
 
 		Player player1 = new Player(1, "JohnDoe", "secret", board1);
 		Player player2 = new Player(2, "KarenMiles", "secret", board2);
@@ -82,7 +82,7 @@ class MastermindlogicApplicationTests {
 	void TestColourChecking()
 	{
 		Game game =new Game(1);
-		Board board1=new Board(1,new Colour[]{new Colour(EPinColour.BLUE), new Colour(EPinColour.YELLOW), new Colour(EPinColour.LIME), new Colour(EPinColour.ORANGE)});
+		Board board1=new Board(1,new EPinColour[]{EPinColour.BLUE, EPinColour.YELLOW, EPinColour.LIME, EPinColour.ORANGE});
 		Player player1 = new Player(1, "JohnDoe", "secret", board1);
 
 		EClueColour[] clues=new EClueColour[4];
@@ -96,17 +96,17 @@ class MastermindlogicApplicationTests {
 	void TestInputColour()
 	{
 		Game game = new Game(1);
-		Board board1 = new Board(1, new Colour[]{new Colour(EPinColour.RED),
-				new Colour(EPinColour.YELLOW),
-				new Colour(EPinColour.LIME),
-				new Colour(EPinColour.BLUE)});
+		Board board1 = new Board(1, new EPinColour[]{EPinColour.RED,
+				EPinColour.YELLOW,
+				EPinColour.LIME,
+				EPinColour.BLUE});
 		Player player1 = new Player(1, "JohnDoe", "secret", board1);
 	}
 
 
 	@Test
 	void testThreeEntitiesColorCode_ShouldReturnNotEqual() {
-		Colour[] code = {new Colour(EPinColour.BLUE), new Colour(EPinColour.YELLOW), new Colour(EPinColour.LIME)};
+		EPinColour[] code = {EPinColour.BLUE, EPinColour.YELLOW, EPinColour.LIME};
 		Board board = new Board(1, code);
 
 		int expected = 4;
@@ -118,7 +118,7 @@ class MastermindlogicApplicationTests {
 
 	@Test
 	void testFourEntitiesColorCode_ShouldReturnEqual() {
-		Colour[] code = {new Colour(EPinColour.BLUE), new Colour(EPinColour.YELLOW), new Colour(EPinColour.LIME), new Colour(EPinColour.ORANGE)};
+		EPinColour[] code = {EPinColour.BLUE, EPinColour.YELLOW, EPinColour.LIME, EPinColour.ORANGE};
 		Board board = new Board(1, code);
 		int expected = 4;
 		int actual = code.length;
@@ -128,7 +128,7 @@ class MastermindlogicApplicationTests {
 
 	@Test
 	void testDoubleColorColorCode_ShouldReturnEqual() {
-		Colour[] code = {new Colour(EPinColour.BLUE), new Colour(EPinColour.BLUE), new Colour(EPinColour.LIME), new Colour(EPinColour.ORANGE)};
+		EPinColour[] code = {EPinColour.BLUE, EPinColour.BLUE, EPinColour.LIME, EPinColour.ORANGE};
 		Board board = new Board(1, code);
 
 		int expected = 4;
@@ -139,7 +139,7 @@ class MastermindlogicApplicationTests {
 
 	@Test
 	void testNotDoubleColorColorCode_ShouldReturnEqual() {
-		Colour[] code = {new Colour(EPinColour.BLUE), new Colour(EPinColour.YELLOW), new Colour(EPinColour.LIME), new Colour(EPinColour.ORANGE)};
+		EPinColour[] code = {EPinColour.BLUE, EPinColour.YELLOW, EPinColour.LIME, EPinColour.ORANGE};
 		Board board = new Board(1, code);
 
 		int expected = 4;
@@ -150,7 +150,7 @@ class MastermindlogicApplicationTests {
 
 	@Test
 	void testCodeCheck_ShouldReturnEqual() {
-		Colour[] code = {new Colour(EPinColour.BLUE), new Colour(EPinColour.YELLOW), new Colour(EPinColour.LIME), new Colour(EPinColour.ORANGE)};
+		EPinColour[] code = {EPinColour.BLUE, EPinColour.YELLOW, EPinColour.LIME, EPinColour.ORANGE};
 		Board board = new Board(1, code);
 
 		board.guessCode(EPinColour.YELLOW, EPinColour.LIME, EPinColour.PURPLE, EPinColour.RED);
