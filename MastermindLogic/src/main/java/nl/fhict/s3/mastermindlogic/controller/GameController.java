@@ -23,7 +23,7 @@ public class GameController {
     }
 
     @PostMapping("/code/submit")
-    public Colour[] submitCode(@RequestBody Colour[] code, int playerId){
+    public EPinColour[] submitCode(@RequestBody EPinColour[] code, int playerId){
         return game.players[playerId].board.createCode(code);
     }
     

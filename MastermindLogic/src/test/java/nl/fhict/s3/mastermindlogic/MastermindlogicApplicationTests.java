@@ -69,12 +69,12 @@ class MastermindlogicApplicationTests {
 
 		Player player1 = new Player(1, "JohnDoe", "secret", board1);
 		Player player2 = new Player(2, "KarenMiles", "secret", board2);
-		Colour[] inPutPlayer2={new Colour(EPinColour.RED),
-				new Colour(EPinColour.BlUE),
-				new Colour(EPinColour.YELLOW),
-				new Colour(EPinColour.PURPLE)};
+		EPinColour[] inPutPlayer2={EPinColour.RED,
+				EPinColour.BLUE,
+				EPinColour.YELLOW,
+				EPinColour.PURPLE};
 
-		clues= player1.board.getClues(inPutPlayer2);
+		EClueColour[] clues= player1.board.getClues(inPutPlayer2);
 		EClueColour[] cluesExpect=new EClueColour[]{EClueColour.BLACK,EClueColour.WHITE,EClueColour.WHITE,EClueColour.BLANK};
 		assertArrayEquals(cluesExpect,clues);
 
@@ -160,7 +160,7 @@ class MastermindlogicApplicationTests {
 		EPinColour[] code = {EPinColour.BLUE, EPinColour.YELLOW, EPinColour.LIME, EPinColour.ORANGE};
 		Board board = new Board(1, code);
 
-		board.guessCode(EPinColour.YELLOW, EPinColour.LIME, EPinColour.PURPLE, EPinColour.RED);
+		//board.guessCode(EPinColour.YELLOW, EPinColour.LIME, EPinColour.PURPLE, EPinColour.RED);
 
 		// Assert the expected pin result as feedback to the player.
 	}
