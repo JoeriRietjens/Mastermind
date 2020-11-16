@@ -24,10 +24,11 @@ public class Board implements IBoard {
         this.id = id;
     }
 
-    public void createCode(Colour[] codeCreation) {
+    public Colour[] createCode(Colour[] codeCreation) {
         for (int i = 0; i < codeCreation.length; i++) {
             code[i] = codeCreation[i];
         }
+        return code;
     }
 
     @Override

@@ -38,7 +38,6 @@ export default {
     },
     CreateCode(SelectSpot) {
       this.SelectedSpot = SelectSpot;
-      
     },
     PostGuess(){
       console.log("Guess confirmed")

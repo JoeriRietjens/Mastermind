@@ -20,6 +20,11 @@ public class GameController {
     public Row submitGuess(@RequestBody Row row, int playerId){
         return game.players[playerId].board.checkRow(row);
     }
+
+    @PostMapping("/code/submit")
+    public Colour[] submitCode(@RequestBody Colour[] code, int playerId){
+        return game.players[playerId].board.createCode(code);
+    }
     
     @GetMapping("/emptyrow")
     public Row guessEmptyRow(){
