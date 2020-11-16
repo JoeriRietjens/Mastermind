@@ -8,7 +8,7 @@
     <Colors v-on:SetColor="ChangeColor"></Colors>
     <button v-on:click="PostGuess" class="myButton">Confirm guess</button>
     <h2> Your opponents board </h2>
-    <OpponentBoard class="board" BoardId="OpponentBoard" v-on:SelectSpot="SelectSpot"></OpponentBoard>
+    <OpponentBoard v-on:CreateCode="CreateCode" class="board" BoardId="OpponentBoard"></OpponentBoard>
   </div>
 </template>
 
@@ -36,10 +36,12 @@ export default {
   methods: {
     SelectSpot(obj){
       this.SelectedSpot = obj;
-      this.SelectedSpot.$data.selected = false;
     },
     ChangeColor(color){
       this.SelectedSpot.$data.Color = color;
+    },
+    CreateCode(SelectSpot) {
+      this.SelectedSpot = SelectSpot;
     },
     PostGuess(){
       console.log("Guess confirmed");

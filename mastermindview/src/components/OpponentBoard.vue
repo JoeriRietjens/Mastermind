@@ -1,16 +1,16 @@
 <template>
     <div class="board" :id="BoardId">
-        <Code class="row" id="code"></Code>
-        <BoardRow class="row" RowId="RowOne" v-on:SelectSpot="SelectSpot"></BoardRow>
-        <BoardRow class="row" RowId="RowOne" v-on:SelectSpot="SelectSpot"></BoardRow>
-        <BoardRow class="row" RowId="RowOne" v-on:SelectSpot="SelectSpot"></BoardRow>
-        <BoardRow class="row" RowId="RowOne" v-on:SelectSpot="SelectSpot"></BoardRow>
-        <BoardRow class="row" RowId="RowOne" v-on:SelectSpot="SelectSpot"></BoardRow>
-        <BoardRow class="row" RowId="RowOne" v-on:SelectSpot="SelectSpot"></BoardRow>
-        <BoardRow class="row" RowId="RowOne" v-on:SelectSpot="SelectSpot"></BoardRow>
-        <BoardRow class="row" RowId="RowOne" v-on:SelectSpot="SelectSpot"></BoardRow>
-        <BoardRow class="row" RowId="RowOne" v-on:SelectSpot="SelectSpot"></BoardRow>
-        <BoardRow class="row" RowId="RowOne" v-on:SelectSpot="SelectSpot"></BoardRow>
+        <Code v-on:SelectCodeSpot="CreateCode" class="row" RowId="code"></Code>
+        <BoardRow class="row" RowId="RowOne"></BoardRow>
+        <BoardRow class="row" RowId="RowOne"></BoardRow>
+        <BoardRow class="row" RowId="RowOne"></BoardRow>
+        <BoardRow class="row" RowId="RowOne"></BoardRow>
+        <BoardRow class="row" RowId="RowOne"></BoardRow>
+        <BoardRow class="row" RowId="RowOne"></BoardRow>
+        <BoardRow class="row" RowId="RowOne"></BoardRow>
+        <BoardRow class="row" RowId="RowOne"></BoardRow>
+        <BoardRow class="row" RowId="RowOne"></BoardRow>
+        <BoardRow class="row" RowId="RowOne"></BoardRow>
     </div>
 </template>
 
@@ -32,7 +32,11 @@ export default {
     },
     created: function () {
         this.$store.commit('setOpponentBoard', {state: this.$store.state, board: this})
-    }
+        
+    },
+    CreateCode(SelectCodeSpot) {
+            this.$emit("CreateCode", SelectCodeSpot)
+        }
 }
 </script>
 

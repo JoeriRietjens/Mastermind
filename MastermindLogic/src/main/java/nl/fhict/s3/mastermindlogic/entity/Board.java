@@ -28,6 +28,7 @@ public class Board implements IBoard {
         for (int i = 0; i < codeCreation.length; i++) {
             code[i] = codeCreation[i];
         }
+        return code;
     }
 
     @Override
@@ -38,10 +39,6 @@ public class Board implements IBoard {
             rowToCheck.clues[i].seteClueColour(clues[i]);
         }
         return rowToCheck;
-    }
-
-    public Row guessCode(EPinColour colour1, EPinColour colour2, EPinColour colour3, EPinColour colour4) {
-        return new Row(1);
     }
 
     //only for sake for testing. Need a way around it.

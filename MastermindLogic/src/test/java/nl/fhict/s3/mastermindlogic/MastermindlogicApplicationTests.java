@@ -69,8 +69,15 @@ class MastermindlogicApplicationTests {
 
 		Player player1 = new Player(1, "JohnDoe", "secret", board1);
 		Player player2 = new Player(2, "KarenMiles", "secret", board2);
+		Colour[] inPutPlayer2={new Colour(EPinColour.RED),
+				new Colour(EPinColour.BlUE),
+				new Colour(EPinColour.YELLOW),
+				new Colour(EPinColour.PURPLE)};
 
-		//player1.board.guessCode(EPinColour.BlUE, EPinColour.BlUE, EPinColour.BlUE, EPinColour.BlUE);
+		clues= player1.board.getClues(inPutPlayer2);
+		EClueColour[] cluesExpect=new EClueColour[]{EClueColour.BLACK,EClueColour.WHITE,EClueColour.WHITE,EClueColour.BLANK};
+		assertArrayEquals(cluesExpect,clues);
+
 	}
 
 	@Test
@@ -88,7 +95,7 @@ class MastermindlogicApplicationTests {
 		EClueColour[] clues=new EClueColour[4];
 		EPinColour[] input=new EPinColour[]{EPinColour.LIME,EPinColour.PURPLE,EPinColour.LIME,EPinColour.BLUE};
 		EClueColour[] cluesExpect=new EClueColour[]{EClueColour.BLANK,EClueColour.BLANK,EClueColour.BLACK,EClueColour.WHITE};
-		clues= board1.getClues(input);
+		clues= player1.board.getClues(input);
 		assertArrayEquals(cluesExpect,clues);
 	}
 
