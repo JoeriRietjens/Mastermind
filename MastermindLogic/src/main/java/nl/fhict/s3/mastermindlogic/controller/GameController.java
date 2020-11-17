@@ -25,8 +25,8 @@ public class GameController {
         return game.getPlayers()[playerId].getBoard().checkRow(row);
     }
 
-    @PostMapping("/code/submit")
-    public EPinColour[] submitCode(@RequestBody EPinColour[] code, int playerId){
+    @PostMapping("/code/submit/{id}")
+    public EPinColour[] submitCode(@RequestBody EPinColour[] code, @PathVariable("id") int playerId){
         return game.getPlayers()[playerId].getBoard().createCode(code);
     }
     
