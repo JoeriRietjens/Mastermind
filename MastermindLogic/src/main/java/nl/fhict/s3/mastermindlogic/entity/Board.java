@@ -33,10 +33,10 @@ public class Board implements IBoard {
 
     @Override
     public Row checkRow(Row rowToCheck) {
-        EClueColour clues[] = new EClueColour[4];
+        EClueColour[] clues = new EClueColour[4];
         clues = getClues(rowToCheck.code);
         for (int i = 0; i < clues.length; i++) {
-            rowToCheck.clues[i].seteClueColour(clues[i]);
+            rowToCheck.clues[i] = clues[i];
         }
         return rowToCheck;
     }
@@ -62,7 +62,7 @@ public class Board implements IBoard {
                 input[i] = null;
                 continue;
             }
-            clues[i] = EClueColour.BLANK;
+            clues[i] = EClueColour.GREY;
         }
         return clues;
     }

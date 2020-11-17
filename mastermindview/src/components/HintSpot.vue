@@ -1,12 +1,13 @@
 <template>
     <div>
-      <span class="hint"></span>
+      <span class="hint" :id="HintId"></span>
     </div>
 </template>
 
 <script>
 export default {
     name: 'HintSpot',
+    props: ['HintId'],
     data() {
       return {
         Color: 'grey',
