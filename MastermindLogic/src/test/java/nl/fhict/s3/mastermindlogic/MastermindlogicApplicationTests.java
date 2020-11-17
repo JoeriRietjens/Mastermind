@@ -178,4 +178,5 @@ class MastermindlogicApplicationTests {
 
 		assertArrayEquals(ExpectColour,player1.board.code);
 	}
+
 }
