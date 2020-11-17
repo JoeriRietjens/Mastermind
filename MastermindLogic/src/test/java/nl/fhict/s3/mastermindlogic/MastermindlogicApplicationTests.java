@@ -26,6 +26,7 @@ class MastermindlogicApplicationTests {
 		board1.createCode(codeExpected);
 
 		Colour[] codeActual = board1.code;
+
 		assertArrayEquals(codeExpected, codeActual);
 	}
 
@@ -40,6 +41,7 @@ class MastermindlogicApplicationTests {
 
 
 		Colour[] correctColorCode={new Colour(EPinColour.RED),new Colour( EPinColour.YELLOW),new Colour(EPinColour.GREEN),new Colour( EPinColour.BlUE)};
+
 		assertArrayEquals(board1.code,correctColorCode);
 
 	}
@@ -67,6 +69,7 @@ class MastermindlogicApplicationTests {
 
 		clues= player1.board.getClues(inPutPlayer2);
 		EClueColour[] cluesExpect=new EClueColour[]{EClueColour.BLACK,EClueColour.WHITE,EClueColour.WHITE,EClueColour.BLANK};
+
 		assertArrayEquals(cluesExpect,clues);
 
 	}
@@ -160,6 +163,7 @@ class MastermindlogicApplicationTests {
 		Colour[] input=new Colour[]{new Colour(EPinColour.GREEN),new Colour(EPinColour.PURPLE),new Colour(EPinColour.GREEN),new Colour(EPinColour.BlUE)};
 		EClueColour[] cluesExpect=new EClueColour[]{EClueColour.BLANK,EClueColour.BLANK,EClueColour.BLACK,EClueColour.WHITE};
 		clues= player1.board.getClues(input);
+
 		assertArrayEquals(cluesExpect,clues);
 	}
 
@@ -195,6 +199,7 @@ class MastermindlogicApplicationTests {
 	void testFourEntitiesColorCode_ShouldReturnEqual() {
 		Colour[] code = {new Colour(EPinColour.BlUE), new Colour(EPinColour.YELLOW), new Colour(EPinColour.GREEN), new Colour(EPinColour.ORANGE)};
 		Board board = new Board(1, code);
+
 		int expected = 4;
 		int actual = code.length;
 
@@ -222,6 +227,10 @@ class MastermindlogicApplicationTests {
 
 		assertEquals(expected, actual);
 	}
+	@Test
+	void TestPlayerRegister()
+	{
 
+	}
 
 }
