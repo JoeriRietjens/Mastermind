@@ -22,12 +22,12 @@ public class GameController {
 
     @PostMapping("/guess/submit/{id}")
     public Row submitGuess(@RequestBody Row row, @PathVariable("id") int playerId) {
-        return game.players[playerId].board.checkRow(row);
+        return game.getPlayers()[playerId].getBoard().checkRow(row);
     }
 
     @PostMapping("/code/submit")
     public EPinColour[] submitCode(@RequestBody EPinColour[] code, int playerId){
-        return game.players[playerId].board.createCode(code);
+        return game.getPlayers()[playerId].getBoard().createCode(code);
     }
     
     @GetMapping("/emptyrow")
@@ -37,7 +37,7 @@ public class GameController {
 
     @GetMapping("/board/{id}")
     public Board getBoard(@PathVariable int id) {
-        return game.players[id].board;
+        return game.getPlayers()[id].getBoard();
     }
 
 
