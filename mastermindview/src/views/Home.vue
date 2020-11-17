@@ -1,15 +1,12 @@
 <template>
   <div class="home">
-
-    {{Row.id}}
-    {{Row.code}}
     <h2> Your own board </h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
-    <button v-on:click="PostGuess" class="myButton">Confirm guess</button>
     <button v-on:click="SubmitCode" class="myButton">Confirm code</button>
+    <button v-on:click="PostGuess" class="myButton">Confirm guess</button>
     <h2> Your opponents board </h2>
-    <OpponentBoard v-on:CreateCode="CreateCode" class="board" BoardId="OpponentBoard"></OpponentBoard>
+    <OpponentBoard v-on:SelectCodeSpot="SelectCodeSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
   </div>
 </template>
 
@@ -41,11 +38,14 @@ export default {
     ChangeColor(color){
       this.SelectedSpot.$data.Color = color;
     },
-    CreateCode(SelectSpot) {
-      this.SelectedSpot = SelectSpot;
+    SelectCodeSpot(SelectCodeSpot) {
+      this.SelectedSpot = SelectCodeSpot;
     },
     SubmitCode() {
-      axios.post('http://localhost:8080/code/submit', Colors)
+      var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
+      var colors = [ 
+        Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color ];
+      axios.post('http://localhost:8080/code/submit', colors).then().catch(error => console.log(error));
     },
     PostGuess(){
       console.log("Guess confirmed");
