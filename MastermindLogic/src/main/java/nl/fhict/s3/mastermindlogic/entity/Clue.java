@@ -1,16 +1,34 @@
 package nl.fhict.s3.mastermindlogic.entity;
 
-public class Clue {
+import java.io.Serializable;
+
+public class Clue  {
 
     private final int id;
-    public final EClueColour eClueColour;
+    private EClueColour eClueColour;
+
+
+    public Clue(int id, EClueColour eClueColour) {
+        this.id = id;
+        seteClueColour(eClueColour);
+    }
+
+    public Clue() {
+        this.id = 0;
+    }
 
     public int getId() {
         return id;
     }
 
-    public Clue(int id, EClueColour eClueColour) {
-        this.id = id;
+    public EClueColour geteClueColour() {
+        return eClueColour;
+    }
+
+    protected void seteClueColour(nl.fhict.s3.mastermindlogic.entity.EClueColour eClueColour) {
         this.eClueColour = eClueColour;
     }
+
+
+
 }
