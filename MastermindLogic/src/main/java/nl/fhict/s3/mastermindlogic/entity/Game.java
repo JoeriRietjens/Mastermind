@@ -19,6 +19,10 @@ public class Game {
 
     public Game() {
         this.id = 0;
+        Player player1 = new Player(0);
+        Player player2 = new Player(1);
+        players[0] = player1;
+        players[1] = player2;
     }
     public Game(int id) {
         this.id = id;
