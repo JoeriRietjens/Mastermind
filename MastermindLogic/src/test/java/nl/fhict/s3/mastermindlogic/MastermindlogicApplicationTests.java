@@ -64,7 +64,7 @@ class MastermindlogicApplicationTests {
 				EPinColour.YELLOW,
 				EPinColour.PURPLE};
 
-		EClueColour[] clues= player1.board.getClues(inPutPlayer2);
+		EClueColour[] clues= player1.getBoard().getClues(inPutPlayer2);
 		EClueColour[] cluesExpect=new EClueColour[]{EClueColour.BLACK,EClueColour.WHITE,EClueColour.WHITE,EClueColour.BLANK};
 
 		assertArrayEquals(cluesExpect,clues);
@@ -86,7 +86,7 @@ class MastermindlogicApplicationTests {
 		EPinColour[] inPutPlayer2 = { EPinColour.RED, EPinColour.YELLOW,
 				EPinColour.LIME, EPinColour.BLUE };
 
-		clues = player1.board.getClues(inPutPlayer2);
+		clues = player1.getBoard().getClues(inPutPlayer2);
 		EClueColour[] cluesExpect = new EClueColour[] { EClueColour.BLACK, EClueColour.BLACK, EClueColour.BLACK,
 				EClueColour.BLACK };
 		assertArrayEquals(cluesExpect, clues, "ERROR COLOURS ARE NOT RIGHT");
@@ -108,7 +108,7 @@ class MastermindlogicApplicationTests {
 		EClueColour[] cluesExpect = new EClueColour[] { EClueColour.BLACK, EClueColour.BLACK, EClueColour.BLANK,
 				EClueColour.BLANK };
 
-		clues = player1.board.getClues(input);
+		clues = player1.getBoard().getClues(input);
 		assertArrayEquals(cluesExpect, clues);
 	}
 
@@ -127,7 +127,7 @@ class MastermindlogicApplicationTests {
 		EClueColour[] cluesExpect = new EClueColour[] { EClueColour.BLACK, EClueColour.BLANK, EClueColour.BLANK,
 				EClueColour.BLANK };
 
-		clues = player1.board.getClues(input);
+		clues = player1.getBoard().getClues(input);
 		assertArrayEquals(cluesExpect, clues);
 	}
 
@@ -146,7 +146,7 @@ class MastermindlogicApplicationTests {
 		EClueColour[] cluesExpect = new EClueColour[] { EClueColour.BLACK, EClueColour.BLACK, EClueColour.BLACK,
 				EClueColour.BLANK };
 
-		clues = player1.board.getClues(input);
+		clues = player1.getBoard().getClues(input);
 		assertArrayEquals(cluesExpect, clues);
 	}
 
@@ -161,7 +161,7 @@ class MastermindlogicApplicationTests {
 		EPinColour[] input = new EPinColour[] { EPinColour.LIME, EPinColour.PURPLE, EPinColour.LIME, EPinColour.BLUE };
 		EClueColour[] cluesExpect = new EClueColour[] { EClueColour.BLANK, EClueColour.BLANK, EClueColour.BLACK,
 				EClueColour.WHITE };
-		clues = player1.board.getClues(input);
+		clues = player1.getBoard().getClues(input);
 
 		assertArrayEquals(cluesExpect, clues);
 	}
@@ -176,7 +176,7 @@ class MastermindlogicApplicationTests {
 		EPinColour[] ExpectColour = new EPinColour[] { EPinColour.RED, EPinColour.YELLOW,
 				EPinColour.LIME, EPinColour.BLUE};
 
-		assertArrayEquals(ExpectColour,player1.board.code);
+		assertArrayEquals(ExpectColour,player1.getBoard().code);
 	}
 
 
