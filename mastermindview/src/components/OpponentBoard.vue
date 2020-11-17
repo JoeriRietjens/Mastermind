@@ -1,6 +1,6 @@
 <template>
     <div class="board" :id="BoardId">
-        <Code v-on:SelectCodeSpot="CreateCode" class="row" RowId="code"></Code>
+        <Code v-on:SelectCodeSpot="SelectCodeSpot" class="row" RowId="code"></Code>
         <BoardRow class="row" RowId="RowOne"></BoardRow>
         <BoardRow class="row" RowId="RowOne"></BoardRow>
         <BoardRow class="row" RowId="RowOne"></BoardRow>
@@ -28,15 +28,15 @@ export default {
     methods: {
         SelectSpot() {
             this.$emit("SelectSpot", null);
+        },
+        SelectCodeSpot(SelectCodeSpot) {
+            this.$emit("SelectCodeSpot", SelectCodeSpot)
         }
     },
     created: function () {
         this.$store.commit('setOpponentBoard', {state: this.$store.state, board: this})
         
     },
-    CreateCode(SelectCodeSpot) {
-            this.$emit("CreateCode", SelectCodeSpot)
-        }
 }
 </script>
 
