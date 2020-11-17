@@ -44,8 +44,9 @@ export default {
     SubmitCode() {
       var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
       var colors = [ 
-        Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color];
+      Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color];
       axios.post('http://localhost:8080/code/submit', colors).then().catch(error => console.log(error));
+
     },
     PostGuess(){
       console.log("Guess confirmed");
@@ -62,9 +63,18 @@ export default {
       this.Row.code = colors;
       console.log(this.Row.code);
       axios.post('http://localhost:8080/guess/submit/1/', this.Row)
-        .then()
+        .then(response => this.ChangeClues(response.data))
         .catch(error => console.log(error));
-      
+    },
+    ChangeClues(response){
+      this.Row = response;
+      console.log(response);
+      var Row = this.$children[0].$children.find(child => {return child.RowId == this.currentRow});
+      Row.$children[4].Color = this.Row.clues[0];
+      Row.$children[5].Color = this.Row.clues[1];
+      Row.$children[6].Color = this.Row.clues[2];
+      Row.$children[7].Color = this.Row.clues[3];
+
       this.setNextRow();
     },
     setNextRow(){
