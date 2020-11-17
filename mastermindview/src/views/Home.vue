@@ -1,5 +1,8 @@
 <template>
   <div class="home">
+
+    {{Row.id}}
+    {{Row.code}}
     <h2> Your own board </h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
@@ -27,6 +30,7 @@ export default {
     return {
       SelectedSpot: null,
       currentRow: 'RowOne',
+      Row: {id: 10, code: [null, null, null, null], clues: [null, null, null, null]},
     }
   },
   methods: {
@@ -38,30 +42,22 @@ export default {
     },
     CreateCode(SelectSpot) {
       this.SelectedSpot = SelectSpot;
-      
     },
     PostGuess(){
-      console.log("Guess confirmed")
-      //postcall
-      //document.querySelector('#' + this.currentRow);
-      // row:{
-      //   document.querySelector('#' + this.currentRow).querySelector('#SpotOne').Color,
-      //   document.querySelector('#' + this.currentRow).querySelector('#SpotTwo').Color,
-      //   document.querySelector('#' + this.currentRow).querySelector('#SpotThree').Color,
-      //   document.querySelector('#' + this.currentRow).querySelector('#SpotFour').Color;
-      // }
-      // console.log(row);
-      // console.log(document.querySelector('#' + this.currentRow).querySelector('#SpotOne').Color);
+      console.log("Guess confirmed");
+      axios.get('http://localhost:8080/emptyrow/').then( response => this.SubmitGuess(response.data)).catch(error => console.log(error));
+      console.log(this.Row.id);
       
+    },
+    SubmitGuess(response){
+      console.log(response);
+      this.Row = response;
       var Row = this.$children[0].$children.find(child => {return child.RowId == this.currentRow});
       var colors = [ 
         Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color ];
-      console.log(colors);
-      var row = 'bleh';
-      axios.get('http://localhost:8080/emptyrow/').then(response => this.row = response.data).catch(error => console.log(error));
-      
-      console.log(row);
-      axios.post('http://localhost:8080/guess/submit/', [colors, 1])
+      this.Row.code = colors;
+      console.log(this.Row.code);
+      axios.post('http://localhost:8080/guess/submit/1/', this.Row)
         .then()
         .catch(error => console.log(error));
       
