@@ -179,12 +179,4 @@ class MastermindlogicApplicationTests {
 		assertArrayEquals(ExpectColour,player1.board.code);
 	}
 
-	@Test
-	void TestPlayerRegister()
-	{
-
-		assertTrue(true);
-	}
-
-
 }
