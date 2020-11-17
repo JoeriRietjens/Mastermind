@@ -173,8 +173,8 @@ class MastermindlogicApplicationTests {
 				new EPinColour[] { EPinColour.RED, EPinColour.YELLOW, EPinColour.LIME, EPinColour.BLUE });
 		Player player1 = new Player(1, "JohnDoe", "secret", board1);
 
-		Colour[] ExpectColour = new Colour[] { new Colour(EPinColour.RED), new Colour(EPinColour.YELLOW),
-				new Colour(EPinColour.LIME), new Colour(EPinColour.BLUE) };
+		EPinColour[] ExpectColour = new EPinColour[] { EPinColour.RED, EPinColour.YELLOW,
+				EPinColour.LIME, EPinColour.BLUE};
 
 		assertArrayEquals(ExpectColour,player1.board.code);
 	}
