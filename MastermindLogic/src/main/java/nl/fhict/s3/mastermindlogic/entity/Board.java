@@ -25,9 +25,7 @@ public class Board implements IBoard {
     }
 
     public EPinColour[] createCode(EPinColour[] codeCreation) {
-        for (int i = 0; i < codeCreation.length; i++) {
-            code[i] = codeCreation[i];
-        }
+        this.code = codeCreation;
         return code;
     }
 

@@ -15,7 +15,7 @@ export default {
     },
     watch: {
       Color: function() {
-        document.querySelector('#' + this.$parent.$parent.BoardId).querySelector('#' + this.$parent.RowId).querySelector('#' + this.HintId).style.backgroundColor = this.Color;
+        this.$el.querySelector('span').style.backgroundColor = this.Color;
       }
     }
 }

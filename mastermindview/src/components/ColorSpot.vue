@@ -13,7 +13,7 @@ export default {
         selected: false,
       }
     },
-    props: ['SpotId'],
+    props: ['SpotId', 'color', 'Button'],
     methods: {
       SelectSpot() {
         this.selected = true;
@@ -22,26 +22,15 @@ export default {
     },
     watch: {
       Color: function() {
-        console.log(this.$parent.$parent.BoardId);
-        console.log(this.$parent.RowId);
-        console.log(this.SpotId);
-        document.querySelector('#' + this.$parent.$parent.BoardId).querySelector('#' + this.$parent.RowId).querySelector('#' + this.SpotId).style.backgroundColor = this.Color;
+        this.$el.querySelector('span').style.backgroundColor = this.Color;
       }
     },
-    created: function () {
-        this.$store.commit('addColorSpot', {state: this.$store.state, colorspot: this})
+    mounted: function () {
+      this.Color = this.$props.color;
     }
 }
 </script>
 
 <style scoped>
-.dot {
-  height: 40px;
-  width: 40px;
-  background-color: grey;
-  border-radius: 50%;
-  display: inline-block;
-  border: groove;
-}
 
 </style>
