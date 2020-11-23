@@ -62,7 +62,7 @@ public class Board implements IBoard {
                 input[i] = null;
                 continue;
             }
-            clues[i] = EClueColour.GREY;
+            clues[i] = EClueColour.LIGHTGREY;
         }
         return clues;
     }
@@ -92,5 +92,9 @@ public class Board implements IBoard {
             System.out.println("Colour: " + code[i]);
             System.out.println("Index: " + i + " Clue: " + clues[i]);
         }
+    }
+
+    public void setCode(EPinColour[] code) {
+        this.code = code;
     }
 }
