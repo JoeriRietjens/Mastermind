@@ -25,7 +25,7 @@ export default {
 .hint {
   height: 10px;
   width: 10px;
-  background-color: lightgrey;
+  background-color: GREY;
   border-radius: 50%;
   display: inline-block;
   border: groove;

@@ -118,6 +118,7 @@ export default {
 <style scoped>
 .board {
   margin: 10px;
+  background-color: darkgrey;
 }
 
 .myButton {

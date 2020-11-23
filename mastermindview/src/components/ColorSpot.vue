@@ -38,7 +38,7 @@ export default {
 .dot {
   height: 40px;
   width: 40px;
-  background-color: lightgrey;
+  background-color: grey;
   border-radius: 50%;
   display: inline-block;
   border: groove;

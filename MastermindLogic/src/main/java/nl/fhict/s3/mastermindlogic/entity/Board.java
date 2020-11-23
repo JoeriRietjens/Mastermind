@@ -62,7 +62,7 @@ public class Board implements IBoard {
                 input[i] = null;
                 continue;
             }
-            clues[i] = EClueColour.LIGHTGREY;
+            clues[i] = EClueColour.GREY;
         }
         return clues;
     }
