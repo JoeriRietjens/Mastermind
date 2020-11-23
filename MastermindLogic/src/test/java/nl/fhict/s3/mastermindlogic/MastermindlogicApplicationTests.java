@@ -65,7 +65,7 @@ class MastermindlogicApplicationTests {
 				EPinColour.BLACK};
 
 		EClueColour[] clues= player1.getBoard().getClues(inPutPlayer2);
-		EClueColour[] cluesExpect=new EClueColour[]{EClueColour.BLACK,EClueColour.WHITE,EClueColour.WHITE,EClueColour.GREY};
+		EClueColour[] cluesExpect=new EClueColour[]{EClueColour.BLACK,EClueColour.WHITE,EClueColour.WHITE,EClueColour.LIGHTGREY};
 
 		assertArrayEquals(cluesExpect,clues);
 
@@ -105,8 +105,8 @@ class MastermindlogicApplicationTests {
 
 		EPinColour[] input = new EPinColour[] { EPinColour.BLUE, EPinColour.BLUE,
 				EPinColour.BLUE, EPinColour.BLUE};
-		EClueColour[] cluesExpect = new EClueColour[] { EClueColour.BLACK, EClueColour.BLACK, EClueColour.GREY,
-				EClueColour.GREY};
+		EClueColour[] cluesExpect = new EClueColour[] { EClueColour.BLACK, EClueColour.BLACK, EClueColour.LIGHTGREY,
+				EClueColour.LIGHTGREY};
 
 		clues = player1.getBoard().getClues(input);
 		assertArrayEquals(cluesExpect, clues);
@@ -124,8 +124,8 @@ class MastermindlogicApplicationTests {
 
 		EPinColour[] input = new EPinColour[] { EPinColour.BLUE, EPinColour.BLUE,
 				EPinColour.BLUE, EPinColour.BLUE};
-		EClueColour[] cluesExpect = new EClueColour[] { EClueColour.BLACK, EClueColour.GREY, EClueColour.GREY,
-				EClueColour.GREY};
+		EClueColour[] cluesExpect = new EClueColour[] { EClueColour.BLACK, EClueColour.LIGHTGREY, EClueColour.LIGHTGREY,
+				EClueColour.LIGHTGREY};
 
 		clues = player1.getBoard().getClues(input);
 		assertArrayEquals(cluesExpect, clues);
@@ -144,7 +144,7 @@ class MastermindlogicApplicationTests {
 		EPinColour[] input = new EPinColour[] { EPinColour.BLUE, EPinColour.BLUE,
 				EPinColour.BLUE, EPinColour.BLUE};
 		EClueColour[] cluesExpect = new EClueColour[] { EClueColour.BLACK, EClueColour.BLACK, EClueColour.BLACK,
-				EClueColour.GREY};
+				EClueColour.LIGHTGREY};
 
 		clues = player1.getBoard().getClues(input);
 		assertArrayEquals(cluesExpect, clues);
@@ -159,8 +159,8 @@ class MastermindlogicApplicationTests {
 
 		EClueColour[] clues = new EClueColour[4];
 		EPinColour[] input = new EPinColour[] { EPinColour.LIME, EPinColour.BLACK, EPinColour.LIME, EPinColour.BLUE };
-		EClueColour[] cluesExpect = new EClueColour[] { EClueColour.GREY, EClueColour.GREY, EClueColour.BLACK,
-				EClueColour.WHITE };
+		EClueColour[] cluesExpect = new EClueColour[] { EClueColour.LIGHTGREY, EClueColour.LIGHTGREY, EClueColour.BLACK,
+				EClueColour.WHITE};
 		clues = player1.getBoard().getClues(input);
 
 		assertArrayEquals(cluesExpect, clues);
