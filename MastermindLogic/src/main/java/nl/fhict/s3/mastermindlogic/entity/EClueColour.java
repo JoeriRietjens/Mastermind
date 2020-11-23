@@ -5,7 +5,7 @@ package nl.fhict.s3.mastermindlogic.entity;
 //BLack is Correct As well om the correct place
 
 public enum EClueColour {
-    LIGHTGREY,
+    GREY,
     WHITE,
     BLACK
 }

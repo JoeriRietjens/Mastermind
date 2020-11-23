@@ -45,7 +45,7 @@ export default {
       var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
       var colors = [ 
       Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color];
-      axios.post('http://localhost:8080/code/submit', colors).then().catch(error => console.log(error));
+      axios.post('http://localhost:8080/code/submit/0/', colors).then().catch(error => console.log(error));
 
     },
     PostGuess(){
@@ -115,9 +115,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .board {
   margin: 10px;
+  background-color: darkgrey;
 }
 
 .myButton {
@@ -136,16 +137,16 @@ export default {
 	text-decoration:none;
 	text-shadow:0px 1px 0px #ffffff;
 }
+
 .myButton:hover {
 	background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
 	background-color:#f6f6f6;
 }
+
 .myButton:active {
 	position:relative;
 	top:1px;
 }
-
-        
 
 .homeElements {
   position: relative;
@@ -172,5 +173,22 @@ export default {
 
 #code {
     top: -20px;
+}
+
+.dot {
+  height: 40px;
+  width: 40px;
+  background-color: lightgrey;
+  border-radius: 50%;
+  display: inline-block;
+  border: groove;
+}
+
+.colorSpot .dot{  
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  display: inline-block;
+  border: groove;
 }
 </style>

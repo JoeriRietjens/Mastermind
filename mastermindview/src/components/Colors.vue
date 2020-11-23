@@ -1,42 +1,30 @@
 <template>
     <div>
-        <ColorSpotGreen class="colorSpot" id="green" v-on:SetColor="SelectColor"/>
-        <ColorSpotYellow class="colorSpot" id="yellow" v-on:SetColor="SelectColor"/>
-        <ColorSpotBlue class="colorSpot" id="blue" v-on:SetColor="SelectColor"/>
-        <ColorSpotRed class="colorSpot" id="red" v-on:SetColor="SelectColor"/>
-        <ColorSpotWhite class="colorSpot" id="white" v-on:SetColor="SelectColor"/>
-        <ColorSpotBlack class="colorSpot" id="black" v-on:SetColor="SelectColor"/>
+        <ColorSpot class="colorSpot" color='LIME' SpotId="Lime" Button='true' v-on:SelectSpot="SelectColor"/>
+        <ColorSpot class="colorSpot" color='YELLOW' SpotId="Yellow" Button='true' v-on:SelectSpot="SelectColor"/>
+        <ColorSpot class="colorSpot" color='BLUE' SpotId="Blue" Button='true' v-on:SelectSpot="SelectColor"/>
+        <ColorSpot class="colorSpot" color='RED' SpotId="Red" Button='true' v-on:SelectSpot="SelectColor"/>
+        <ColorSpot class="colorSpot" color='WHITE' SpotId="White" Button=true v-on:SelectSpot="SelectColor"/>
+        <ColorSpot class="colorSpot" color='BLACK' SpotId="Black" Button=true v-on:SelectSpot="SelectColor"/>
     </div>
 </template>
 
 <script>
-import ColorSpotGreen from '@/components/ColorSpotGreen.vue';
-import ColorSpotYellow from '@/components/ColorSpotYellow.vue';
-import ColorSpotBlue from '@/components/ColorSpotBlue.vue';
-import ColorSpotRed from '@/components/ColorSpotRed.vue';
-import ColorSpotWhite from '@/components/ColorSpotWhite.vue';
-import ColorSpotBlack from '@/components/ColorSpotBlack.vue';
+import ColorSpot from '@/components/ColorSpot.vue';
 
 
 export default {
     name: 'Colors',
     components: {
-        ColorSpotRed,
-        ColorSpotYellow,
-        ColorSpotGreen,
-        ColorSpotBlue,
-        ColorSpotWhite,
-        ColorSpotBlack,
+        ColorSpot,
     },
     data() {
         return {
-            SelectedColor: null,
         }
     },
     methods: {
-        SelectColor(color) {
-            this.SelectedColor = color;
-            this.$emit("SetColor", color);
+        SelectColor(spot) {
+            this.$emit("SetColor", spot.$data.Color);
         }
     }
 }
@@ -46,6 +34,4 @@ export default {
 .colorSpot {  
     display: inline-block;
 }
-
-
 </style>

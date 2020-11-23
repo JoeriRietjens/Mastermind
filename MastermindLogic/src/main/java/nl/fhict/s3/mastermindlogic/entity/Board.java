@@ -25,9 +25,7 @@ public class Board implements IBoard {
     }
 
     public EPinColour[] createCode(EPinColour[] codeCreation) {
-        for (int i = 0; i < codeCreation.length; i++) {
-            code[i] = codeCreation[i];
-        }
+        this.code = codeCreation;
         return code;
     }
 
@@ -62,7 +60,7 @@ public class Board implements IBoard {
                 input[i] = null;
                 continue;
             }
-            clues[i] = EClueColour.LIGHTGREY;
+            clues[i] = EClueColour.GREY;
         }
         return clues;
     }
