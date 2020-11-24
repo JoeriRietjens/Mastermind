@@ -1,7 +1,7 @@
 package nl.fhict.s3.mastermindlogic.entity;
 
 public enum EPinColour {
-    GREY,
+    LIGHTGREY,
     RED,
     WHITE,
     YELLOW,

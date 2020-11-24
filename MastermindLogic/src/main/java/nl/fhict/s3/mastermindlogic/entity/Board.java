@@ -25,9 +25,7 @@ public class Board implements IBoard {
     }
 
     public EPinColour[] createCode(EPinColour[] codeCreation) {
-        for (int i = 0; i < codeCreation.length; i++) {
-            code[i] = codeCreation[i];
-        }
+        this.code = codeCreation;
         return code;
     }
 
@@ -92,5 +90,9 @@ public class Board implements IBoard {
             System.out.println("Colour: " + code[i]);
             System.out.println("Index: " + i + " Clue: " + clues[i]);
         }
+    }
+
+    public void setCode(EPinColour[] code) {
+        this.code = code;
     }
 }

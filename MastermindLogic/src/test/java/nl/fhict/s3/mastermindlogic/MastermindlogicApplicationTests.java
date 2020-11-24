@@ -160,7 +160,7 @@ class MastermindlogicApplicationTests {
 		EClueColour[] clues = new EClueColour[4];
 		EPinColour[] input = new EPinColour[] { EPinColour.LIME, EPinColour.BLACK, EPinColour.LIME, EPinColour.BLUE };
 		EClueColour[] cluesExpect = new EClueColour[] { EClueColour.GREY, EClueColour.GREY, EClueColour.BLACK,
-				EClueColour.WHITE };
+				EClueColour.WHITE};
 		clues = player1.getBoard().getClues(input);
 
 		assertArrayEquals(cluesExpect, clues);

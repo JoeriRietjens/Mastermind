@@ -15,7 +15,7 @@ export default {
     },
     watch: {
       Color: function() {
-        document.querySelector('#' + this.$parent.$parent.BoardId).querySelector('#' + this.$parent.RowId).querySelector('#' + this.HintId).style.backgroundColor = this.Color;
+        this.$el.querySelector('span').style.backgroundColor = this.Color;
       }
     }
 }
@@ -25,11 +25,13 @@ export default {
 .hint {
   height: 10px;
   width: 10px;
-  background-color: #bbb;
+  background-color: rgb(70, 7, 7);
   border-radius: 50%;
   display: inline-block;
-  border: groove;
+  position: relative;
+  left: -2px;
+  margin-left: 4px;
+  border: 1px groove rgb(10, 5, 5);
+  box-shadow: inset 0px 0px 2px black;
 }
-
-
 </style>

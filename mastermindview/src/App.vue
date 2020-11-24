@@ -19,6 +19,7 @@
 
 #nav {
   padding: 30px;
+  display: none; /* REMOVE THIS TO SHOW NAVIGATION */ 
 }
 
 #nav a {
