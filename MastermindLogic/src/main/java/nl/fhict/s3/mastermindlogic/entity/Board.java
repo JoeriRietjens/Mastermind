@@ -33,9 +33,13 @@ public class Board implements IBoard {
     public Row checkRow(Row rowToCheck) {
         EClueColour[] clues = new EClueColour[4];
         clues = getClues(rowToCheck.code);
-        for (int i = 0; i < clues.length; i++) {
-            rowToCheck.clues[i] = clues[i];
+
+        if(!(rowToCheck.isEmpty())){
+            for (int i = 0; i < clues.length; i++) {
+                rowToCheck.clues[i] = clues[i];
+            }
         }
+
         return rowToCheck;
     }
 
