@@ -1,12 +1,11 @@
 package nl.fhict.s3.mastermindlogic.entity;
 
-import java.io.Serializable;
 
 public class Row  {
 
     private final int id;
-    public EPinColour[] code = new EPinColour[4];
-    public EClueColour[] clues = new EClueColour[4];
+    public static EPinColour[] code = new EPinColour[4];
+    public static EClueColour[] clues = new EClueColour[4];
 
     public int getId() {
         return id;
@@ -26,7 +25,7 @@ public class Row  {
     }
 
     public void setCode(EPinColour[] code) {
-        this.code = code;
+        Row.code = code;
     }
 
     public EClueColour[] getClues() {
@@ -34,6 +33,6 @@ public class Row  {
     }
 
     public void setClues(EClueColour[] clues) {
-        this.clues = clues;
+        Row.clues = clues;
     }
 }

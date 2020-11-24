@@ -4,8 +4,8 @@ public class Board implements IBoard {
 
     private final int id;
 
-    public EPinColour[] code = new EPinColour[4];
-    public Row[] rows = new Row[10];
+    public static EPinColour[] code = new EPinColour[4];
+    public static final Row[] rows = new Row[10];
 
     public int getId() {
         return id;
@@ -13,7 +13,7 @@ public class Board implements IBoard {
 
     public Board(int id, EPinColour[] code) {
         this.id = id;
-        this.code = code;
+        Board.code = code;
     }
 
     public Board() {
@@ -25,7 +25,7 @@ public class Board implements IBoard {
     }
 
     public EPinColour[] createCode(EPinColour[] codeCreation) {
-        this.code = codeCreation;
+        code = codeCreation;
         return code;
     }
 
@@ -33,9 +33,7 @@ public class Board implements IBoard {
     public Row checkRow(Row rowToCheck) {
         EClueColour[] clues = new EClueColour[4];
         clues = getClues(rowToCheck.code);
-        for (int i = 0; i < clues.length; i++) {
-            rowToCheck.clues[i] = clues[i];
-        }
+        System.arraycopy(clues, 0, rowToCheck.clues, 0, clues.length);
         return rowToCheck;
     }
 
@@ -93,6 +91,6 @@ public class Board implements IBoard {
     }
 
     public void setCode(EPinColour[] code) {
-        this.code = code;
+        Board.code = code;
     }
 }
