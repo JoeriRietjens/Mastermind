@@ -31,7 +31,7 @@ public class Board implements IBoard {
 
     @Override
     public Row checkRow(Row rowToCheck) {
-        if(rowToCheck.isEmpty()){
+        if(rowToCheck.isNotCompletelyFilled()){
             return null;
         }
 
