@@ -37,14 +37,13 @@ public class Row  {
         this.clues = clues;
     }
 
-    public boolean isEmpty() {
+    public boolean isNotCompletelyFilled() {
 
         for(EPinColour pin : code) {
-            if(pin != null) {
+            if(pin == null) {
                 return true;
             }
         }
-        
         return false;
     }
 }
