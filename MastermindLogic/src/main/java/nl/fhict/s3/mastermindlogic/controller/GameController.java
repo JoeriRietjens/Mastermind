@@ -15,7 +15,7 @@ public class GameController {
         game = new Game();
     }
 
-    @RequestMapping("/")
+    @GetMapping("/")
     public String index() {
         return "Greetings from Joeri & Bram";
     }
