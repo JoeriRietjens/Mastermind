@@ -4,7 +4,7 @@
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
     <button v-on:click="SubmitCode" class="myButton">Confirm code</button>
-    <button v-on:click="PostGuess" class="myButton">Confirm guess</button>
+    <button v-on:click="SubmitGuess" class="myButton">Confirm guess</button>
     <h2 class="boardTitle"> Your opponents board </h2>
     <OpponentBoard v-on:SelectCodeSpot="SelectCodeSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
   </div>
