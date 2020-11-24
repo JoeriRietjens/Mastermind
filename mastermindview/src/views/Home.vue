@@ -1,11 +1,11 @@
 <template>
   <div class="home">
-    <h2> Your own board </h2>
+    <h2 class="boardTitle"> Your own board </h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
     <button v-on:click="SubmitCode" class="myButton">Confirm code</button>
-    <button v-on:click="PostGuess" class="myButton">Confirm guess</button>
-    <h2> Your opponents board </h2>
+    <button v-on:click="SubmitGuess" class="myButton">Confirm guess</button>
+    <h2 class="boardTitle"> Your opponents board </h2>
     <OpponentBoard v-on:SelectCodeSpot="SelectCodeSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
   </div>
 </template>
@@ -70,10 +70,18 @@ export default {
       this.Row = response;
       console.log(response);
       var Row = this.$children[0].$children.find(child => {return child.RowId == this.currentRow});
-      Row.$children[4].Color = this.Row.clues[0];
-      Row.$children[5].Color = this.Row.clues[1];
-      Row.$children[6].Color = this.Row.clues[2];
-      Row.$children[7].Color = this.Row.clues[3];
+      if(this.Row.clues[0] != 'BLANK') {
+        Row.$children[4].Color = this.Row.clues[0];
+      }
+      if(this.Row.clues[1] != 'BLANK') {
+        Row.$children[5].Color = this.Row.clues[1]; 
+      }
+      if(this.Row.clues[2] != 'BLANK') {
+        Row.$children[6].Color = this.Row.clues[2];
+      }
+      if(this.Row.clues[3] != 'BLANK') {
+        Row.$children[7].Color = this.Row.clues[3];
+      }
 
       this.setNextRow();
     },
@@ -118,29 +126,38 @@ export default {
 <style>
 .board {
   margin: 10px;
-  background-color: darkgrey;
+  padding: 5px;
+  box-shadow: -5px 5px 10px black;
+  border: 0px solid black;
+  border-radius: 15px;
+  background-color: rgb(82, 11, 11);
+}
+
+.boardTitle {
+  color: white;
 }
 
 .myButton {
-	box-shadow:inset 0px 1px 0px 0px #ffffff;
-	background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
-	background-color:	#888888;
+	background-color:	rgb(82, 11, 11);
 	border-radius:6px;
-	border:1px solid #dcdcdc;
+	border:1px solid black;
 	display:inline-block;
 	cursor:pointer;
-	color:#666666;
+	color:white;
 	font-family:Arial;
 	font-size:15px;
 	font-weight:bold;
 	padding:6px 24px;
+  margin-left: 10px;
+  margin-top: 5px;
 	text-decoration:none;
-	text-shadow:0px 1px 0px #ffffff;
+  height: 40px;
+  transition: 0.2s;
 }
 
 .myButton:hover {
-	background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
-	background-color:#f6f6f6;
+	background-color: rgb(60, 5, 5);
+  transition: 0.2s;
 }
 
 .myButton:active {
@@ -178,10 +195,11 @@ export default {
 .dot {
   height: 40px;
   width: 40px;
-  background-color: lightgrey;
+  background-color: rgb(70, 7, 7);
+  box-shadow: inset 0px 0px 2px black;
   border-radius: 50%;
   display: inline-block;
-  border: groove;
+  border: 3px groove rgb(10, 5, 5);
 }
 
 .colorSpot .dot{  
@@ -189,6 +207,8 @@ export default {
   width: 50px;
   border-radius: 50%;
   display: inline-block;
-  border: groove;
+  border: 0px;
+  box-shadow: -2px 2px 5px black;
+  margin: 5px;
 }
 </style>
