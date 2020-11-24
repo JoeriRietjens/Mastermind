@@ -15,7 +15,7 @@ export default {
     },
     watch: {
       Color: function() {
-        document.querySelector('#' + this.$parent.$parent.BoardId).querySelector('#' + this.$parent.RowId).querySelector('#' + this.HintId).style.backgroundColor = this.Color;
+        this.$el.querySelector('span').style.backgroundColor = this.Color;
       }
     }
 }
@@ -25,7 +25,7 @@ export default {
 .hint {
   height: 10px;
   width: 10px;
-  background-color: #bbb;
+  background-color: GREY;
   border-radius: 50%;
   display: inline-block;
   border: groove;
