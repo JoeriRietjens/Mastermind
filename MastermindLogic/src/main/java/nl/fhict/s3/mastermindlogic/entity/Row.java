@@ -36,4 +36,14 @@ public class Row  {
     public void setClues(EClueColour[] clues) {
         this.clues = clues;
     }
+
+    public boolean isEmpty() {
+
+        for(EPinColour pin : code) {
+            if(pin == null) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
