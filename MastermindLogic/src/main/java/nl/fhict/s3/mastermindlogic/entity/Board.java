@@ -15,6 +15,9 @@ public class Board implements IBoard {
         this.id = id;
         this.code = code;
     }
+    public void setCode(EPinColour[] code){
+        this.code = code;
+    }
 
     public Board() {
         id = 0;
