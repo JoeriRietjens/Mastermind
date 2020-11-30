@@ -1,5 +1,9 @@
 package nl.fhict.s3.mastermindlogic.entity;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class Board implements IBoard {
 
     private final int id;
@@ -36,6 +40,9 @@ public class Board implements IBoard {
         }
 
         rowToCheck.clues = getClues(rowToCheck.code);
+        List<EClueColour> cluesList = Arrays.asList(rowToCheck.clues);
+        Collections.sort(cluesList);
+        rowToCheck.clues = cluesList.toArray(new EClueColour[0]);
         return rowToCheck;
     }
 
