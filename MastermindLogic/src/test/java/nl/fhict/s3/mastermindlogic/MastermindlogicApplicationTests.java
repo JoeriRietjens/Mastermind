@@ -25,7 +25,7 @@ class MastermindlogicApplicationTests {
 		board1.createCode(codeExpected);
 
 
-		EPinColour[] codeActual = board1.code;
+		EPinColour[] codeActual = board1.getCode();
 		assertArrayEquals(codeExpected, codeActual);
 	}
 
@@ -41,7 +41,7 @@ class MastermindlogicApplicationTests {
 
 
 		EPinColour[] correctColorCode={EPinColour.RED, EPinColour.YELLOW, EPinColour.LIME, EPinColour.BLUE};
-		assertArrayEquals(board1.code,correctColorCode);
+		assertArrayEquals(board1.getCode(),correctColorCode);
 
 	}
 
@@ -177,7 +177,7 @@ class MastermindlogicApplicationTests {
 		EPinColour[] ExpectColour = new EPinColour[] { EPinColour.RED, EPinColour.YELLOW,
 				EPinColour.LIME, EPinColour.BLUE};
 
-		assertArrayEquals(ExpectColour,player1.getBoard().code);
+		assertArrayEquals(ExpectColour,player1.getBoard().getCode());
 	}
 
 	@Test
@@ -187,7 +187,7 @@ class MastermindlogicApplicationTests {
 			EPinColour.RED, EPinColour.WHITE, EPinColour.BLUE
 		};
 
-		row.setCode(clues);
+		row.setGuess(clues);
 
 		assertTrue(row.isNotCompletelyFilled());
 	}
@@ -199,7 +199,7 @@ class MastermindlogicApplicationTests {
 			EPinColour.RED, EPinColour.WHITE, EPinColour.BLUE, null
 		};
 
-		row.setCode(clues);
+		row.setGuess(clues);
 
 		assertTrue(row.isNotCompletelyFilled());
 	}
@@ -211,7 +211,7 @@ class MastermindlogicApplicationTests {
 			EPinColour.RED, EPinColour.WHITE, EPinColour.BLUE, EPinColour.BLACK
 		};
 
-		row.setCode(clues);
+		row.setGuess(clues);
 
 		assertFalse(row.isNotCompletelyFilled());
 	}
