@@ -40,5 +40,4 @@ public class GameController {
         return game.getPlayers()[id].getBoard();
     }
 
-
 }

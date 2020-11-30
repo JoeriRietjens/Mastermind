@@ -204,7 +204,7 @@ class MastermindLogicApplicationTests {
 	}
 
 	@Test
-	void TestColourChecking() {
+	void testColourChecking() {
 
 		player1.getBoard().setCode(new EPinColour[]{
 				EPinColour.BLUE,
@@ -232,7 +232,7 @@ class MastermindLogicApplicationTests {
 	}
 
 	@Test
-	void TestInputColour() {
+	void testInputColour() {
 
 		player1.getBoard().setCode(new EPinColour[]{
 				EPinColour.RED,
