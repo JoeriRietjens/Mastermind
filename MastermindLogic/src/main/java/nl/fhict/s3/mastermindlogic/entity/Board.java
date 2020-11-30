@@ -8,8 +8,8 @@ public class Board implements IBoard {
 
     private final int id;
 
-    public EPinColour[] code = new EPinColour[4];
-    public final Row[] rows = new Row[10];
+    private EPinColour[] code = new EPinColour[4];
+    private final Row[] rows = new Row[10];
 
     public int getId() {
         return id;
@@ -99,5 +99,13 @@ public class Board implements IBoard {
 
     public void setCode(EPinColour[] code) {
         this.code = code;
+    }
+
+    public EPinColour[] getCode() {
+        return code;
+    }
+
+    public Row[] getRows() {
+        return rows;
     }
 }
