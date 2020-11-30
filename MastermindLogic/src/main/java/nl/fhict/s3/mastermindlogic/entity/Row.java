@@ -38,12 +38,12 @@ public class Row  {
 
     public boolean isNotCompletelyFilled() {
         // See if the code is the correct length, otherwise a length of 3 will still be a 'full' code
-        if (code.length != 4) {
+        if (guess.length != 4) {
             return true;
         }
 
         // check if there are no nulls
-        for(EPinColour pin : code) {
+        for(EPinColour pin : guess) {
             if(pin == null) {
                 return true;
             }
