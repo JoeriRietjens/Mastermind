@@ -82,8 +82,9 @@ export default {
       if(this.Row.clues[3] != 'BLANK') {
         Row.$children[7].Color = this.Row.clues[3];
       }
-
-      this.setNextRow();
+      if(this.Row.clues[0] != null){
+        this.setNextRow();
+      }
     },
     setNextRow(){
       switch (this.currentRow){
