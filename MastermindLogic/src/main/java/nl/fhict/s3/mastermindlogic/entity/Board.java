@@ -39,10 +39,10 @@ public class Board implements IBoard {
             return null;
         }
 
-        rowToCheck.clues = getClues(rowToCheck.code);
-        List<EClueColour> cluesList = Arrays.asList(rowToCheck.clues);
+        rowToCheck.setClues(getClues(rowToCheck.getGuess()));
+        List<EClueColour> cluesList = Arrays.asList(rowToCheck.getClues());
         Collections.sort(cluesList);
-        rowToCheck.setClues() = cluesList.toArray(new EClueColour[0]);
+        rowToCheck.setClues(cluesList.toArray(new EClueColour[0]));
         return rowToCheck;
     }
 

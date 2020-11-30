@@ -187,7 +187,7 @@ class MastermindlogicApplicationTests {
 			EPinColour.RED, EPinColour.WHITE, EPinColour.BLUE
 		};
 
-		row.setCode(clues);
+		row.setGuess(clues);
 
 		assertTrue(row.isNotCompletelyFilled());
 	}
@@ -199,7 +199,7 @@ class MastermindlogicApplicationTests {
 			EPinColour.RED, EPinColour.WHITE, EPinColour.BLUE, null
 		};
 
-		row.setCode(clues);
+		row.setGuess(clues);
 
 		assertTrue(row.isNotCompletelyFilled());
 	}
@@ -211,7 +211,7 @@ class MastermindlogicApplicationTests {
 			EPinColour.RED, EPinColour.WHITE, EPinColour.BLUE, EPinColour.BLACK
 		};
 
-		row.setCode(clues);
+		row.setGuess(clues);
 
 		assertFalse(row.isNotCompletelyFilled());
 	}
