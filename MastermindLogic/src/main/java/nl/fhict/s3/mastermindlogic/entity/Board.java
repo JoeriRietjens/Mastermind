@@ -28,11 +28,6 @@ public class Board implements IBoard {
         this.id = id;
     }
 
-    public EPinColour[] createCode(EPinColour[] codeCreation) {
-        code = codeCreation;
-        return code;
-    }
-
     @Override
     public Row checkRow(Row rowToCheck) {
         if(rowToCheck.isNotCompletelyFilled()){
