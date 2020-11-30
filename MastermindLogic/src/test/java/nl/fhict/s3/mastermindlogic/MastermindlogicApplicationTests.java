@@ -13,19 +13,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 class MastermindlogicApplicationTests {
 
-	private Game game;
 	private Board board1;
-	private Board board2;
 	private Player player1;
 	private Player player2;
+	private EClueColour[] clues;
 
 	@BeforeEach
 	void setup(){
-		game = new Game(1);
 		board1 = new Board(1);
-		board2 = new Board(2);
+		Board board2 = new Board(2);
 		player1 = new Player(1, "JohnDoe","secret",board1);
-		player2 = new Player(2,"JaneDoe","secret",board2);
+		player2 = new Player(2,"JaneDoe","secret", board2);
 	}
 
 	@Test
@@ -35,7 +33,7 @@ class MastermindlogicApplicationTests {
 				EPinColour.YELLOW,
 				EPinColour.LIME,
 				EPinColour.BLUE};
-		board1.createCode(codeExpected);
+		board1.setCode(codeExpected);
 
 		EPinColour[] codeActual = board1.code;
 		assertArrayEquals(codeExpected, codeActual);
@@ -79,8 +77,8 @@ class MastermindlogicApplicationTests {
 				EPinColour.PURPLE
 		};
 
-		EClueColour[] clues = player1.board.getClues(inPutPlayer2);
-		EClueColour[] cluesExpect=new EClueColour[]{EClueColour.BLACK,EClueColour.WHITE,EClueColour.WHITE,EClueColour.BLANK};
+		clues = player1.board.getClues(inPutPlayer2);
+		EClueColour[] cluesExpect = new EClueColour[]{EClueColour.BLACK,EClueColour.WHITE,EClueColour.WHITE,EClueColour.BLANK};
 
 		assertArrayEquals(cluesExpect,clues);
 	}
@@ -88,7 +86,7 @@ class MastermindlogicApplicationTests {
 	@Test
 	void testRightGuessCodeOfOpponent() {
 
-		EClueColour[] clues;
+
 		player1.board.setCode(new EPinColour[]{
 				EPinColour.RED,
 				EPinColour.YELLOW,
@@ -124,7 +122,6 @@ class MastermindlogicApplicationTests {
 	@Test
 	void colorTwoPinsRight() {
 		// only two colors are right on the board. the result is that 2 pins are right.
-		EClueColour[] clues;
 		player1.board.setCode(new EPinColour[]{
 				EPinColour.BLUE,
 				EPinColour.BLUE,
@@ -153,8 +150,6 @@ class MastermindlogicApplicationTests {
 	@Test
 	void colorOnePinsRight() {
 		// only two colors are right on the board. the result is that 2 pins are right.
-
-		EClueColour[] clues;
 		player1.board.setCode(new EPinColour[]{
 				EPinColour.BLUE,
 				EPinColour.LIME,
@@ -184,7 +179,6 @@ class MastermindlogicApplicationTests {
 	void colorThreePinsRight() {
 		// only two colors are right on the board. the result is that 2 pins are right.
 
-		EClueColour[] clues;
 		player1.board.setCode(new EPinColour[]{
 				EPinColour.BLUE,
 				EPinColour.BLUE,
@@ -214,7 +208,6 @@ class MastermindlogicApplicationTests {
 	@Test
 	void TestColourChecking() {
 
-		EClueColour[] clues;
 		player1.board.setCode(new EPinColour[]{
 				EPinColour.BLUE,
 				EPinColour.YELLOW,
