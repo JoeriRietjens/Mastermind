@@ -4,9 +4,10 @@ import nl.fhict.s3.mastermindlogic.entity.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -143,7 +144,7 @@ class MastermindlogicApplicationTests {
 				EClueColour.BLANK
 		};
 
-		clues = player1.board.getClues(input);
+		clues = player1.getBoard().getClues(input);
 		assertArrayEquals(cluesExpect, clues);
 	}
 
@@ -171,7 +172,7 @@ class MastermindlogicApplicationTests {
 				EClueColour.BLANK
 		};
 
-		clues = player1.board.getClues(input);
+		clues = player1.getBoard().getClues(input);
 		assertArrayEquals(cluesExpect, clues);
 	}
 
@@ -259,5 +260,42 @@ class MastermindlogicApplicationTests {
 
 		assertArrayEquals(ExpectColour, player1.board.code);
 
+		assertArrayEquals(ExpectColour,player1.getBoard().code);
+	}
+
+	@Test
+	void testRowIsNotCompletelyFilled() {
+		Row row = new Row();
+		EPinColour[] clues = new EPinColour[] {
+			EPinColour.RED, EPinColour.WHITE, EPinColour.BLUE
+		};
+
+		row.setCode(clues);
+
+		assertTrue(row.isNotCompletelyFilled());
+	}
+
+	@Test
+	void testRowIsNotCompletelyFilledWithNull() {
+		Row row = new Row();
+		EPinColour[] clues = new EPinColour[] {
+			EPinColour.RED, EPinColour.WHITE, EPinColour.BLUE, null
+		};
+
+		row.setCode(clues);
+
+		assertTrue(row.isNotCompletelyFilled());
+	}
+
+	@Test
+	void testRowIsCompletelyFilled() {
+		Row row = new Row();
+		EPinColour[] clues = new EPinColour[] {
+			EPinColour.RED, EPinColour.WHITE, EPinColour.BLUE, EPinColour.BLACK
+		};
+
+		row.setCode(clues);
+
+		assertFalse(row.isNotCompletelyFilled());
 	}
 }

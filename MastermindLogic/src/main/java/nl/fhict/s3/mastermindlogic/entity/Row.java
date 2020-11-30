@@ -6,7 +6,7 @@ public class Row  {
 
     private final int id;
     public EPinColour[] code = new EPinColour[4];
-    public Clue[] clues = new Clue[4];
+    public EClueColour[] clues = new EClueColour[4];
 
     public int getId() {
         return id;
@@ -29,11 +29,26 @@ public class Row  {
         this.code = code;
     }
 
-    public Clue[] getClues() {
+    public EClueColour[] getClues() {
         return clues;
     }
 
-    public void setClues(Clue[] clues) {
+    public void setClues(EClueColour[] clues) {
         this.clues = clues;
+    }
+
+    public boolean isNotCompletelyFilled() {
+        // See if the code is the correct length, otherwise a length of 3 will still be a 'full' code
+        if (code.length != 4) {
+            return true;
+        }
+
+        // check if there are no nulls
+        for(EPinColour pin : code) {
+            if(pin == null) {
+                return true;
+            }
+        }
+        return false;
     }
 }
