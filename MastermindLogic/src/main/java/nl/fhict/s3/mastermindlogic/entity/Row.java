@@ -4,8 +4,8 @@ package nl.fhict.s3.mastermindlogic.entity;
 public class Row  {
 
     private final int id;
-    public static EPinColour[] code = new EPinColour[4];
-    public static EClueColour[] clues = new EClueColour[4];
+    public EPinColour[] guess = new EPinColour[4];
+    public EClueColour[] clues = new EClueColour[4];
 
     public int getId() {
         return id;
@@ -21,11 +21,11 @@ public class Row  {
 
 
     public EPinColour[] getCode() {
-        return code;
+        return guess;
     }
 
-    public void setCode(EPinColour[] code) {
-        Row.code = code;
+    public void setCode(EPinColour[] guess) {
+        this.guess = guess;
     }
 
     public EClueColour[] getClues() {
@@ -33,6 +33,6 @@ public class Row  {
     }
 
     public void setClues(EClueColour[] clues) {
-        Row.clues = clues;
+        this.clues = clues;
     }
 }

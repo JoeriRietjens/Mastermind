@@ -4,8 +4,8 @@ public class Board implements IBoard {
 
     private final int id;
 
-    public static EPinColour[] code = new EPinColour[4];
-    public static final Row[] rows = new Row[10];
+    public EPinColour[] code = new EPinColour[4];
+    public final Row[] rows = new Row[10];
 
     public int getId() {
         return id;
@@ -13,7 +13,7 @@ public class Board implements IBoard {
 
     public Board(int id, EPinColour[] code) {
         this.id = id;
-        Board.code = code;
+        this.code = code;
     }
 
     public Board() {
@@ -31,19 +31,16 @@ public class Board implements IBoard {
 
     @Override
     public Row checkRow(Row rowToCheck) {
-        EClueColour[] clues = new EClueColour[4];
-        clues = getClues(rowToCheck.code);
-        System.arraycopy(clues, 0, rowToCheck.clues, 0, clues.length);
+        rowToCheck.setClues(getClues(rowToCheck.getCode()));
         return rowToCheck;
     }
 
     //only for sake for testing. Need a way around it.
     public EClueColour[] getClues(EPinColour[] input) {
-        EPinColour[] tempColour = new EPinColour[4];
-        System.arraycopy(code, 0, tempColour, 0, code.length);
+        EPinColour[] tempColour = code.clone();
         EClueColour[] clues = new EClueColour[4];
-        clues = getBlackPins(clues, tempColour, input);
-        clues = getWhitePins(clues, tempColour, input);
+        getBlackPins(clues, tempColour, input);
+        getWhitePins(clues, tempColour, input);
         sayClues(clues);
         return clues;
 
@@ -91,6 +88,6 @@ public class Board implements IBoard {
     }
 
     public void setCode(EPinColour[] code) {
-        Board.code = code;
+        this.code = code;
     }
 }
