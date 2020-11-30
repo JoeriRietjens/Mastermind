@@ -5,14 +5,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class MastermindlogicApplicationTests {
+class MastermindLogicApplicationTests {
 
 	private Board board1;
 	private Player player1;
@@ -57,27 +55,27 @@ class MastermindlogicApplicationTests {
 	@Test
 	void testGuessCodeOfOpponent() {
 
-		player1.board.setCode(new EPinColour[]{
+		player1.getBoard().setCode(new EPinColour[]{
 				EPinColour.RED,
 				EPinColour.YELLOW,
 				EPinColour.LIME,
 				EPinColour.BLUE
 		});
 
-		player2.board.setCode(new EPinColour[]{
-				EPinColour.ORANGE,
+		player2.getBoard().setCode(new EPinColour[]{
+				EPinColour.WHITE,
 				EPinColour.BLUE,
 				EPinColour.YELLOW,
-				EPinColour.PURPLE
+				EPinColour.BLACK
 		});
 
 		EPinColour[] inPutPlayer2 = {EPinColour.RED,
 				EPinColour.BLUE,
 				EPinColour.YELLOW,
-				EPinColour.PURPLE
+				EPinColour.BLACK
 		};
 
-		clues = player1.board.getClues(inPutPlayer2);
+		clues = player1.getBoard().getClues(inPutPlayer2);
 		EClueColour[] cluesExpect = new EClueColour[]{EClueColour.BLACK,EClueColour.WHITE,EClueColour.WHITE,EClueColour.BLANK};
 
 		assertArrayEquals(cluesExpect,clues);
@@ -87,18 +85,18 @@ class MastermindlogicApplicationTests {
 	void testRightGuessCodeOfOpponent() {
 
 
-		player1.board.setCode(new EPinColour[]{
+		player1.getBoard().setCode(new EPinColour[]{
 				EPinColour.RED,
 				EPinColour.YELLOW,
 				EPinColour.LIME,
 				EPinColour.BLUE
 		});
 
-		player2.board.setCode(new EPinColour[]{
-				EPinColour.ORANGE,
+		player2.getBoard().setCode(new EPinColour[]{
+				EPinColour.WHITE,
 				EPinColour.BLUE,
 				EPinColour.YELLOW,
-				EPinColour.PURPLE
+				EPinColour.RED
 		});
 
 		EPinColour[] inPutPlayer2 = {
@@ -108,7 +106,7 @@ class MastermindlogicApplicationTests {
 				EPinColour.BLUE
 		};
 
-		clues = player1.board.getClues(inPutPlayer2);
+		clues = player1.getBoard().getClues(inPutPlayer2);
 		EClueColour[] cluesExpect = new EClueColour[]{
 				EClueColour.BLACK,
 				EClueColour.BLACK,
@@ -122,11 +120,11 @@ class MastermindlogicApplicationTests {
 	@Test
 	void colorTwoPinsRight() {
 		// only two colors are right on the board. the result is that 2 pins are right.
-		player1.board.setCode(new EPinColour[]{
+		player1.getBoard().setCode(new EPinColour[]{
 				EPinColour.BLUE,
 				EPinColour.BLUE,
 				EPinColour.LIME,
-				EPinColour.ORANGE
+				EPinColour.RED
 		});
 
 		EPinColour[] input = new EPinColour[] {
@@ -150,11 +148,11 @@ class MastermindlogicApplicationTests {
 	@Test
 	void colorOnePinsRight() {
 		// only two colors are right on the board. the result is that 2 pins are right.
-		player1.board.setCode(new EPinColour[]{
+		player1.getBoard().setCode(new EPinColour[]{
 				EPinColour.BLUE,
 				EPinColour.LIME,
 				EPinColour.LIME,
-				EPinColour.ORANGE
+				EPinColour.RED
 		});
 
 		EPinColour[] input = new EPinColour[] {
@@ -179,11 +177,11 @@ class MastermindlogicApplicationTests {
 	void colorThreePinsRight() {
 		// only two colors are right on the board. the result is that 2 pins are right.
 
-		player1.board.setCode(new EPinColour[]{
+		player1.getBoard().setCode(new EPinColour[]{
 				EPinColour.BLUE,
 				EPinColour.BLUE,
 				EPinColour.BLUE,
-				EPinColour.ORANGE
+				EPinColour.WHITE
 		});
 
 		EPinColour[] input = new EPinColour[] {
@@ -200,7 +198,7 @@ class MastermindlogicApplicationTests {
 				EClueColour.BLANK
 		};
 
-		clues = player1.board.getClues(input);
+		clues = player1.getBoard().getClues(input);
 
 		assertArrayEquals(cluesExpect, clues);
 	}
@@ -208,16 +206,16 @@ class MastermindlogicApplicationTests {
 	@Test
 	void TestColourChecking() {
 
-		player1.board.setCode(new EPinColour[]{
+		player1.getBoard().setCode(new EPinColour[]{
 				EPinColour.BLUE,
 				EPinColour.YELLOW,
 				EPinColour.LIME,
-				EPinColour.ORANGE
+				EPinColour.WHITE
 		});
 
 		EPinColour[] input = new EPinColour[] {
 				EPinColour.LIME,
-				EPinColour.PURPLE,
+				EPinColour.RED,
 				EPinColour.LIME,
 				EPinColour.BLUE
 		};
@@ -229,14 +227,14 @@ class MastermindlogicApplicationTests {
 				EClueColour.WHITE
 		};
 
-		clues = player1.board.getClues(input);
+		clues = player1.getBoard().getClues(input);
 		assertArrayEquals(cluesExpect, clues);
 	}
 
 	@Test
 	void TestInputColour() {
 
-		player1.board.setCode(new EPinColour[]{
+		player1.getBoard().setCode(new EPinColour[]{
 				EPinColour.RED,
 				EPinColour.YELLOW,
 				EPinColour.LIME,
@@ -257,7 +255,8 @@ class MastermindlogicApplicationTests {
 				EClueColour.WHITE
 		};
 
-		assertArrayEquals(ExpectColour, player1.board.code);
+		// TODO: fix this test. Why make cluesExpect and not use it?
+		assertArrayEquals(ExpectColour, player1.getBoard().getCode());
 
 		assertArrayEquals(ExpectColour,player1.getBoard().getCode());
 	}

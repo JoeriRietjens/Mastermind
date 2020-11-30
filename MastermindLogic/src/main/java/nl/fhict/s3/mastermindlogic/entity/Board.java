@@ -19,9 +19,6 @@ public class Board implements IBoard {
         this.id = id;
         this.code = code;
     }
-    public void setCode(EPinColour[] code){
-        this.code = code;
-    }
 
     public Board() {
         id = 0;
@@ -29,11 +26,6 @@ public class Board implements IBoard {
 
     public Board(int id) {
         this.id = id;
-    }
-
-    public EPinColour[] createCode(EPinColour[] codeCreation) {
-        code = codeCreation;
-        return code;
     }
 
     @Override
