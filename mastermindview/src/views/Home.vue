@@ -4,7 +4,7 @@
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
     <button v-on:click="SubmitCode" class="myButton">Confirm code</button>
-    <button v-on:click="PostGuess" class="myButton">Confirm guess</button>
+    <button v-on:click="SubmitGuess" class="myButton">Confirm guess</button>
     <h2 class="boardTitle"> Your opponents board </h2>
     <OpponentBoard v-on:SelectCodeSpot="SelectCodeSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
   </div>
@@ -70,12 +70,21 @@ export default {
       this.Row = response;
       console.log(response);
       var Row = this.$children[0].$children.find(child => {return child.RowId == this.currentRow});
-      Row.$children[4].Color = this.Row.clues[0];
-      Row.$children[5].Color = this.Row.clues[1];
-      Row.$children[6].Color = this.Row.clues[2];
-      Row.$children[7].Color = this.Row.clues[3];
-
-      this.setNextRow();
+      if(this.Row.clues[0] != 'BLANK') {
+        Row.$children[4].Color = this.Row.clues[0];
+      }
+      if(this.Row.clues[1] != 'BLANK') {
+        Row.$children[5].Color = this.Row.clues[1]; 
+      }
+      if(this.Row.clues[2] != 'BLANK') {
+        Row.$children[6].Color = this.Row.clues[2];
+      }
+      if(this.Row.clues[3] != 'BLANK') {
+        Row.$children[7].Color = this.Row.clues[3];
+      }
+      if(this.Row.clues[0] != null){
+        this.setNextRow();
+      }
     },
     setNextRow(){
       switch (this.currentRow){

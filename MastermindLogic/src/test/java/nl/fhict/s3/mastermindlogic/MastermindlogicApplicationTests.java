@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -65,7 +66,7 @@ class MastermindlogicApplicationTests {
 				EPinColour.BLACK};
 
 		EClueColour[] clues= player1.getBoard().getClues(inPutPlayer2);
-		EClueColour[] cluesExpect=new EClueColour[]{EClueColour.BLACK,EClueColour.WHITE,EClueColour.WHITE,EClueColour.GREY};
+		EClueColour[] cluesExpect=new EClueColour[]{EClueColour.BLACK,EClueColour.WHITE,EClueColour.WHITE,EClueColour.BLANK};
 
 		assertArrayEquals(cluesExpect,clues);
 
@@ -105,8 +106,8 @@ class MastermindlogicApplicationTests {
 
 		EPinColour[] input = new EPinColour[] { EPinColour.BLUE, EPinColour.BLUE,
 				EPinColour.BLUE, EPinColour.BLUE};
-		EClueColour[] cluesExpect = new EClueColour[] { EClueColour.BLACK, EClueColour.BLACK, EClueColour.GREY,
-				EClueColour.GREY};
+		EClueColour[] cluesExpect = new EClueColour[] { EClueColour.BLACK, EClueColour.BLACK, EClueColour.BLANK,
+				EClueColour.BLANK};
 
 		clues = player1.getBoard().getClues(input);
 		assertArrayEquals(cluesExpect, clues);
@@ -124,8 +125,8 @@ class MastermindlogicApplicationTests {
 
 		EPinColour[] input = new EPinColour[] { EPinColour.BLUE, EPinColour.BLUE,
 				EPinColour.BLUE, EPinColour.BLUE};
-		EClueColour[] cluesExpect = new EClueColour[] { EClueColour.BLACK, EClueColour.GREY, EClueColour.GREY,
-				EClueColour.GREY};
+		EClueColour[] cluesExpect = new EClueColour[] { EClueColour.BLACK, EClueColour.BLANK, EClueColour.BLANK,
+				EClueColour.BLANK};
 
 		clues = player1.getBoard().getClues(input);
 		assertArrayEquals(cluesExpect, clues);
@@ -144,7 +145,7 @@ class MastermindlogicApplicationTests {
 		EPinColour[] input = new EPinColour[] { EPinColour.BLUE, EPinColour.BLUE,
 				EPinColour.BLUE, EPinColour.BLUE};
 		EClueColour[] cluesExpect = new EClueColour[] { EClueColour.BLACK, EClueColour.BLACK, EClueColour.BLACK,
-				EClueColour.GREY};
+				EClueColour.BLANK};
 
 		clues = player1.getBoard().getClues(input);
 		assertArrayEquals(cluesExpect, clues);
@@ -159,7 +160,7 @@ class MastermindlogicApplicationTests {
 
 		EClueColour[] clues = new EClueColour[4];
 		EPinColour[] input = new EPinColour[] { EPinColour.LIME, EPinColour.BLACK, EPinColour.LIME, EPinColour.BLUE };
-		EClueColour[] cluesExpect = new EClueColour[] { EClueColour.GREY, EClueColour.GREY, EClueColour.BLACK,
+		EClueColour[] cluesExpect = new EClueColour[] { EClueColour.BLANK, EClueColour.BLANK, EClueColour.BLACK,
 				EClueColour.WHITE};
 		clues = player1.getBoard().getClues(input);
 
@@ -179,4 +180,39 @@ class MastermindlogicApplicationTests {
 		assertArrayEquals(ExpectColour,player1.getBoard().code);
 	}
 
+	@Test
+	void testRowIsNotCompletelyFilled() {
+		Row row = new Row();
+		EPinColour[] clues = new EPinColour[] {
+			EPinColour.RED, EPinColour.WHITE, EPinColour.BLUE
+		};
+
+		row.setCode(clues);
+
+		assertTrue(row.isNotCompletelyFilled());
+	}
+
+	@Test
+	void testRowIsNotCompletelyFilledWithNull() {
+		Row row = new Row();
+		EPinColour[] clues = new EPinColour[] {
+			EPinColour.RED, EPinColour.WHITE, EPinColour.BLUE, null
+		};
+
+		row.setCode(clues);
+
+		assertTrue(row.isNotCompletelyFilled());
+	}
+
+	@Test
+	void testRowIsCompletelyFilled() {
+		Row row = new Row();
+		EPinColour[] clues = new EPinColour[] {
+			EPinColour.RED, EPinColour.WHITE, EPinColour.BLUE, EPinColour.BLACK
+		};
+
+		row.setCode(clues);
+
+		assertFalse(row.isNotCompletelyFilled());
+	}
 }

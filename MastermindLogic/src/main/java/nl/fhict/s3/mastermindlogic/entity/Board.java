@@ -1,5 +1,9 @@
 package nl.fhict.s3.mastermindlogic.entity;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class Board implements IBoard {
 
     private final int id;
@@ -31,36 +35,43 @@ public class Board implements IBoard {
 
     @Override
     public Row checkRow(Row rowToCheck) {
-        rowToCheck.setClues(getClues(rowToCheck.getCode()));
+        if(rowToCheck.isNotCompletelyFilled()){
+            return null;
+        }
+
+        rowToCheck.clues = getClues(rowToCheck.code);
+        List<EClueColour> cluesList = Arrays.asList(rowToCheck.clues);
+        Collections.sort(cluesList);
+        rowToCheck.setClues() = cluesList.toArray(new EClueColour[0]);
         return rowToCheck;
     }
 
-    //only for sake for testing. Need a way around it.
     public EClueColour[] getClues(EPinColour[] input) {
-        EPinColour[] tempColour = code.clone();
+        EPinColour[] tempCode = code.clone();
+        EPinColour [] tempGuess = input.clone();
         EClueColour[] clues = new EClueColour[4];
-        getBlackPins(clues, tempColour, input);
-        getWhitePins(clues, tempColour, input);
+        getBlackPins(clues, tempCode, tempGuess);
+        getWhitePins(clues, tempCode, tempGuess);
         sayClues(clues);
         return clues;
 
     }
 
-    private EClueColour[] getBlackPins(EClueColour[] clues, EPinColour[] tempColour, EPinColour[] input) {
-        for (int i = 0; i < tempColour.length; i++) {
-            if (input[i] == tempColour[i]) {
+    private void getBlackPins(EClueColour[] clues, EPinColour[] tempCode, EPinColour[] tempGuess) {
+        for (int i = 0; i < tempCode.length; i++) {
+            if (tempGuess[i] == tempCode[i]) {
                 //black pin.
                 clues[i] = EClueColour.BLACK;
-                tempColour[i] = null;
-                input[i] = null;
-                continue;
+                tempCode[i] = null;
+                tempGuess[i] = null;
             }
-            clues[i] = EClueColour.GREY;
+            else {
+                clues[i] = EClueColour.BLANK;
+            }
         }
-        return clues;
     }
 
-    private EClueColour[] getWhitePins(EClueColour[] clues, EPinColour[] tempColour, EPinColour[] input) {
+    private void getWhitePins(EClueColour[] clues, EPinColour[] tempColour, EPinColour[] input) {
 
         for (int i = 0; i < tempColour.length; i++) {
             if (tempColour[i] == null) {
@@ -77,7 +88,6 @@ public class Board implements IBoard {
                 }
             }
         }
-        return clues;
     }
 
     private void sayClues(EClueColour[] clues) {

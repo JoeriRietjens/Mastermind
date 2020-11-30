@@ -35,4 +35,19 @@ public class Row  {
     public void setClues(EClueColour[] clues) {
         this.clues = clues;
     }
+
+    public boolean isNotCompletelyFilled() {
+        // See if the code is the correct length, otherwise a length of 3 will still be a 'full' code
+        if (code.length != 4) {
+            return true;
+        }
+
+        // check if there are no nulls
+        for(EPinColour pin : code) {
+            if(pin == null) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
