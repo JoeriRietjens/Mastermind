@@ -19,6 +19,13 @@ import axios from 'axios';
 
 export default {
   name: 'Home',
+  notifications: {
+    showWinMessage: {
+      title: "win",
+      message: "Player has won!",
+      type: "info"
+    }
+  },
   components: {
     Board,
     Colors,
@@ -70,11 +77,12 @@ export default {
       this.Row = response;
       console.log(response);
       var Row = this.$children[0].$children.find(child => {return child.RowId == this.currentRow});
+      
       if(this.Row.clues[0] != 'BLANK') {
         Row.$children[4].Color = this.Row.clues[0];
       }
       if(this.Row.clues[1] != 'BLANK') {
-        Row.$children[5].Color = this.Row.clues[1]; 
+        Row.$children[5].Color = this.Row.clues[1];
       }
       if(this.Row.clues[2] != 'BLANK') {
         Row.$children[6].Color = this.Row.clues[2];
@@ -82,8 +90,13 @@ export default {
       if(this.Row.clues[3] != 'BLANK') {
         Row.$children[7].Color = this.Row.clues[3];
       }
-
+      if(this.Row.clues[0] == 'BLACK' && this.Row.clues[1] == 'BLACK' && this.Row.clues[2] == 'BLACK' && this.Row.clues[3] == 'BLACK') {
+        this.WinGame();
+      }
       this.setNextRow();
+    },
+    WinGame() {
+      this.showWinMessage();
     },
     setNextRow(){
       switch (this.currentRow){
