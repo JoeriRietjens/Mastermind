@@ -24,6 +24,11 @@ export default {
       title: "win",
       message: "Player has won!",
       type: "info"
+    },
+    showLostMessage: {
+      title: "loss",
+      message: "Player has lost!",
+      type: "info"
     }
   },
   components: {
@@ -98,6 +103,9 @@ export default {
         this.setNextRow();
       }
     },
+    LostGame() {
+      this.showLostMessage();
+    },
     WinGame() {
       this.showWinMessage();
     },
@@ -131,7 +139,7 @@ export default {
           this.currentRow = 'RowTen';
           break;
         case 'RowTen':
-          //youlost();
+          this.LostGame();
           break;
       }
     }
