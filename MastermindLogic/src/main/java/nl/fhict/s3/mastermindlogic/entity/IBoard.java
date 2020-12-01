@@ -1,6 +1,5 @@
 package nl.fhict.s3.mastermindlogic.entity;
 
-import nl.fhict.s3.mastermindlogic.entity.Row;
 
 public interface IBoard {
 

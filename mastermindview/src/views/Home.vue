@@ -94,6 +94,9 @@ export default {
         this.WinGame();
       }
       this.setNextRow();
+      if(this.Row.clues[0] != null){
+        this.setNextRow();
+      }
     },
     WinGame() {
       this.showWinMessage();

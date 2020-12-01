@@ -1,11 +1,15 @@
 package nl.fhict.s3.mastermindlogic.entity;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class Board implements IBoard {
 
     private final int id;
 
-    public EPinColour[] code = new EPinColour[4];
-    public Row[] rows = new Row[10];
+    private EPinColour[] code = new EPinColour[4];
+    private final Row[] rows = new Row[10];
 
     public int getId() {
         return id;
@@ -24,18 +28,16 @@ public class Board implements IBoard {
         this.id = id;
     }
 
-    public EPinColour[] createCode(EPinColour[] codeCreation) {
-        this.code = codeCreation;
-        return code;
-    }
-
     @Override
     public Row checkRow(Row rowToCheck) {
         if(rowToCheck.isNotCompletelyFilled()){
             return null;
         }
 
-        rowToCheck.clues = getClues(rowToCheck.code);
+        rowToCheck.setClues(getClues(rowToCheck.getGuess()));
+        List<EClueColour> cluesList = Arrays.asList(rowToCheck.getClues());
+        Collections.sort(cluesList);
+        rowToCheck.setClues(cluesList.toArray(new EClueColour[0]));
         return rowToCheck;
     }
 
@@ -92,5 +94,13 @@ public class Board implements IBoard {
 
     public void setCode(EPinColour[] code) {
         this.code = code;
+    }
+
+    public EPinColour[] getCode() {
+        return code;
+    }
+
+    public Row[] getRows() {
+        return rows;
     }
 }

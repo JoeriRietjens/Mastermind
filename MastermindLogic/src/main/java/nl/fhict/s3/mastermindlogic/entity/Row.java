@@ -1,12 +1,11 @@
 package nl.fhict.s3.mastermindlogic.entity;
 
-import java.io.Serializable;
 
 public class Row  {
 
     private final int id;
-    public EPinColour[] code = new EPinColour[4];
-    public EClueColour[] clues = new EClueColour[4];
+    private EPinColour[] guess = new EPinColour[4];
+    private EClueColour[] clues = new EClueColour[4];
 
     public int getId() {
         return id;
@@ -21,12 +20,12 @@ public class Row  {
     }
 
 
-    public EPinColour[] getCode() {
-        return code;
+    public EPinColour[] getGuess() {
+        return guess;
     }
 
-    public void setCode(EPinColour[] code) {
-        this.code = code;
+    public void setGuess(EPinColour[] guess) {
+        this.guess = guess;
     }
 
     public EClueColour[] getClues() {
@@ -39,12 +38,12 @@ public class Row  {
 
     public boolean isNotCompletelyFilled() {
         // See if the code is the correct length, otherwise a length of 3 will still be a 'full' code
-        if (code.length != 4) {
+        if (guess.length != 4) {
             return true;
         }
 
         // check if there are no nulls
-        for(EPinColour pin : code) {
+        for(EPinColour pin : guess) {
             if(pin == null) {
                 return true;
             }
