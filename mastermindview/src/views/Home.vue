@@ -26,7 +26,7 @@ export default {
       type: "info"
     },
     showLostMessage: {
-      title: "loss",
+      title: "lost",
       message: "Player has lost!",
       type: "info"
     }
