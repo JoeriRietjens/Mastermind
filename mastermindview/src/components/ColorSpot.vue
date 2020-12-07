@@ -10,8 +10,7 @@ export default {
     data() {
       return {
         Color: 'grey',
-        selected: false,
-        temp: true
+        selected: false
       }
     },
     props: ['SpotId', 'color', 'Button'],
