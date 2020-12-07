@@ -5,8 +5,10 @@
     <Colors v-on:SetColor="ChangeColor"></Colors>
     <button v-on:click="SubmitCode" class="myButton">Confirm code</button>
     <button v-on:click="SubmitGuess" class="myButton">Confirm guess</button>
+    <button v-on:click="showPanel" class="myButton">Instructions</button>
     <h2 class="boardTitle"> Your opponents board </h2>
     <OpponentBoard v-on:SelectCodeSpot="SelectCodeSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
+    <slideout-panel></slideout-panel>
   </div>
 </template>
 
@@ -16,6 +18,11 @@ import Board from '@/components/Board.vue';
 import Colors from '@/components/Colors.vue';
 import OpponentBoard from '@/components/OpponentBoard.vue';
 import axios from 'axios';
+import Vue from 'vue';
+import VueSlideoutPanel from 'vue2-slideout-panel';
+import Instruction from '@/components/Instruction.vue';
+
+Vue.use(VueSlideoutPanel);
 
 export default {
   name: 'Home',
@@ -23,6 +30,7 @@ export default {
     Board,
     Colors,
     OpponentBoard,
+    Instruction,
   },
   data() {
     return {
@@ -32,6 +40,22 @@ export default {
     }
   },
   methods: {
+    showPanel() {
+    const panel1Handle = this.$showPanel({
+      component : 'Instruction',
+      openOn: 'left',
+      props: {
+        //any data you want passed to your component
+      }
+    });
+    /*
+    panel1Handle.promise
+      .then(result => {
+        
+      });
+    */
+  },
+
     SelectSpot(obj){
       this.SelectedSpot = obj;
     },
@@ -119,7 +143,7 @@ export default {
           //youlost();
           break;
       }
-    }
+    }    
   }
 }
 </script>
