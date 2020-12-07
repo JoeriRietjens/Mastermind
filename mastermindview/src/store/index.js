@@ -1,32 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import VueNativeSock from 'vue-native-websocket'
+import socket from './modules/socket'
+import { config } from './modules/config'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
-  state: {
-    ColorSpots: {}
-  },
-  mutations: {
-    setPlayerBoard (state, board) {
-      state.PlayerBoard = board;
-    },
-    setOpponentBoard (state, board) {
-      state.OpponentBoard = board;
-    },
-    addColorSpot (state, colorspot) {
-      state.ColorSpots = state.ColorSpots + colorspot;
-    }
-  },
-  actions: {
-  },
+export const store = new Vuex.Store({
   modules: {
-  },
-  getters: {
-    //getColorSpotsColors: (state) => (row) => {
-      //Spots = state.colorspots.findAll(colorspot => colorspot.$parent.$parent.BaordId == 'PlayerBoard' && colorspot.$parent.RowId == row);
-      //console.log(Spots);
-    //  return;
-    //}
+    socket
   }
 })
+
+Vue.use(VueNativeSock, config.baseApiUrl, { store: store, format: 'json' })
