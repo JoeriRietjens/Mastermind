@@ -10,13 +10,12 @@ export default {
     data() {
       return {
         Color: 'grey',
-        selected: false,
+        selected: false
       }
     },
     props: ['SpotId', 'color', 'Button'],
     methods: {
       SelectSpot() {
-        this.selected = true;
         this.$emit("SelectSpot", this);
       }
     },
