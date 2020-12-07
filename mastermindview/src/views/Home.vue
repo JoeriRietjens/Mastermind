@@ -4,7 +4,7 @@
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
     <button v-on:click="SubmitCode" class="myButton">Confirm code</button>
-    <button v-on:click="SubmitGuess" class="myButton">Confirm guess</button>
+    <button v-on:click="PostGuess" class="myButton">Confirm guess</button>
     <h2 class="boardTitle"> Your opponents board </h2>
     <OpponentBoard v-on:SelectCodeSpot="SelectCodeSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
   </div>
@@ -33,7 +33,9 @@ export default {
   },
   methods: {
     SelectSpot(obj){
-      this.SelectedSpot = obj;
+      if (obj.$parent.RowId == this.currentRow){
+        this.SelectedSpot = obj;
+      }
     },
     ChangeColor(color){
       this.SelectedSpot.$data.Color = color;
@@ -60,7 +62,7 @@ export default {
       var Row = this.$children[0].$children.find(child => {return child.RowId == this.currentRow});
       var colors = [ 
         Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color ];
-      this.Row.code = colors;
+      this.Row.guess = colors;
       console.log(this.Row.code);
       axios.post('http://localhost:8080/guess/submit/1/', this.Row)
         .then(response => this.ChangeClues(response.data))
