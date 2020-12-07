@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h2 class="boardTitle"> Your own board </h2>
+    <h2 class="boardTitle"> Your own board gino </h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
     <button v-on:click="SubmitCode" class="myButton">Confirm code</button>
@@ -10,9 +10,6 @@
     <OpponentBoard v-on:SelectCodeSpot="SelectCodeSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
 
     <slideout-panel>
-    <Instruction>
-      
-    </Instruction>
     </slideout-panel>
 
   </div>
@@ -29,6 +26,7 @@ import VueSlideoutPanel from 'vue2-slideout-panel';
 import Instruction from '../components/Instruction.vue';
 
 Vue.use(VueSlideoutPanel);
+//vue.components(Instruction,{});
 
 export default {
   name: 'Home',
@@ -48,10 +46,11 @@ export default {
   methods: {
     showPanel() {
     const panel1Handle = this.$showPanel({
-      component : 'Instruction',
+      component : Instruction,
       openOn: 'left',
       props: {
         
+
         //any data you want passed to your component
       }
     });
