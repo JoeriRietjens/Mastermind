@@ -33,7 +33,9 @@ export default {
   },
   methods: {
     SelectSpot(obj){
-      this.SelectedSpot = obj;
+      if (obj.$parent.RowId == this.currentRow){
+        this.SelectedSpot = obj;
+      }
     },
     ChangeColor(color){
       this.SelectedSpot.$data.Color = color;
