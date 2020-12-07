@@ -13,7 +13,7 @@ const toastTypes = {
 
 miniToastr.init({ types: toastTypes });
 const toast = ({ title, message, type, timeout, cb }) => {
-  return miniToastr.info(message, type, title, timeout, cb);
+  return miniToastr[type](message, title, timeout, cb);
 };
 
 const options = {

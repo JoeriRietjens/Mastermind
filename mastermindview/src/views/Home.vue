@@ -98,10 +98,12 @@ export default {
         Row.$children[7].Color = this.Row.clues[3];
       }
       if(this.Row.clues[0] == 'BLACK' && this.Row.clues[1] == 'BLACK' && this.Row.clues[2] == 'BLACK' && this.Row.clues[3] == 'BLACK') {
+        this.showWinMessage();
         this.currentRow = null;
       }
       if(this.Row.clues[0] != null){
         this.setNextRow();
+        this.SelectedSpot = null;
       }
     },
     LostGame() {
@@ -142,6 +144,7 @@ export default {
         case 'RowTen':
           this.currentRow = null;
           this.SelectedSpot = null;
+          this.showLostMessage();
           break;
         case null:
           this.SelectedSpot = null;
