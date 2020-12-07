@@ -8,7 +8,13 @@
     <button v-on:click="showPanel" class="myButton">Instructions</button>
     <h2 class="boardTitle"> Your opponents board </h2>
     <OpponentBoard v-on:SelectCodeSpot="SelectCodeSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
-    <slideout-panel></slideout-panel>
+
+    <slideout-panel>
+    <Instruction>
+      
+    </Instruction>
+    </slideout-panel>
+
   </div>
 </template>
 
@@ -20,7 +26,7 @@ import OpponentBoard from '@/components/OpponentBoard.vue';
 import axios from 'axios';
 import Vue from 'vue';
 import VueSlideoutPanel from 'vue2-slideout-panel';
-import Instruction from '@/components/Instruction.vue';
+import Instruction from '../components/Instruction.vue';
 
 Vue.use(VueSlideoutPanel);
 
@@ -30,7 +36,7 @@ export default {
     Board,
     Colors,
     OpponentBoard,
-    Instruction,
+    Instruction
   },
   data() {
     return {
@@ -45,15 +51,16 @@ export default {
       component : 'Instruction',
       openOn: 'left',
       props: {
+        
         //any data you want passed to your component
       }
     });
-    /*
+    
     panel1Handle.promise
-      .then(result => {
+      // .then(result => {
         
-      });
-    */
+      // });
+    
   },
 
     SelectSpot(obj){

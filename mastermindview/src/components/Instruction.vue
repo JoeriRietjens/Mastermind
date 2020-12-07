@@ -1,13 +1,15 @@
 <template>
   <p>
-      Hello
+      
   </p>
 </template>
 
 <script>
+
     export default {
     name: 'Instruction'
 }
+
 </script>
 
 <style scoped>
