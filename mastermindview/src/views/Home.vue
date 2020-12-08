@@ -61,8 +61,6 @@ export default {
       component : Instruction,
       openOn: 'left',
       props: {
-        
-
         //any data you want passed to your component
       }
     });
