@@ -56,6 +56,6 @@ _axios.interceptors.response.use(
   });
 };
 
-Vue.use(Plugin)
+Vue.use(Plugin);
 
 export default Plugin;

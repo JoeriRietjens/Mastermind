@@ -44,7 +44,7 @@ De codekraker heeft maximaal 10 kansen om de code te raden.
 
     export default {
     name: "Instruction",
-    }
+    };
 
 </script>
 
