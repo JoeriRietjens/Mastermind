@@ -1,0 +1,3 @@
+module mastermindlogicserver {
+    exports mastermindlogic;
+}
