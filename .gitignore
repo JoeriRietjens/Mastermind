@@ -57,4 +57,3 @@ hs_err_pid*
 ### VS Code ###
 */.vscode/
 */node_modules/
-*/package-lock.json
