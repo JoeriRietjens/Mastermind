@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <h2 class="boardTitle"> Your own board</h2>
+
+    <h2 class="boardTitle"> Your own board </h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
     <button v-on:click="SubmitCode" class="myButton">Confirm code</button>
@@ -23,8 +24,10 @@ import axios from 'axios';
 import Vue from 'vue';
 import VueSlideoutPanel from 'vue2-slideout-panel';
 import Instruction from '../components/Instruction.vue';
+import VueSimpleAlert from "vue-simple-alert";
 
 Vue.use(VueSlideoutPanel);
+Vue.use(VueSimpleAlert);
 //vue.components(Instruction,{});
 
 export default {
@@ -73,7 +76,14 @@ export default {
       var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
       var colors = [ 
       Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color];
+      if(this.checkColorCode()==true)
+      {
       axios.post('http://localhost:8080/code/submit/0/', colors).then().catch(error => console.log(error));
+      }
+      else
+      {
+          this.$fire({title:"Colour code input", text:"You didn't have made your colour code!",type:'warning'});
+      }
 
     },
     PostGuess(){
@@ -90,9 +100,16 @@ export default {
         Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color ];
       this.Row.code = colors;
       console.log(this.Row.code);
+            if(this.checkColorCode()==true)
+      {
       axios.post('http://localhost:8080/guess/submit/1/', this.Row)
         .then(response => this.ChangeClues(response.data))
         .catch(error => console.log(error));
+      }
+      else
+      {
+        this.$fire({title:"Colour input", text:"some inputs don't have a colour!",type:'warning'});
+      }
     },
     ChangeClues(response){
       this.Row = response;
@@ -147,7 +164,22 @@ export default {
           //youlost();
           break;
       }
-    }    
+    },
+    
+    checkColorCode:function() {
+      console.log("CheckColorCode");
+        var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
+      var colors = [ 
+        Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color ];
+        for(var i=0;i<4;i++)
+        {
+          if(colors[i]==null)
+          {
+            return false;
+          }
+        }
+        return true;
+    }
   }
 }
 </script>
