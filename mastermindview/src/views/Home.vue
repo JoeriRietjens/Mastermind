@@ -28,7 +28,6 @@ import VueSimpleAlert from "vue-simple-alert";
 
 Vue.use(VueSlideoutPanel);
 Vue.use(VueSimpleAlert);
-//vue.components(Instruction,{});
 
 export default {
   name: 'Home',
