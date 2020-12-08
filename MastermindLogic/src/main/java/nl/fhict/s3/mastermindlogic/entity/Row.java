@@ -1,6 +1,8 @@
 package nl.fhict.s3.mastermindlogic.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Row  {
 
     private final int id;
@@ -36,6 +38,7 @@ public class Row  {
         this.clues = clues;
     }
 
+    @JsonIgnore
     public boolean isNotCompletelyFilled() {
         // See if the code is the correct length, otherwise a length of 3 will still be a 'full' code
         if (guess.length != 4) {
