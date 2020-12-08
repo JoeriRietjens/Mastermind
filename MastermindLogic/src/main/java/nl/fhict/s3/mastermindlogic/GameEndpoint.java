@@ -12,6 +12,8 @@ import javax.websocket.server.ServerEndpoint;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
+import nl.fhict.s3.mastermindlogic.entity.Row;
+
 
 @ServerEndpoint("/game")
 public class GameEndpoint {
@@ -71,7 +73,7 @@ public class GameEndpoint {
                     submitGuessOperation(property, session, serializedMessage);
                     break;
                 case GET_EMPTY_ROW:
-                    getEmptyRowOperation(property, session, serializedMessage);
+                    getEmptyRowOperation(session);
                     break;
                 default:
                     cannotParseMessage(serializedMessage);
