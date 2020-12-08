@@ -1,10 +1,6 @@
 package nl.fhict.s3.mastermindlogic.entity;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
 
-@Service
-@Scope("singleton")
-
+// TODO: make this a singleton again
 public class Game {
 
     private final int id;
@@ -24,6 +20,7 @@ public class Game {
         players[0] = player1;
         players[1] = player2;
     }
+
     public Game(int id) {
         this.id = id;
         Player player1 = new Player(0);
