@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h2 class="boardTitle"> Your own board gino </h2>
+    <h2 class="boardTitle"> Your own board</h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
     <button v-on:click="SubmitCode" class="myButton">Confirm code</button>
@@ -9,8 +9,7 @@
     <h2 class="boardTitle"> Your opponents board </h2>
     <OpponentBoard v-on:SelectCodeSpot="SelectCodeSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
 
-    <slideout-panel>
-    </slideout-panel>
+    <slideout-panel></slideout-panel>
 
   </div>
 </template>
@@ -33,8 +32,7 @@ export default {
   components: {
     Board,
     Colors,
-    OpponentBoard,
-    Instruction
+    OpponentBoard
   },
   data() {
     return {
