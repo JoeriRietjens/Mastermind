@@ -1,5 +1,6 @@
 package nl.fhict.s3.mastermindlogic.entity;
 
+import javax.websocket.Session;
 
 public class Player {
 
@@ -7,8 +8,16 @@ public class Player {
     private String name;
     private String password;
     private final Board board;
+    private Session session;
 
     public Player(int id) {
+        this.id = id;
+        board = new Board();
+        this.board.setCode(new EPinColour[]{EPinColour.WHITE, EPinColour.BLACK, EPinColour.RED, EPinColour.BLUE});
+    }
+
+    public Player(int id, Session session) {
+        this.session = session;
         this.id = id;
         board = new Board();
         this.board.setCode(new EPinColour[]{EPinColour.WHITE, EPinColour.BLACK, EPinColour.RED, EPinColour.BLUE});
@@ -44,4 +53,11 @@ public class Player {
         return board;
     }
 
+    public Session getSession() {
+        return session;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
+    }
 }

@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class WebSocketMessage {
     private WebSocketMessageOperation operation;
-    private String property;
+    private String gameId;
     private String content;
 }
