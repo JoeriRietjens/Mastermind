@@ -11,7 +11,7 @@
     <OpponentBoard v-on:SelectCodeSpot="SelectCodeSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
 
     <slideout-panel></slideout-panel>
-
+    
   </div>
 </template>
 
@@ -53,6 +53,12 @@ export default {
       SelectedSpot: null,
       currentRow: 'RowOne',
       Row: {id: 10, code: [null, null, null, null], clues: [null, null, null, null]},
+    }
+  },
+  created:{
+    showStartUpMessage()
+    {
+      this.$alert("Please enter a colour code");
     }
   },
   methods: {
