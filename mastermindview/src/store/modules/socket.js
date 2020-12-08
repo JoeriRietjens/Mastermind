@@ -15,7 +15,7 @@ const getters = {}
 const actions = {
     async sendMessage({ commit }, message) {
         console.log(message)
-        if(localState.isConnected) {
+        if(localState.socket.isConnected) {
             Vue.prototype.$socket.send(message)
             commit('SEND_MESSAGE', message)
         } else {

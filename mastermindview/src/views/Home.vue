@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <button v-on:click="sendMessage(Row)">Send message to server</button>
     <h2 class="boardTitle"> Your own board </h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
@@ -16,6 +17,7 @@ import Board from '@/components/Board.vue';
 import Colors from '@/components/Colors.vue';
 import OpponentBoard from '@/components/OpponentBoard.vue';
 import axios from 'axios';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'Home',
@@ -44,6 +46,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['sendMessage']),
     SelectSpot(obj){
       if (obj.$parent.RowId == this.currentRow){
         this.SelectedSpot = obj;
