@@ -13,6 +13,23 @@ const localState = {
 const getters = {}
 
 const actions = {
+    async sendGetEmptyRow({ commit }) {
+        console.log('getting empty row')
+
+        var message = {
+            operation: "GET_EMPTY_ROW",
+            property: "not_empty",
+            content: ""
+        }
+
+        console.log(message)
+        if(localState.socket.isConnected) {
+            Vue.prototype.$socket.send(JSON.stringify(message))
+            commit('SEND_MESSAGE', message)
+        } else {
+            commit('NOT_CONNECTED_ERROR')
+        }
+    },
     async sendMessage({ commit }, message) {
         console.log(message)
         if(localState.socket.isConnected) {

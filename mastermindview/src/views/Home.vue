@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <button v-on:click="sendMessage(Row)">Send message to server</button>
+    <button v-on:click="sendGetEmptyRow()">Send message to server</button>
     <h2 class="boardTitle"> Your own board </h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
@@ -46,7 +46,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['sendMessage']),
+    ...mapActions(['sendGetEmptyRow']),
     SelectSpot(obj){
       if (obj.$parent.RowId == this.currentRow){
         this.SelectedSpot = obj;
