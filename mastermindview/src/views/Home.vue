@@ -101,8 +101,15 @@ export default {
     },
     PostGuess(){
       console.log("Guess confirmed");
-      axios.get('http://localhost:8080/emptyrow/').then( response => this.SubmitGuess(response.data)).catch(error => console.log(error));
-      console.log(this.Row.id);
+      if(this.checkColorCode()==true)
+      {
+          axios.get('http://localhost:8080/emptyrow/').then( response => this.SubmitGuess(response.data)).catch(error => console.log(error));
+          console.log(this.Row.id);
+      }
+      else
+      {
+          this.$fire({title:"Colour code input", text:"You didn't have made your colour code!",type:'warning'});
+      }
       
     },
     SubmitGuess(response){
