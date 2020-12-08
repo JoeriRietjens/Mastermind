@@ -43,7 +43,7 @@ De codekraker heeft maximaal 10 kansen om de code te raden.
 <script>
 
     export default {
-    name: 'Instruction',
+    name: "Instruction",
     }
 
 </script>
