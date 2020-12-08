@@ -30,6 +30,11 @@ Vue.use(VueSlideoutPanel);
 Vue.use(VueSimpleAlert);
 
 export default {
+
+  created() {
+    this.$alert("Hello Player Please enter your colour code before you start.\n \nif you want to know how the game works please press on the Instruction button");
+  },
+
   name: 'Home',
   notifications: {
     showWinMessage: {
@@ -55,12 +60,7 @@ export default {
       Row: {id: 10, code: [null, null, null, null], clues: [null, null, null, null]},
     }
   },
-  created:{
-    showStartUpMessage()
-    {
-      this.$alert("Please enter a colour code");
-    }
-  },
+
   methods: {
     showPanel() {
     const panel1Handle = this.$showPanel({
