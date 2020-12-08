@@ -18,7 +18,7 @@ const actions = {
 
         var message = {
             operation: "GET_EMPTY_ROW",
-            property: "not_empty",
+            gameId: "not_empty",
             content: ""
         }
 
