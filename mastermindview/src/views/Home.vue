@@ -11,7 +11,7 @@
     <OpponentBoard v-on:SelectCodeSpot="SelectCodeSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
 
     <slideout-panel></slideout-panel>
-
+    
   </div>
 </template>
 
@@ -30,6 +30,11 @@ Vue.use(VueSlideoutPanel);
 Vue.use(VueSimpleAlert);
 
 export default {
+
+  created() {
+    this.$alert("Hello Player Please enter your colour code before you start.\n \nif you want to know how the game works please press on the Instruction button");
+  },
+
   name: 'Home',
   notifications: {
     showWinMessage: {
@@ -55,6 +60,7 @@ export default {
       Row: {id: 10, code: [null, null, null, null], clues: [null, null, null, null]},
     }
   },
+
   methods: {
     showPanel() {
     const panel1Handle = this.$showPanel({
@@ -99,8 +105,15 @@ export default {
     },
     PostGuess(){
       console.log("Guess confirmed");
-      axios.get('http://localhost:8080/emptyrow/').then( response => this.SubmitGuess(response.data)).catch(error => console.log(error));
-      console.log(this.Row.id);
+      if(this.checkColorCode()==true)
+      {
+          axios.get('http://localhost:8080/emptyrow/').then( response => this.SubmitGuess(response.data)).catch(error => console.log(error));
+          console.log(this.Row.id);
+      }
+      else
+      {
+          this.$fire({title:"Colour code input", text:"You didn't have made your colour code!",type:'warning'});
+      }
       
     },
     SubmitGuess(response){
