@@ -109,7 +109,6 @@ export default {
       var colors = [ 
         Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color ];
       this.Row.guess = colors;
-      console.log(this.Row.code);
       this.sendSubmitGuess(this.Row);
     },
     ChangeClues(filledRow){
