@@ -51,6 +51,7 @@ export default {
       (mutation, state) => { 
         if (mutation.type == "SOCKET_ONOPEN") {
           if (state.socket.socket.isConnected) {
+            this.sendRegisterGame()
             this.sendGetEmptyRow()
           }
         }
@@ -77,7 +78,7 @@ export default {
     this.unsubscribe();
   },
   methods: {
-    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess']),
+    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame']),
     SelectSpot(obj){
       if (obj.$parent.RowId == this.currentRow){
         this.SelectedSpot = obj;

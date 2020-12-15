@@ -1,7 +1,5 @@
 package nl.fhict.s3.mastermindlogic.entity;
 
-import javax.websocket.Session;
-
 public class Player {
 
     private final int id;

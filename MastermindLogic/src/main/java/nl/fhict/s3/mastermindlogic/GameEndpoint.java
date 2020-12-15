@@ -110,7 +110,8 @@ public class GameEndpoint {
     }
 
     private void registerGameOperation(UUID gameId, Session session) {
-        Game game = new Game();
+        Game game = new Game(gameId);
+        application.newGame(game);
         games.put(game.getId(), new ArrayList<Session>());
         games.get(game.getId()).add(session);
     }
@@ -151,17 +152,22 @@ public class GameEndpoint {
             returnMessage.setGameId(gameId);
 
             Row row = gson.fromJson(message.getContent(), Row.class);
-            Row returnRow = application.getGameById(gameId).getPlayer(message.getPlayerId()).getBoard().checkRow(row);
-            returnMessage.setContent(gson.toJson(returnRow));
-            String jsonReturnMessage = gson.toJson(returnMessage);
+            Game currentGame = application.getGameById(gameId);
+            if (currentGame == null) {
+                logMessage(session.getId(), "error", "could not find game in app");
+            } else {
+                Row returnRow = currentGame.getPlayer(message.getPlayerId()).getBoard().checkRow(row);
+                returnMessage.setContent(gson.toJson(returnRow));
+                String jsonReturnMessage = gson.toJson(returnMessage);
+                // for(Session s : games.get(gameId).getSessions()) {
+                //     s.getAsyncRemote().sendText(jsonReturnMessage);
+                // } // This is for the multiplayer, to be implemented
+                session.getAsyncRemote().sendText(jsonReturnMessage);
+            }
 
-            // for(Session s : games.get(gameId).getSessions()) {
-            //     s.getAsyncRemote().sendText(jsonReturnMessage);
-            // } // This is for the multiplayer, to be implemented
 
-            session.getAsyncRemote().sendText(jsonReturnMessage);
         } else {
-            // game not found TODO: add logic
+            logMessage(session.getId(), "error", "could not find game, gameId null" + gameId);
         }
     }
 

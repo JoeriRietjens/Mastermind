@@ -23,18 +23,39 @@ const localState = {
         isConnected: false,
         message: '',
         reconnectError: false,
+        currentGameId: ''
     }
 }
 
 const getters = {}
 
 const actions = {
+    async sendRegisterGame({commit}) {
+        console.log('registering game')
+
+        var message = {
+            operation: "REGISTER_GAME",
+            gameId: generateUUID(),
+            playerId: 0,
+            content: '' 
+        }
+
+        localState.socket.currentGameId = message.gameId
+
+        if(localState.socket.isConnected) {
+            Vue.prototype.$socket.send(JSON.stringify(message))
+            commit('SEND_MESSAGE', message)
+        } else {
+            commit('NOT_CONNECTED_ERROR')
+        }
+    },
     async sendGetEmptyRow({ commit }) {
         console.log('getting empty row')
 
         var message = {
             operation: "GET_EMPTY_ROW",
-            gameId: generateUUID(),
+            gameId: localState.socket.currentGameId,
+            playerId: 0,
             content: ""
         }
 
@@ -50,7 +71,8 @@ const actions = {
 
         var message = {
             operation: "SUBMIT_GUESS",
-            gameId: generateUUID(),
+            gameId: localState.socket.currentGameId,
+            playerId: 0,
             content: JSON.stringify(row)
         }
 
@@ -97,6 +119,9 @@ const mutations = {
     },
     SOCKET_RECONNECT_ERROR(state) {
         state.socket.reconnectError = true
+    },
+    CHANGE_GAME_ID(state, gameId) {
+        state.socket.currentGameId = gameId
     }
 }
 

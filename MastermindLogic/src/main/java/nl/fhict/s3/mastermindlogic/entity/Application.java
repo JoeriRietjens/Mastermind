@@ -1,6 +1,5 @@
 package nl.fhict.s3.mastermindlogic.entity;
 
-import javax.management.ObjectInstance;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -17,6 +16,10 @@ public class Application {
         return INSTANCE;
     }
 
+    public void newGame(Game game) {
+        games.add(game);
+    }
+
     public Game getOpenGame() {
         for (Game game :
                 games) {
@@ -31,7 +34,7 @@ public class Application {
 
     public Game getGameById(UUID id) {
         for(Game game: games){
-            if(game.getId() == id )
+            if(game.getId().equals(id) )
                 return game;
         }
         return null;

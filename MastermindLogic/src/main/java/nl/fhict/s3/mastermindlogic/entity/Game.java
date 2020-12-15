@@ -1,9 +1,6 @@
 package nl.fhict.s3.mastermindlogic.entity;
 
 import java.util.*;
-import java.util.stream.Collectors;
-
-import javax.websocket.Session;
 
 public class Game {
     private final UUID id;
@@ -16,6 +13,12 @@ public class Game {
 
     public Game() {
         this.id = UUID.randomUUID();
+        player1 = new Player(0);
+        player2 = new Player(1);
+    }
+
+    public Game(UUID id) {
+        this.id = id;
         player1 = new Player(0);
         player2 = new Player(1);
     }
