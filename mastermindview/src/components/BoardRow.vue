@@ -1,9 +1,9 @@
 <template>
     <div id="RowId">
-        <ColorSpot v-on:SelectSpot="SelectSpot" SpotId="SpotOne"></ColorSpot>
-        <ColorSpot v-on:SelectSpot="SelectSpot" SpotId="SpotTwo"></ColorSpot>
-        <ColorSpot v-on:SelectSpot="SelectSpot" SpotId="SpotThree"></ColorSpot>
-        <ColorSpot v-on:SelectSpot="SelectSpot" SpotId="SpotFour"></ColorSpot>
+        <ColorSpot class="custom-select" v-on:SelectSpot="SelectSpot" SpotId="SpotOne"></ColorSpot>
+        <ColorSpot class="custom-select" v-on:SelectSpot="SelectSpot" SpotId="SpotTwo"></ColorSpot>
+        <ColorSpot class="custom-select" v-on:SelectSpot="SelectSpot" SpotId="SpotThree"></ColorSpot>
+        <ColorSpot class="custom-select" v-on:SelectSpot="SelectSpot" SpotId="SpotFour"></ColorSpot>
         <div class="Hints">
             <div class="topRow">
             <HintSpot class="hintSpot" HintId="HintOne"></HintSpot>
@@ -44,5 +44,15 @@ export default {
 .hintSpot {
     position: relative;
     display: inline-block;
+}
+
+.custom-select .selected {
+    background-color: #0a0a0a;
+  border-radius: 6px;
+  border: 1px solid #666666;
+  color: #fff;
+  padding-left: 1em;
+  cursor: pointer;
+  user-select: none;
 }
 </style>

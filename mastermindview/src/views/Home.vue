@@ -304,7 +304,16 @@ export default {
   border: 3px groove rgb(10, 5, 5);
 }
 
-.colorSpot .dot{  
+.dot:active {
+  border: 3px groove rgb(255, 255, 255);
+}
+
+.dot:hover {
+  background-color: rgb(60, 5, 5);
+  transition: 0.2s;
+}
+
+.colorSpot .dot{
   height: 50px;
   width: 50px;
   border-radius: 50%;
