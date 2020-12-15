@@ -61,7 +61,8 @@ export default {
     SubmitCode() {
       var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
       var colors = [ 
-      Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color];
+        Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color
+      ];
       axios.post('http://localhost:8080/code/submit/0/', colors).then().catch(error => console.log(error));
 
     },

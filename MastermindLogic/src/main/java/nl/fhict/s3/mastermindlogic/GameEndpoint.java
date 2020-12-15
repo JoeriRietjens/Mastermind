@@ -12,6 +12,7 @@ import javax.websocket.server.ServerEndpoint;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
+import nl.fhict.s3.mastermindlogic.entity.Application;
 import nl.fhict.s3.mastermindlogic.entity.EPinColour;
 import nl.fhict.s3.mastermindlogic.entity.Game;
 import nl.fhict.s3.mastermindlogic.entity.Row;
@@ -20,7 +21,9 @@ import nl.fhict.s3.mastermindlogic.entity.Row;
 @ServerEndpoint("/game")
 public class GameEndpoint {
     private static final List<Session> players = new ArrayList<>();
-    private static final Map<String,Game> games = new HashMap<>();
+    private static final Map<UUID,List<Session>> games = new HashMap<>();
+
+    private Application application = Application.getInstance();
 
     @OnOpen
     public void onOpen(Session session) {
@@ -52,7 +55,7 @@ public class GameEndpoint {
         }
 
         WebSocketMessageOperation operation = message.getOperation();
-        String gameId = message.getGameId();
+        UUID gameId = message.getGameId();
 
         if(operation != null && gameId != null && !"".equals(gameId)) {
             switch(operation) {
@@ -69,7 +72,7 @@ public class GameEndpoint {
                     leaveGameOperation(gameId, session);
                     break;
                 case SUBMIT_CODE:
-                    submitCodeOperation(gameId, session, message);
+                    submitCodeOperation(gameId, message);
                     break;
                 case SUBMIT_GUESS:
                     submitGuessOperation(gameId, session, message);
@@ -106,42 +109,41 @@ public class GameEndpoint {
         System.err.println("[wsServer] cannot parse: " + message);
     }
 
-    private void registerGameOperation(String gameId, Session session) {
-        if(games.get(gameId) == null) {
-            Game game = new Game(gameId);
-            game.setPlayerOne(session);
-            games.put(gameId, game);
-        }
+    private void registerGameOperation(UUID gameId, Session session) {
+        Game game = new Game();
+        games.put(game.getId(), new ArrayList<Session>());
+        games.get(game.getId()).add(session);
     }
 
-    private void unregisterGameOperation(String gameId) {
+    private void unregisterGameOperation(UUID gameId) {
         // TODO: this should send a message to all sessions in property to leave game then remove from games
     }
 
-    private void joinGameOperation(String gameId, Session session) {
+    private void joinGameOperation(UUID gameId, Session session) {
         if(games.get(gameId) != null) {
-            Game game = games.get(gameId);
-            game.setPlayerTwo(session);
+            Game game = application.getGameById(gameId);
+            games.get(game.getId()).add(session);
         }
     }
 
-    private void leaveGameOperation(String gameId, Session session) {
+    private void leaveGameOperation(UUID gameId, Session session) {
         // TODO: implement leaving a game
     }
 
-    private void submitCodeOperation(String gameId, Session session, WebSocketMessage message) {
+    private void submitCodeOperation(UUID gameId, WebSocketMessage message) {
+        Gson gson = new Gson();
         // TODO: finish, make sure code gets set to right player
         if(games.get(gameId) != null) {
-            Gson gson = new Gson();
-
+            int playerId = message.getPlayerId();
+            int opponentId = playerId-1;
             EPinColour[] code = gson.fromJson(message.getContent(), EPinColour[].class);
-            games.get(gameId).getPlayer(session.getId()).getBoard().setCode(code);
+            application.getGameById(gameId).getPlayer(opponentId).getBoard().setCode(code);
         } else {
             // game not found TODO: add logic
         }
     }
 
-    private void submitGuessOperation(String gameId, Session session, WebSocketMessage message) {
+    private void submitGuessOperation(UUID gameId, Session session, WebSocketMessage message) {
         if(games.get(gameId) != null) {
             Gson gson = new Gson();
             WebSocketMessage returnMessage = new WebSocketMessage();
@@ -149,7 +151,7 @@ public class GameEndpoint {
             returnMessage.setGameId(gameId);
 
             Row row = gson.fromJson(message.getContent(), Row.class);
-            Row returnRow = games.get(gameId).getPlayer(session.getId()).getBoard().checkRow(row);
+            Row returnRow = application.getGameById(gameId).getPlayer(message.getPlayerId()).getBoard().checkRow(row);
             returnMessage.setContent(gson.toJson(returnRow));
             String jsonReturnMessage = gson.toJson(returnMessage);
 
@@ -168,7 +170,6 @@ public class GameEndpoint {
         String emptyRow = gson.toJson(new Row(0));
         WebSocketMessage message = new WebSocketMessage();
         message.setOperation(WebSocketMessageOperation.GET_EMPTY_ROW);
-        message.setGameId("return");
         message.setContent(emptyRow);
         String jsonMessage = gson.toJson(message);
         session.getAsyncRemote().sendText(jsonMessage);
