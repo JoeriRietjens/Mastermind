@@ -4,37 +4,36 @@
    <div>
      <pre class="Instruction"> 
        <h2>
-Spel instructies:
+Game instructions:
        </h2>
-De speler plaatst 4 gekleurde codepinnetjes in de gaatjes 
-aan de voorkant van zijn speelbord.
-De code bestaat uit ieder gewenste combinatie van de 6 kleuren. 
-Je mag 2 of meer codepinnetjes van dezelfde kleur gebruiken.
-Je tegenstander doet hetzelfde en stelt ook een code op.
+The player places 4 colored code pins in the holes
+at the front of his game board.
+The code consists of any desired combination of the 6 colors.
+You may use 2 or more code pins of the same color.
+Your opponent does the same.
 
-Wanneer de code is opgezet, kan de tegenspeler beginnen met raden.
-Dit doe je door een rij van 4 gekleurde codepinnetjes op het spelbord
-van de tegenstander te zetten. Naarmate het spel vordert, krijg je meer
-informatie over de code en kun je steeds gerichtere pogingen wagen. 
-Elke rij codepinnetjes blijft gedurende de ronde staan. 
-Na iedere poging moet de
-codemaker de tegenstander vertellen wat er goed en fout is in het rijtje.
-Dat gebeurt door middel van zwarte en witte scorepinnetjes.
+When the code is set up, the opponent can start guessing.
+You do this through a row of 4 colored code pins on the game board
+of the opponent. As the game progresses you will get more
+information about the code and you can make increasingly targeted attempts.
+Each row of code pins remains for the duration of the round.
+After each attempt, the codemaker will tel the opponent what is right and wrong in the list.
+This is done by means of black and white score pins.
 
-<b>Zwarte scorepinnetjes:</b>
-Is zowel de kleur als de plek van een pinnetje correct geraden? Dan zet je 
-een zwart scorepinnetje in het scoregaatje. Dit doe je voor elk goed geraden
-pinnetje. De plek is niet van belang. De codekraker weet dus niet precies
-welke scorepinnen hij/zij goed geraden heeft. 
+<b>Black scorepins:</b>
+Have both the color and the location of a pin been guessed correctly? Then you put
+a black score pin in the score hole. You do this for every guess
+pin. The place doesn't matter. The code breaker does not know exactly
+which score pins he / she guessed correctly.
 
-<b>Witte scorepinnetjes:</b>
-Zet een wit scorepinnetje in een scoregaatje voor elke codepinnetje van de
-juiste kleur op een verkeerde plaats. Ook hierbij is de exacte plek van het
-witte pinnetje in de scoregaten niet van belang.
+<b>White scorepins:</b>
+Place a white score pin in a score hole for each code pin of the
+right color in the wrong place. Also here is the exact spot of it
+white pin in the score holes does not matter.
 
-Laat een scoregaatje leeg voor elk codepinnetje van een verkeerde kleur.
-Scorepinnetjes worden automatisch door het spel geplaatst.
-De codekraker heeft maximaal 10 kansen om de code te raden.
+Leave a score hole blank for each pin of the wrong color.
+Score markers are automatically placed by the game.
+The code breaker has a maximum of 10 chances to guess the code.
 </pre>
 </div>
 
