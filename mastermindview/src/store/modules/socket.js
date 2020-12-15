@@ -1,5 +1,21 @@
 import Vue from 'vue'
 
+function generateUUID() { // Public Domain/MIT courtesy of Briguy37 on Stackoverflow
+    var d = new Date().getTime();//Timestamp
+    var d2 = (performance && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16;//random number between 0 and 16
+        if(d > 0){//Use timestamp until depleted
+            r = (d + r)%16 | 0;
+            d = Math.floor(d/16);
+        } else {//Use microseconds since page-load if supported
+            r = (d2 + r)%16 | 0;
+            d2 = Math.floor(d2/16);
+        }
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+}
+
 const localState = {
     count: 0,
     lastSentMessage: '',
@@ -18,11 +34,26 @@ const actions = {
 
         var message = {
             operation: "GET_EMPTY_ROW",
-            gameId: "not_empty",
+            gameId: generateUUID(),
             content: ""
         }
 
-        console.log(message)
+        if(localState.socket.isConnected) {
+            Vue.prototype.$socket.send(JSON.stringify(message))
+            commit('SEND_MESSAGE', message)
+        } else {
+            commit('NOT_CONNECTED_ERROR')
+        }
+    },
+    async sendSubmitGuess({commit}, row) {
+        console.log('submitting guess')
+
+        var message = {
+            operation: "SUBMIT_GUESS",
+            gameId: generateUUID(),
+            content: JSON.stringify(row)
+        }
+
         if(localState.socket.isConnected) {
             Vue.prototype.$socket.send(JSON.stringify(message))
             commit('SEND_MESSAGE', message)

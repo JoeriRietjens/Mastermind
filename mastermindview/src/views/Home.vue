@@ -1,11 +1,10 @@
 <template>
   <div class="home">
-    <button v-on:click="sendGetEmptyRow()">Send message to server</button>
     <h2 class="boardTitle"> Your own board </h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
     <button v-on:click="SubmitCode" class="myButton">Confirm code</button>
-    <button v-on:click="PostGuess" class="myButton">Confirm guess</button>
+    <button v-on:click="SubmitGuess" class="myButton">Confirm guess</button>
     <h2 class="boardTitle"> Your opponents board </h2>
     <OpponentBoard v-on:SelectCodeSpot="SelectCodeSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
   </div>
@@ -17,7 +16,7 @@ import Board from '@/components/Board.vue';
 import Colors from '@/components/Colors.vue';
 import OpponentBoard from '@/components/OpponentBoard.vue';
 import axios from 'axios';
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'Home',
@@ -43,10 +42,42 @@ export default {
       SelectedSpot: null,
       currentRow: 'RowOne',
       Row: {id: 10, code: [null, null, null, null], clues: [null, null, null, null]},
+      emptyRow: null,
     }
   },
+  computed: mapState(['socket']),
+  created() {
+    this.unsubscribe = this.$store.subscribe(
+      (mutation, state) => { 
+        if (mutation.type == "SOCKET_ONOPEN") {
+          if (state.socket.socket.isConnected) {
+            this.sendGetEmptyRow()
+          }
+        }
+        else if (mutation.type == "SOCKET_ONMESSAGE") {
+          var message = state.socket.socket.message
+          var parsedMessage = JSON.parse(message.content);
+          switch(message.operation) {
+            case "SUBMIT_GUESS":
+              console.log(parsedMessage)
+              this.ChangeClues(parsedMessage)
+              break
+            case "GET_EMPTY_ROW":
+              this.emptyRow = parsedMessage
+              break
+            case "SUBMIT_CODE":
+              console.log(parsedMessage)
+              break
+          }
+        }
+      }
+    );
+  },
+  beforeDestroy() {
+    this.unsubscribe();
+  },
   methods: {
-    ...mapActions(['sendGetEmptyRow']),
+    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess']),
     SelectSpot(obj){
       if (obj.$parent.RowId == this.currentRow){
         this.SelectedSpot = obj;
@@ -72,21 +103,18 @@ export default {
       console.log(this.Row.id);
       
     },
-    SubmitGuess(response){
-      console.log(response);
-      this.Row = response;
+    SubmitGuess(){
+      this.Row = Object.assign({}, this.emptyRow); // copy empty row
       var Row = this.$children[0].$children.find(child => {return child.RowId == this.currentRow});
       var colors = [ 
         Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color ];
       this.Row.guess = colors;
       console.log(this.Row.code);
-      axios.post('http://localhost:8080/guess/submit/1/', this.Row)
-        .then(response => this.ChangeClues(response.data))
-        .catch(error => console.log(error));
+      this.sendSubmitGuess(this.Row);
     },
-    ChangeClues(response){
-      this.Row = response;
-      console.log(response);
+    ChangeClues(filledRow){
+      this.Row = filledRow;
+      console.log(filledRow);
       var Row = this.$children[0].$children.find(child => {return child.RowId == this.currentRow});
       
       if(this.Row.clues[0] != 'BLANK') {
