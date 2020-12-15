@@ -60,7 +60,6 @@ export default {
           var parsedMessage = JSON.parse(message.content);
           switch(message.operation) {
             case "SUBMIT_GUESS":
-              console.log(parsedMessage)
               this.ChangeClues(parsedMessage)
               break
             case "GET_EMPTY_ROW":
@@ -114,7 +113,6 @@ export default {
     },
     ChangeClues(filledRow){
       this.Row = filledRow;
-      console.log(filledRow);
       var Row = this.$children[0].$children.find(child => {return child.RowId == this.currentRow});
       
       if(this.Row.clues[0] != 'BLANK') {
