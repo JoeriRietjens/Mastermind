@@ -233,18 +233,19 @@ export default {
     },
     
     checkColorCode:function() {
-      console.log("CheckColorCode");
-        var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
+      var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
+      console.log(Row)
       var colors = [ 
-        Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color ];
-        for(var i=0;i<4;i++)
+        Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color 
+        ];
+      for(var i=0;i<4;i++)
+      {
+        if(colors[i]==null)
         {
-          if(colors[i]==null)
-          {
-            return false;
-          }
+          return false;
         }
-        return true;
+      }
+      return true;
     }
   }
 }
