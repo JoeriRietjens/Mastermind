@@ -33,10 +33,6 @@ export default {
             this.$emit("SelectCodeSpot", SelectCodeSpot)
         }
     },
-    created: function () {
-        this.$store.commit('setOpponentBoard', {state: this.$store.state, board: this})
-        
-    },
 }
 </script>
 

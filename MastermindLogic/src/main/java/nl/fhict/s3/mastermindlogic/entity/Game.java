@@ -1,29 +1,43 @@
 package nl.fhict.s3.mastermindlogic.entity;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
-@Service
-@Scope("singleton")
+import java.util.*;
 
 public class Game {
-
     private final UUID id;
-    private Player[] players = new Player[2];
+    private Player player1;
+    private Player player2;
 
-    public Player[] getPlayers() {
-        return players;
-    }
     public UUID getId() {
         return id;
     }
 
     public Game() {
         this.id = UUID.randomUUID();
-        Player player1 = new Player(0);
-        Player player2 = new Player(1);
-        players[0] = player1;
-        players[1] = player2;
+        player1 = new Player(0);
+        player2 = new Player(1);
+    }
+
+    public Game(UUID id) {
+        this.id = id;
+        player1 = new Player(0);
+        player2 = new Player(1);
+    }
+
+    public Player getPlayer(int playerId) {
+        if(playerId == player1.getId()){
+            return player1;
+        } else if (playerId == player2.getId()) {
+            return player2;
+        }
+        return null;
+    }
+
+    public Player getOponnent(int playerId) {
+        if(playerId == player1.getId()){
+            return player2;
+        } else if (playerId == player2.getId()) {
+            return player1;
+        }
+        return null;
     }
 }

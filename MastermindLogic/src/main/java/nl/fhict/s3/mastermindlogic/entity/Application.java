@@ -16,10 +16,14 @@ public class Application {
         return INSTANCE;
     }
 
+    public void newGame(Game game) {
+        games.add(game);
+    }
+
     public Game getOpenGame() {
         for (Game game :
                 games) {
-            if (game.getPlayers()[1] == null) {
+            if (game.getPlayer(1) == null) {
                 return game;
             }
         }
@@ -30,7 +34,7 @@ public class Application {
 
     public Game getGameById(UUID id) {
         for(Game game: games){
-            if(game.getId() == id )
+            if(game.getId().equals(id) )
                 return game;
         }
         return null;

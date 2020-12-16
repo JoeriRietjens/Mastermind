@@ -1,12 +1,17 @@
 <template>
   <div class="home">
+
     <h2 class="boardTitle"> Your own board </h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
     <button v-on:click="SubmitCode" class="myButton">Confirm code</button>
-    <button v-on:click="PostGuess" class="myButton">Confirm guess</button>
+    <button v-on:click="SubmitGuess" class="myButton">Confirm guess</button>
+    <button v-on:click="showPanel" class="myButton">Instructions</button>
     <h2 class="boardTitle"> Your opponents board </h2>
     <OpponentBoard v-on:SelectCodeSpot="SelectCodeSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
+
+    <slideout-panel></slideout-panel>
+    
   </div>
 </template>
 
@@ -16,6 +21,14 @@ import Board from '@/components/Board.vue';
 import Colors from '@/components/Colors.vue';
 import OpponentBoard from '@/components/OpponentBoard.vue';
 import axios from 'axios';
+import Vue from 'vue';
+import VueSlideoutPanel from 'vue2-slideout-panel';
+import Instruction from '../components/Instruction.vue';
+import VueSimpleAlert from "vue-simple-alert";
+import { mapActions, mapState } from 'vuex';
+
+Vue.use(VueSlideoutPanel);
+Vue.use(VueSimpleAlert);
 
 export default {
   name: 'Home',
@@ -34,16 +47,67 @@ export default {
   components: {
     Board,
     Colors,
-    OpponentBoard,
+    OpponentBoard
   },
   data() {
     return {
       SelectedSpot: null,
       currentRow: 'RowOne',
       Row: {id: 10, code: [null, null, null, null], clues: [null, null, null, null]},
+      emptyRow: null,
     }
   },
+  computed: mapState(['socket']),
+  created() {
+    this.$alert("Hello Player Please enter your colour code before you start.\n \nif you want to know how the game works please press on the Instruction button");
+    this.unsubscribe = this.$store.subscribe(
+      (mutation, state) => { 
+        if (mutation.type == "SOCKET_ONOPEN") {
+          if (state.socket.socket.isConnected) {
+            this.sendRegisterGame()
+            this.sendGetEmptyRow()
+          }
+        }
+        else if (mutation.type == "SOCKET_ONMESSAGE") {
+          var message = state.socket.socket.message
+          var parsedMessage = JSON.parse(message.content);
+          switch(message.operation) {
+            case "SUBMIT_GUESS":
+              this.ChangeClues(parsedMessage)
+              break
+            case "GET_EMPTY_ROW":
+              this.emptyRow = parsedMessage
+              break
+            case "SUBMIT_CODE":
+              console.log(parsedMessage)
+              break
+          }
+        }
+      }
+    );
+  },
+  beforeDestroy() {
+    this.unsubscribe();
+  },
   methods: {
+    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame']),
+    showPanel() {
+      const panel1Handle = this.$showPanel({
+        component : Instruction,
+        openOn: 'left',
+        props: {
+          
+
+          //any data you want passed to your component
+        }
+      });
+      
+      panel1Handle.promise
+        // .then(result => {
+          
+        // });
+      
+    },
     SelectSpot(obj){
       if (obj.$parent.RowId == this.currentRow){
         this.SelectedSpot = obj;
@@ -59,30 +123,46 @@ export default {
       var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
       var colors = [ 
       Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color];
-      axios.post('http://localhost:8080/code/submit/0/', colors).then().catch(error => console.log(error));
+      if(this.checkColorCode()==true)
+      {
+        axios.post('http://localhost:8080/code/submit/0/', colors).then().catch(error => console.log(error));
+      }
+      else
+      {
+        this.$fire({title:"Colour code input", text:"You didn't have made your colour code!",type:'warning'});
+      }
 
     },
     PostGuess(){
       console.log("Guess confirmed");
-      axios.get('http://localhost:8080/emptyrow/').then( response => this.SubmitGuess(response.data)).catch(error => console.log(error));
-      console.log(this.Row.id);
+      if(this.checkColorCode()==true)
+      {
+          axios.get('http://localhost:8080/emptyrow/').then( response => this.SubmitGuess(response.data)).catch(error => console.log(error));
+          console.log(this.Row.id);
+      }
+      else
+      {
+          this.$fire({title:"Colour code input", text:"You didn't have made your colour code!",type:'warning'});
+      }
       
     },
-    SubmitGuess(response){
-      console.log(response);
-      this.Row = response;
+    SubmitGuess(){
+      this.Row = Object.assign({}, this.emptyRow); // copy empty row
       var Row = this.$children[0].$children.find(child => {return child.RowId == this.currentRow});
       var colors = [ 
         Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color ];
       this.Row.guess = colors;
-      console.log(this.Row.code);
-      axios.post('http://localhost:8080/guess/submit/1/', this.Row)
-        .then(response => this.ChangeClues(response.data))
-        .catch(error => console.log(error));
+      if(this.checkColorCode()==true)
+      {
+        this.sendSubmitGuess(this.Row);
+      }
+      else
+      {
+        this.$fire({title:"Colour input", text:"some inputs don't have a colour!",type:'warning'});
+      }
     },
-    ChangeClues(response){
-      this.Row = response;
-      console.log(response);
+    ChangeClues(filledRow){
+      this.Row = filledRow;
       var Row = this.$children[0].$children.find(child => {return child.RowId == this.currentRow});
       
       if(this.Row.clues[0] != 'BLANK') {
@@ -150,6 +230,22 @@ export default {
           this.SelectedSpot = null;
           break;
       }
+    },
+    
+    checkColorCode:function() {
+      var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
+      console.log(Row)
+      var colors = [ 
+        Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color 
+        ];
+      for(var i=0;i<4;i++)
+      {
+        if(colors[i]==null)
+        {
+          return false;
+        }
+      }
+      return true;
     }
   }
 }
