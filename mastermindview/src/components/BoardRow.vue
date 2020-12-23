@@ -1,9 +1,9 @@
 <template>
     <div id="RowId">
-        <ColorSpot class="custom-select" v-on:SelectSpot="SelectSpot" SpotId="SpotOne"></ColorSpot>
-        <ColorSpot class="custom-select" v-on:SelectSpot="SelectSpot" SpotId="SpotTwo"></ColorSpot>
-        <ColorSpot class="custom-select" v-on:SelectSpot="SelectSpot" SpotId="SpotThree"></ColorSpot>
-        <ColorSpot class="custom-select" v-on:SelectSpot="SelectSpot" SpotId="SpotFour"></ColorSpot>
+        <ColorSpot v-on:SelectSpot="SelectSpot" SpotId="SpotOne"></ColorSpot>
+        <ColorSpot v-on:SelectSpot="SelectSpot" SpotId="SpotTwo"></ColorSpot>
+        <ColorSpot v-on:SelectSpot="SelectSpot" SpotId="SpotThree"></ColorSpot>
+        <ColorSpot v-on:SelectSpot="SelectSpot" SpotId="SpotFour"></ColorSpot>
         <div class="Hints">
             <div class="topRow">
             <HintSpot class="hintSpot" HintId="HintOne"></HintSpot>
