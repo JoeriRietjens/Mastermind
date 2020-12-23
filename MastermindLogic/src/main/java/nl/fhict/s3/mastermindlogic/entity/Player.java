@@ -1,6 +1,5 @@
 package nl.fhict.s3.mastermindlogic.entity;
 
-
 public class Player {
 
     private final int id;
@@ -43,5 +42,4 @@ public class Player {
     public Board getBoard() {
         return board;
     }
-
 }

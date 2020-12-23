@@ -5,7 +5,7 @@
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
     <button v-on:click="SubmitCode" class="myButton">Confirm code</button>
-    <button v-on:click="PostGuess" class="myButton">Confirm guess</button>
+    <button v-on:click="SubmitGuess" class="myButton">Confirm guess</button>
     <button v-on:click="showPanel" class="myButton">Instructions</button>
     <h2 class="boardTitle"> Your opponents board </h2>
     <OpponentBoard v-on:SelectCodeSpot="SelectCodeSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
@@ -25,16 +25,12 @@ import Vue from 'vue';
 import VueSlideoutPanel from 'vue2-slideout-panel';
 import Instruction from '../components/Instruction.vue';
 import VueSimpleAlert from "vue-simple-alert";
+import { mapActions, mapState } from 'vuex';
 
 Vue.use(VueSlideoutPanel);
 Vue.use(VueSimpleAlert);
 
 export default {
-
-  created() {
-    this.$alert("Hello Player Please enter your colour code before you start.\n \nif you want to know how the game works please press on the Instruction button");
-  },
-
   name: 'Home',
   notifications: {
     showWinMessage: {
@@ -58,6 +54,7 @@ export default {
       SelectedSpot: null,
       currentRow: 'RowOne',
       Row: {id: 10, code: [null, null, null, null], clues: [null, null, null, null]},
+      emptyRow: null,
     }
   },
 
@@ -68,16 +65,57 @@ export default {
       openOn: 'left',
       props: {
         //any data you want passed to your component
+  computed: mapState(['socket']),
+  created() {
+    this.$alert("Hello Player Please enter your colour code before you start.\n \nif you want to know how the game works please press on the Instruction button");
+    this.unsubscribe = this.$store.subscribe(
+      (mutation, state) => { 
+        if (mutation.type == "SOCKET_ONOPEN") {
+          if (state.socket.socket.isConnected) {
+            this.sendRegisterGame()
+            this.sendGetEmptyRow()
+          }
+        }
+        else if (mutation.type == "SOCKET_ONMESSAGE") {
+          var message = state.socket.socket.message
+          var parsedMessage = JSON.parse(message.content);
+          switch(message.operation) {
+            case "SUBMIT_GUESS":
+              this.ChangeClues(parsedMessage)
+              break
+            case "GET_EMPTY_ROW":
+              this.emptyRow = parsedMessage
+              break
+            case "SUBMIT_CODE":
+              console.log(parsedMessage)
+              break
+          }
+        }
       }
-    });
-    
-    panel1Handle.promise
-      // .then(result => {
-        
-      // });
-    
+    );
   },
+  beforeDestroy() {
+    this.unsubscribe();
+  },
+  methods: {
+    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame']),
+    showPanel() {
+      const panel1Handle = this.$showPanel({
+        component : Instruction,
+        openOn: 'left',
+        props: {
+          
 
+          //any data you want passed to your component
+        }
+      });
+      
+      panel1Handle.promise
+        // .then(result => {
+          
+        // });
+      
+    },
     SelectSpot(obj){
       if (obj.$parent.RowId == this.currentRow){
         this.SelectedSpot = obj;
@@ -95,11 +133,11 @@ export default {
       Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color];
       if(this.checkColorCode()==true)
       {
-      axios.post('http://localhost:8080/code/submit/0/', colors).then().catch(error => console.log(error));
+        axios.post('http://localhost:8080/code/submit/0/', colors).then().catch(error => console.log(error));
       }
       else
       {
-          this.$fire({title:"Colour code input", text:"You didn't have made your colour code!",type:'warning'});
+        this.$fire({title:"Colour code input", text:"You didn't have made your colour code!",type:'warning'});
       }
 
     },
@@ -116,28 +154,23 @@ export default {
       }
       
     },
-    SubmitGuess(response){
-      console.log(response);
-      this.Row = response;
+    SubmitGuess(){
+      this.Row = Object.assign({}, this.emptyRow); // copy empty row
       var Row = this.$children[0].$children.find(child => {return child.RowId == this.currentRow});
       var colors = [ 
         Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color ];
       this.Row.guess = colors;
-      console.log(this.Row.code);
-            if(this.checkColorCode()==true)
+      if(this.checkColorCode()==true)
       {
-      axios.post('http://localhost:8080/guess/submit/1/', this.Row)
-        .then(response => this.ChangeClues(response.data))
-        .catch(error => console.log(error));
+        this.sendSubmitGuess(this.Row);
       }
       else
       {
         this.$fire({title:"Colour input", text:"some inputs don't have a colour!",type:'warning'});
       }
     },
-    ChangeClues(response){
-      this.Row = response;
-      console.log(response);
+    ChangeClues(filledRow){
+      this.Row = filledRow;
       var Row = this.$children[0].$children.find(child => {return child.RowId == this.currentRow});
       
       if(this.Row.clues[0] != 'BLANK') {
@@ -208,18 +241,19 @@ export default {
     },
     
     checkColorCode:function() {
-      console.log("CheckColorCode");
-        var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
+      var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
+      console.log(Row)
       var colors = [ 
-        Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color ];
-        for(var i=0;i<4;i++)
+        Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color 
+        ];
+      for(var i=0;i<4;i++)
+      {
+        if(colors[i]==null)
         {
-          if(colors[i]==null)
-          {
-            return false;
-          }
+          return false;
         }
-        return true;
+      }
+      return true;
     }
   }
 }
