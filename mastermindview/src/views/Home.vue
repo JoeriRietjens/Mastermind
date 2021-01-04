@@ -57,14 +57,6 @@ export default {
       emptyRow: null,
     }
   },
-
-  methods: {
-    showPanel() {
-    const panel1Handle = this.$showPanel({
-      component : Instruction,
-      openOn: 'left',
-      props: {
-        //any data you want passed to your component
   computed: mapState(['socket']),
   created() {
     this.$alert("Hello Player Please enter your colour code before you start.\n \nif you want to know how the game works please press on the Instruction button");
@@ -97,6 +89,8 @@ export default {
   beforeDestroy() {
     this.unsubscribe();
   },
+  
+  
   methods: {
     ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame']),
     showPanel() {
@@ -114,7 +108,7 @@ export default {
         // .then(result => {
           
         // });
-      
+    
     },
     SelectSpot(obj){
       if (obj.$parent.RowId == this.currentRow){
@@ -239,7 +233,6 @@ export default {
           break;
       }
     },
-    
     checkColorCode:function() {
       var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
       console.log(Row)
@@ -255,8 +248,9 @@ export default {
       }
       return true;
     }
-  },
+  }
 }
+
 </script>
 
 <style>

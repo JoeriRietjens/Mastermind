@@ -10,7 +10,7 @@ export default {
     data() {
       return {
         Color: 'grey',
-        selected: false
+        Selected: false
       }
     },
     props: ['SpotId', 'color', 'Button'],
@@ -22,6 +22,9 @@ export default {
     watch: {
       Color: function() {
         this.$el.querySelector('span').style.backgroundColor = this.Color;
+      },
+      Selected: function() {
+        this.$el.querySelector('span').style.border.Color = rgb(255, 255, 255);
       }
     },
     mounted: function () {
