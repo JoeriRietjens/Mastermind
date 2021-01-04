@@ -73,8 +73,7 @@ export default {
           var parsedMessage = JSON.parse(message.content);
           switch(message.operation) {
             case "REGISTER_GAME":
-              // Change game ID
-              
+              this.changeGameID(parsedMessage)
               break
             case "SUBMIT_GUESS":
               this.ChangeClues(parsedMessage)
