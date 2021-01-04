@@ -24,7 +24,12 @@ export default {
         this.$el.querySelector('span').style.backgroundColor = this.Color;
       },
       Selected: function() {
-        this.$el.querySelector('span').style.border.Color = rgb(255, 255, 255);
+        if(this.Selected == true){
+          this.$el.querySelector('span').classList.add("selectedSpot");
+        }
+        else{
+          this.$el.querySelector('span').classList.remove("selectedSpot");
+        }
       }
     },
     mounted: function () {

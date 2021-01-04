@@ -112,7 +112,11 @@ export default {
     },
     SelectSpot(obj){
       if (obj.$parent.RowId == this.currentRow){
+        if(this.SelectedSpot != null){
+          this.SelectedSpot.$data.Selected = false;
+        }
         this.SelectedSpot = obj;
+        this.SelectedSpot.$data.Selected = true;
       }
     },
     ChangeColor(color){
@@ -332,7 +336,7 @@ export default {
   border: 3px groove rgb(10, 5, 5);
 }
 
-.dot:active {
+.selectedSpot {
   border: 3px groove rgb(255, 255, 255);
 }
 
