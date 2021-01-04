@@ -1,5 +1,6 @@
 package nl.fhict.s3.mastermindlogic;
 
+import java.net.http.WebSocket;
 import java.util.*;
 import javax.websocket.CloseReason;
 import javax.websocket.OnClose;
@@ -60,7 +61,7 @@ public class GameEndpoint {
         if(operation != null && gameId != null && !"".equals(gameId)) {
             switch(operation) {
                 case REGISTER_GAME:
-                    registerGameOperation(gameId, session);
+                    registerGameOperation(session);
                     break;
                 case UNREGISTER_GAME:
                     unregisterGameOperation(gameId);
@@ -109,11 +110,20 @@ public class GameEndpoint {
         System.err.println("[wsServer] cannot parse: " + message);
     }
 
-    private void registerGameOperation(UUID gameId, Session session) {
-        Game game = new Game(gameId);
+    private void registerGameOperation(Session session) {
+        Game game = new Game();
         application.newGame(game);
         games.put(game.getId(), new ArrayList<Session>());
         games.get(game.getId()).add(session);
+        
+        // Return gameID to user
+        Gson gson = new Gson();
+        WebSocketMessage returnMessage = new WebSocketMessage();
+        returnMessage.setGameId(game.getId());
+        returnMessage.setOperation(WebSocketMessageOperation.REGISTER_GAME);
+        returnMessage.setContent(game.getId().toString());
+        String jsonReturnMessage = gson.toJson(returnMessage);
+        session.getAsyncRemote().sendText(jsonReturnMessage);
     }
 
     private void unregisterGameOperation(UUID gameId) {
