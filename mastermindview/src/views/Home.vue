@@ -94,7 +94,7 @@ export default {
     this.unsubscribe();
   },
   methods: {
-    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame', 'changeGameID']),
+    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame', 'changeGameID', 'sendSubmitCode']),
     showPanel() {
       const panel1Handle = this.$showPanel({
         component : Instruction,
@@ -129,7 +129,7 @@ export default {
       Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color];
       if(this.checkColorCode()==true)
       {
-        axios.post('http://localhost:8080/code/submit/0/', colors).then().catch(error => console.log(error));
+        this.sendSubmitCode(colors)
       }
       else
       {
