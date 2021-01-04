@@ -124,7 +124,6 @@ public class GameEndpoint {
         returnMessage.setContent(gson.toJson(game.getId().toString()));
         String jsonReturnMessage = gson.toJson(returnMessage);
         session.getAsyncRemote().sendText(jsonReturnMessage);
-        System.out.println(game.getId());
     }
 
     private void unregisterGameOperation(UUID gameId) {
@@ -147,7 +146,7 @@ public class GameEndpoint {
         // TODO: finish, make sure code gets set to right player
         if(games.get(gameId) != null) {
             int playerId = message.getPlayerId();
-            int opponentId = playerId-1;
+            int opponentId = 1;
             EPinColour[] code = gson.fromJson(message.getContent(), EPinColour[].class);
             application.getGameById(gameId).getPlayer(opponentId).getBoard().setCode(code);
         } else {
