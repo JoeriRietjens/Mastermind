@@ -1,6 +1,6 @@
 package nl.fhict.s3.mastermindlogic.entity;
 
-import java.util.*;
+import java.util.UUID;
 
 public class Game {
     private final UUID id;
@@ -32,12 +32,4 @@ public class Game {
         return null;
     }
 
-    public Player getOponnent(int playerId) {
-        if(playerId == player1.getId()){
-            return player2;
-        } else if (playerId == player2.getId()) {
-            return player1;
-        }
-        return null;
-    }
 }
