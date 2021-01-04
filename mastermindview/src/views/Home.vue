@@ -8,7 +8,7 @@
     <button v-on:click="SubmitGuess" class="myButton">Confirm guess</button>
     <button v-on:click="showPanel" class="myButton">Instructions</button>
     <h2 class="boardTitle"> Your opponents board </h2>
-    <OpponentBoard v-on:SelectCodeSpot="SelectCodeSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
+    <OpponentBoard v-on:SelectCodeSpot="SelectSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
 
     <slideout-panel></slideout-panel>
     
@@ -52,7 +52,7 @@ export default {
   data() {
     return {
       SelectedSpot: null,
-      currentRow: 'RowOne',
+      currentRow: 'code',
       Row: {id: 10, code: [null, null, null, null], clues: [null, null, null, null]},
       emptyRow: null,
     }
@@ -122,20 +122,17 @@ export default {
     ChangeColor(color){
       this.SelectedSpot.$data.Color = color;
     },
-    SelectCodeSpot(SelectCodeSpot) {
-      this.SelectedSpot = SelectCodeSpot;
-    },
     SubmitCode() {
       var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
       var colors = [ 
       Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color];
       if(this.checkColorCode()==true)
       {
-        axios.post('http://localhost:8080/code/submit/0/', colors).then().catch(error => console.log(error));
+        axios.post('http://localhost:8080/code/submit/0/', colors).then(this.setNextRow()).catch(error => console.log(error));
       }
       else
       {
-        this.$fire({title:"Colour code input", text:"You didn't have made your colour code!",type:'warning'});
+        this.$fire({title:"Colour code input", text:"You haven't made a correct colour code!",type:'warning'});
       }
 
     },
@@ -200,6 +197,9 @@ export default {
     },
     setNextRow(){
       switch (this.currentRow){
+        case 'code':
+          this.currentRow = 'RowOne';
+          break;
         case 'RowOne':
           this.currentRow = 'RowTwo';
           break;
