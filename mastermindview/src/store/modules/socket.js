@@ -31,6 +31,23 @@ const actions = {
             commit('NOT_CONNECTED_ERROR')
         }
     },
+    async sendSubmitCode({commit}, code) {
+        console.log('submitting code')
+
+        var message = {
+            operation: "SUBMIT_CODE",
+            gameId: localState.socket.currentGameId,
+            playerId: 0,
+            content: JSON.stringify(code)
+        }
+
+        if(localState.socket.isConnected) {
+            Vue.prototype.$socket.send(JSON.stringify(message))
+            commit('SEND_MESSAGE', message)
+        } else {
+            commit('NOT_CONNECTED_ERROR')
+        }
+    },
     async sendGetEmptyRow({ commit }) {
         console.log('getting empty row')
 
