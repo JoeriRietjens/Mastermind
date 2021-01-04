@@ -177,7 +177,7 @@ public class GameEndpoint {
 
 
         } else {
-            logMessage(session.getId(), "error", "could not find game, gameId null" + gameId);
+            logMessage(session.getId(), "error", "could not find game, gameId null: " + gameId);
         }
     }
 
