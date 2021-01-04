@@ -91,6 +91,9 @@ const actions = {
         } else {
             commit('NOT_CONNECTED_ERROR')
         }
+    },
+    async changeGameID({ commit }, gameID) {
+        commit('CHANGE_GAME_ID', gameID)
     }
 }
 

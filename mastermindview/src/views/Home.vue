@@ -72,6 +72,10 @@ export default {
           var message = state.socket.socket.message
           var parsedMessage = JSON.parse(message.content);
           switch(message.operation) {
+            case "REGISTER_GAME":
+              // Change game ID
+              
+              break
             case "SUBMIT_GUESS":
               this.ChangeClues(parsedMessage)
               break
@@ -90,7 +94,7 @@ export default {
     this.unsubscribe();
   },
   methods: {
-    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame']),
+    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame', 'changeGameID']),
     showPanel() {
       const panel1Handle = this.$showPanel({
         component : Instruction,
