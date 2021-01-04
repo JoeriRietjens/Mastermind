@@ -58,7 +58,7 @@ public class GameEndpoint {
         WebSocketMessageOperation operation = message.getOperation();
         UUID gameId = message.getGameId();
 
-        if(operation != null && gameId != null && !"".equals(gameId)) {
+        if(operation != null && gameId != null) {
             switch(operation) {
                 case REGISTER_GAME:
                     registerGameOperation(session);
@@ -121,9 +121,10 @@ public class GameEndpoint {
         WebSocketMessage returnMessage = new WebSocketMessage();
         returnMessage.setGameId(game.getId());
         returnMessage.setOperation(WebSocketMessageOperation.REGISTER_GAME);
-        returnMessage.setContent(game.getId().toString());
+        returnMessage.setContent(gson.toJson(game.getId().toString()));
         String jsonReturnMessage = gson.toJson(returnMessage);
         session.getAsyncRemote().sendText(jsonReturnMessage);
+        System.out.println(game.getId());
     }
 
     private void unregisterGameOperation(UUID gameId) {

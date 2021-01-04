@@ -7,7 +7,7 @@ const localState = {
         isConnected: false,
         message: '',
         reconnectError: false,
-        currentGameId: ''
+        currentGameId: '00000000-0000-0000-0000-000000000000'
     }
 }
 
@@ -19,12 +19,10 @@ const actions = {
 
         var message = {
             operation: "REGISTER_GAME",
-            gameId: null,
+            gameId: localState.socket.currentGameId,
             playerId: 0,
             content: '' 
         }
-
-        localState.socket.currentGameId = message.gameId
 
         if(localState.socket.isConnected) {
             Vue.prototype.$socket.send(JSON.stringify(message))
