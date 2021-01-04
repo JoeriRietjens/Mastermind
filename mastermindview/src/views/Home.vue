@@ -71,7 +71,11 @@ export default {
         else if (mutation.type == "SOCKET_ONMESSAGE") {
           var message = state.socket.socket.message
           var parsedMessage = JSON.parse(message.content);
+          console.log(message.operation)
           switch(message.operation) {
+            case "REGISTER_GAME":
+              this.changeGameID(parsedMessage)
+              break
             case "SUBMIT_GUESS":
               this.ChangeClues(parsedMessage)
               break
@@ -92,7 +96,7 @@ export default {
   
   
   methods: {
-    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame']),
+    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame', 'changeGameID', 'sendSubmitCode']),
     showPanel() {
       const panel1Handle = this.$showPanel({
         component : Instruction,
@@ -128,7 +132,8 @@ export default {
       Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color];
       if(this.checkColorCode()==true)
       {
-        axios.post('http://localhost:8080/code/submit/0/', colors).then(this.setNextRow()).catch(error => console.log(error));
+        this.sendSubmitCode(colors)
+        this.setNextRow();
       }
       else
       {
