@@ -23,7 +23,7 @@ public class Application {
     public Game getOpenGame() {
         for (Game game :
                 games) {
-            if (game.getPlayer(1) == null) {
+            if (game.getPlayer2() == null) {
                 return game;
             }
         }
