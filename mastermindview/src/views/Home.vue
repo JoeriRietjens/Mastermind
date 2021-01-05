@@ -75,6 +75,9 @@ export default {
             case "REGISTER_GAME":
               this.changeGameID(parsedMessage)
               break
+            case "JOIN_GAME":
+              this.changePlayerID(parsedMessage)
+              break
             case "SUBMIT_GUESS":
               this.ChangeClues(parsedMessage)
               break
@@ -95,7 +98,7 @@ export default {
   
   
   methods: {
-    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame', 'changeGameID', 'sendSubmitCode']),
+    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame', 'changeGameID', 'changePlayerId', 'sendSubmitCode']),
     showPanel() {
       const panel1Handle = this.$showPanel({
         component : Instruction,

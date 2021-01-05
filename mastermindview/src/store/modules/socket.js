@@ -7,7 +7,8 @@ const localState = {
         isConnected: false,
         message: '',
         reconnectError: false,
-        currentGameId: '00000000-0000-0000-0000-000000000000'
+        currentGameId: '00000000-0000-0000-0000-000000000000',
+        currentPlayerId: 0
     }
 }
 
@@ -20,7 +21,7 @@ const actions = {
         var message = {
             operation: "REGISTER_GAME",
             gameId: localState.socket.currentGameId,
-            playerId: 0,
+            playerId: localState.socket.currentPlayerId,
             content: '' 
         }
 
@@ -37,7 +38,7 @@ const actions = {
         var message = {
             operation: "SUBMIT_CODE",
             gameId: localState.socket.currentGameId,
-            playerId: 0,
+            playerId: localState.socket.currentPlayerId,
             content: JSON.stringify(code)
         }
 
@@ -54,7 +55,7 @@ const actions = {
         var message = {
             operation: "GET_EMPTY_ROW",
             gameId: localState.socket.currentGameId,
-            playerId: 0,
+            playerId: localState.socket.currentPlayerId,
             content: ""
         }
 
@@ -71,7 +72,7 @@ const actions = {
         var message = {
             operation: "SUBMIT_GUESS",
             gameId: localState.socket.currentGameId,
-            playerId: 0,
+            playerId: localState.socket.currentPlayerId,
             content: JSON.stringify(row)
         }
 
@@ -93,6 +94,9 @@ const actions = {
     },
     async changeGameID({ commit }, gameID) {
         commit('CHANGE_GAME_ID', gameID)
+    },
+    async changePlayerId({ commit }, playerId) {
+        commit('CHANGE_PLAYER_ID', playerId)
     }
 }
 
@@ -124,6 +128,9 @@ const mutations = {
     },
     CHANGE_GAME_ID(state, gameId) {
         state.socket.currentGameId = gameId
+    },
+    CHANGE_PLAYER_ID(state, playerId) {
+        state.socket.currentPlayerId = playerId
     }
 }
 
