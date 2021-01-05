@@ -17,12 +17,6 @@ public class Game {
         player2 = new Player(1);
     }
 
-    public Game(UUID id) {
-        this.id = id;
-        player1 = new Player(0);
-        player2 = new Player(1);
-    }
-
     public Player getPlayer(int playerId) {
         if(playerId == player1.getId()){
             return player1;
