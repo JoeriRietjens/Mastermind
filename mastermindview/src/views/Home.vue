@@ -75,7 +75,7 @@ export default {
               this.changeGameID(parsedMessage)
               break
             case "JOIN_GAME":
-              this.changePlayerID(parsedMessage)
+              this.changePlayerId(parsedMessage)
               break
             case "SUBMIT_GUESS":
               this.ChangeClues(parsedMessage)
