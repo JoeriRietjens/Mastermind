@@ -66,8 +66,10 @@
 					<append>true</append>
 					<excludes>
 						<exclude>*MethodAccess</exclude>
+						<!--
 						<exclude>**/*Game.*</exclude>
 						<exclude>**/*Application.*</exclude>
+						-->
 
 					</excludes>
 				</configuration>

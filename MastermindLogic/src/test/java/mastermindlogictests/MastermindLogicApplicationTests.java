@@ -291,4 +291,19 @@ public class MastermindLogicApplicationTests {
 
 		assertFalse(row.isNotCompletelyFilled());
 	}
+	@Test
+	void testGame(){
+		Game game = new Game();
+		assertNotNull(game.getPlayer(1));
+		assertNotNull(game);
+	}
+
+	@Test
+	void testApplication(){
+		Application app = Application.getInstance();
+		Game game = app.getOpenGameOrNew();
+		Game game2 = app.getOpenGameOrNew();
+
+		assertEquals(game.getId(), game2.getId());
+	}
 }
