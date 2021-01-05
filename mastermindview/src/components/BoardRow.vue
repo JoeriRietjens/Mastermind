@@ -45,4 +45,14 @@ export default {
     position: relative;
     display: inline-block;
 }
+
+.custom-select .selected {
+    background-color: #0a0a0a;
+  border-radius: 6px;
+  border: 1px solid #666666;
+  color: #fff;
+  padding-left: 1em;
+  cursor: pointer;
+  user-select: none;
+}
 </style>
