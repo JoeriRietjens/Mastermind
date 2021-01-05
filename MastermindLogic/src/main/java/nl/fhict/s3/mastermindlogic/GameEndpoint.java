@@ -99,6 +99,16 @@ public class GameEndpoint {
         return wsMessage;
     }
 
+    private void sendMessage(Session toSession, UUID gameId, WebSocketMessageOperation operation, Object content) {
+        Gson gson = new Gson();
+        WebSocketMessage returnMessage = new WebSocketMessage();
+        returnMessage.setGameId(gameId);
+        returnMessage.setOperation(operation);
+        returnMessage.setContent(gson.toJson(content));
+        String jsonReturnMessage = gson.toJson(returnMessage);
+        toSession.getAsyncRemote().sendText(jsonReturnMessage);
+    }
+
     private void logMessage(String sessionId, String action, String message) {
         System.out.println(String.format("[session %s] %s: %s", sessionId, action, message));
     }
@@ -108,27 +118,28 @@ public class GameEndpoint {
     }
 
     private void registerGameOperation(Session session) {
-        Game game = application.getOpenGame();
-        if(game.getPlayer1() == null){
+        Game game = application.getOpenGameOrNew();
+        int playerID = -1;
+        if(game.getPlayer1() == null) {
             game.setPlayer1(new Player(0));
-        }
-        else if(game.getPlayer2() == null){
+            playerID = 0;
+        } else if(game.getPlayer2() == null) {
             game.setPlayer2(new Player(1));
-        }
-        else{
+            playerID = 1;
+        } else {
             //TODO: error
         }
+        
+        assert playerID != -1;
+
         games.put(game.getId(), new ArrayList<Session>());
         games.get(game.getId()).add(session);
         
         // Return gameID to user
-        Gson gson = new Gson();
-        WebSocketMessage returnMessage = new WebSocketMessage();
-        returnMessage.setGameId(game.getId());
-        returnMessage.setOperation(WebSocketMessageOperation.REGISTER_GAME);
-        returnMessage.setContent(gson.toJson(game.getId().toString()));
-        String jsonReturnMessage = gson.toJson(returnMessage);
-        session.getAsyncRemote().sendText(jsonReturnMessage);
+        sendMessage(session, game.getId(), WebSocketMessageOperation.REGISTER_GAME, game.getId().toString());
+        
+        // return playerID to user
+        sendMessage(session, game.getId(), WebSocketMessageOperation.JOIN_GAME, Integer.toString(playerID));
     }
 
     private void unregisterGameOperation(UUID gameId) {
@@ -139,6 +150,8 @@ public class GameEndpoint {
         if(games.get(gameId) != null) {
             Game game = application.getGameById(gameId);
             games.get(game.getId()).add(session);
+            
+            // TODO: return playerID to user
         }
     }
 
