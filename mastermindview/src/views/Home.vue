@@ -72,6 +72,7 @@ export default {
           var parsedMessage = JSON.parse(message.content);
           switch(message.operation) {
             case "REGISTER_GAME":
+              this.changePlayerId(message.playerId)
               this.changeGameID(parsedMessage)
               break
             case "JOIN_GAME":

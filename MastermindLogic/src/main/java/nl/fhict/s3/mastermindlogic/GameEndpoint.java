@@ -136,11 +136,8 @@ public class GameEndpoint {
         games.put(game.getId(), new ArrayList<Session>());
         games.get(game.getId()).add(session);
         
-        // Return gameID to user
+        // Return gameId and playerId to user
         sendMessage(session, playerId, game.getId(), WebSocketMessageOperation.REGISTER_GAME, game.getId().toString());
-        
-        // return playerID to user
-        sendMessage(session, playerId, game.getId(), WebSocketMessageOperation.JOIN_GAME, Integer.toString(playerId));
     }
 
     private void unregisterGameOperation(UUID gameId) {
