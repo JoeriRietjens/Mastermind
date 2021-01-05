@@ -4,11 +4,11 @@
     <h2 class="boardTitle"> Your own board </h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
-    <button v-show="!buttonIsShown" v-on:click="SubmitCode" class="myButton">Confirm code</button>
+    <button v-show="confirmCodeIsShown" v-on:click="SubmitCode" class="myButton">Confirm code</button>
     <button v-show="confirmGuessIsShown" v-on:click="SubmitGuess" class="myButton">Confirm guess</button>
-    <button v-show="buttonIsShown" v-on:click="showPanel" class="myButton">Instructions</button>
-    <button v-show="buttonIsShown" v-on:click="reloadPage" class="myButton">Restart game</button>
-    <button v-on:click="laeveGame" class="myButton">Leave game</button>
+    <button v-on:click="showPanel" class="myButton">Instructions</button>
+    <button v-show="restartIsShown" v-on:click="reloadPage" class="myButton">Restart game</button>
+    <button v-on:click="leaveGame" class="myButton">Leave game</button>
     <h2 class="boardTitle"> Your opponents board </h2>
     <OpponentBoard v-on:SelectCodeSpot="SelectSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
 
@@ -55,8 +55,9 @@ export default {
       SelectedSpot: null,
       currentRow: 'code',
       Row: {id: 10, code: [null, null, null, null], clues: [null, null, null, null]},
-      buttonIsShown: false,
       confirmGuessIsShown: false,
+      confirmCodeIsShown: true,
+      restartIsShown: false,
     }
   },
   computed: mapState(['socket']),
@@ -183,17 +184,20 @@ export default {
       }
     },
     LostGame() {
-      this.buttonIsShown = true;
+      this.restartIsShown = true;
+      this.confirmGuessIsShown = false;
       this.showLostMessage();
     },
     WinGame() {
-      this.buttonIsShown = true;
+      this.restartIsShown = true;
+      this.confirmGuessIsShown = false;
       this.showWinMessage();
     },
     setNextRow(){
       switch (this.currentRow){
         case 'code':
           this.confirmGuessIsShown = true;
+          this.confirmCodeIsShown = false;
           this.currentRow = 'RowOne';
           break;
         case 'RowOne':
