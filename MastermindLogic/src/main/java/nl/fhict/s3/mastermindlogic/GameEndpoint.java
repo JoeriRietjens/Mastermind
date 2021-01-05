@@ -120,27 +120,27 @@ public class GameEndpoint {
 
     private void registerGameOperation(Session session) {
         Game game = application.getOpenGameOrNew();
-        int playerID = -1;
+        int playerId = -1;
         if(game.getPlayer1() == null) {
             game.setPlayer1(new Player(0));
-            playerID = 0;
+            playerId = 0;
         } else if(game.getPlayer2() == null) {
             game.setPlayer2(new Player(1));
-            playerID = 1;
+            playerId = 1;
         } else {
             //TODO: error
         }
         
-        assert playerID != -1;
+        assert playerId != -1;
 
         games.put(game.getId(), new ArrayList<Session>());
         games.get(game.getId()).add(session);
         
         // Return gameID to user
-        sendMessage(session, playerID, game.getId(), WebSocketMessageOperation.REGISTER_GAME, game.getId().toString());
+        sendMessage(session, playerId, game.getId(), WebSocketMessageOperation.REGISTER_GAME, game.getId().toString());
         
         // return playerID to user
-        sendMessage(session, playerID, game.getId(), WebSocketMessageOperation.JOIN_GAME, Integer.toString(playerID));
+        sendMessage(session, playerId, game.getId(), WebSocketMessageOperation.JOIN_GAME, Integer.toString(playerId));
     }
 
     private void unregisterGameOperation(UUID gameId) {
