@@ -69,7 +69,6 @@ export default {
         else if (mutation.type == "SOCKET_ONMESSAGE") {
           var message = state.socket.socket.message
           var parsedMessage = JSON.parse(message.content);
-          console.log(message.operation)
           switch(message.operation) {
             case "REGISTER_GAME":
               this.changeGameID(parsedMessage)
