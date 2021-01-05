@@ -1,21 +1,5 @@
 import Vue from 'vue'
 
-function generateUUID() { // Public Domain/MIT courtesy of Briguy37 on Stackoverflow
-    var d = new Date().getTime();//Timestamp
-    var d2 = (performance && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random() * 16;//random number between 0 and 16
-        if(d > 0){//Use timestamp until depleted
-            r = (d + r)%16 | 0;
-            d = Math.floor(d/16);
-        } else {//Use microseconds since page-load if supported
-            r = (d2 + r)%16 | 0;
-            d2 = Math.floor(d2/16);
-        }
-        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-    });
-}
-
 const localState = {
     count: 0,
     lastSentMessage: '',
@@ -23,7 +7,8 @@ const localState = {
         isConnected: false,
         message: '',
         reconnectError: false,
-        currentGameId: ''
+        currentGameId: '00000000-0000-0000-0000-000000000000',
+        currentPlayerId: 0
     }
 }
 
@@ -35,12 +20,27 @@ const actions = {
 
         var message = {
             operation: "REGISTER_GAME",
-            gameId: generateUUID(),
-            playerId: 0,
+            gameId: localState.socket.currentGameId,
+            playerId: localState.socket.currentPlayerId,
             content: '' 
         }
 
-        localState.socket.currentGameId = message.gameId
+        if(localState.socket.isConnected) {
+            Vue.prototype.$socket.send(JSON.stringify(message))
+            commit('SEND_MESSAGE', message)
+        } else {
+            commit('NOT_CONNECTED_ERROR')
+        }
+    },
+    async sendSubmitCode({commit}, code) {
+        console.log('submitting code')
+
+        var message = {
+            operation: "SUBMIT_CODE",
+            gameId: localState.socket.currentGameId,
+            playerId: localState.socket.currentPlayerId,
+            content: JSON.stringify(code)
+        }
 
         if(localState.socket.isConnected) {
             Vue.prototype.$socket.send(JSON.stringify(message))
@@ -55,7 +55,7 @@ const actions = {
         var message = {
             operation: "GET_EMPTY_ROW",
             gameId: localState.socket.currentGameId,
-            playerId: 0,
+            playerId: localState.socket.currentPlayerId,
             content: ""
         }
 
@@ -72,7 +72,7 @@ const actions = {
         var message = {
             operation: "SUBMIT_GUESS",
             gameId: localState.socket.currentGameId,
-            playerId: 0,
+            playerId: localState.socket.currentPlayerId,
             content: JSON.stringify(row)
         }
 
@@ -91,6 +91,12 @@ const actions = {
         } else {
             commit('NOT_CONNECTED_ERROR')
         }
+    },
+    async changeGameID({ commit }, gameID) {
+        commit('CHANGE_GAME_ID', gameID)
+    },
+    async changePlayerId({ commit }, playerId) {
+        commit('CHANGE_PLAYER_ID', playerId)
     }
 }
 
@@ -122,6 +128,9 @@ const mutations = {
     },
     CHANGE_GAME_ID(state, gameId) {
         state.socket.currentGameId = gameId
+    },
+    CHANGE_PLAYER_ID(state, playerId) {
+        state.socket.currentPlayerId = playerId
     }
 }
 
