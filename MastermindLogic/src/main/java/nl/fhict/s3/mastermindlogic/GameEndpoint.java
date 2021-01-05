@@ -165,7 +165,12 @@ public class GameEndpoint {
             int playerId = message.getPlayerId();
             int opponentId = Math.abs(playerId-1);
             EPinColour[] code = gson.fromJson(message.getContent(), EPinColour[].class);
-            application.getGameById(gameId).getPlayer(opponentId).getBoard().setCode(code);
+            Player opponent = application.getGameById(gameId).getPlayer(opponentId);
+            if (opponent != null) {
+                opponent.getBoard().setCode(code);
+            } else {
+                logMessage(session.getId(), "error", "no opponent has joined yet");
+            }
         } else {
             logMessage(session.getId(), "error", "could not find game, gameId: " + gameId);
         }
