@@ -7,6 +7,8 @@
     <button v-on:click="SubmitCode" class="myButton">Confirm code</button>
     <button v-on:click="SubmitGuess" class="myButton">Confirm guess</button>
     <button v-on:click="showPanel" class="myButton">Instructions</button>
+    <button v-show="restartButtonIsShown" v-on:click="reloadPage" class="myButton">Restart game</button>
+    <button v-on:click="laeveGame" class="myButton">Leave game</button>
     <h2 class="boardTitle"> Your opponents board </h2>
     <OpponentBoard v-on:SelectCodeSpot="SelectSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
 
@@ -55,6 +57,7 @@ export default {
       currentRow: 'code',
       Row: {id: 10, code: [null, null, null, null], clues: [null, null, null, null]},
       emptyRow: null,
+      restartButtonIsShown: false,
     }
   },
   computed: mapState(['socket']),
@@ -186,7 +189,7 @@ export default {
         Row.$children[7].Color = this.Row.clues[3];
       }
       if(this.Row.clues[0] == 'BLACK' && this.Row.clues[1] == 'BLACK' && this.Row.clues[2] == 'BLACK' && this.Row.clues[3] == 'BLACK') {
-        this.showWinMessage();
+        this.WinGame();
         this.currentRow = null;
       }
       if(this.Row.clues[0] != null){
@@ -195,9 +198,11 @@ export default {
       }
     },
     LostGame() {
+      this.restartButtonIsShown = true;
       this.showLostMessage();
     },
     WinGame() {
+      this.restartButtonIsShown = true;
       this.showWinMessage();
     },
     setNextRow(){
@@ -235,7 +240,7 @@ export default {
         case 'RowTen':
           this.currentRow = null;
           this.SelectedSpot = null;
-          this.showLostMessage();
+          this.LostGame();
           break;
         case null:
           this.SelectedSpot = null;
@@ -256,6 +261,12 @@ export default {
         }
       }
       return true;
+    },
+    reloadPage(){
+      window.location.reload()
+    },
+    leaveGame(){
+      //leave websocket game
     }
   }
 }
