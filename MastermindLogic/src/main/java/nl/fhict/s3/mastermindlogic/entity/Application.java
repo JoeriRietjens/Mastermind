@@ -20,10 +20,9 @@ public class Application {
         games.add(game);
     }
 
-    public Game getOpenGame() {
-        for (Game game :
-                games) {
-            if (game.getPlayer(1) == null) {
+    public Game getOpenGameOrNew() {
+        for (Game game : games) {
+            if (game.getPlayer2() == null) {
                 return game;
             }
         }

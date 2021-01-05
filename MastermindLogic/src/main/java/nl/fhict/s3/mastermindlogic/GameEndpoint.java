@@ -13,10 +13,7 @@ import javax.websocket.server.ServerEndpoint;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
-import nl.fhict.s3.mastermindlogic.entity.Application;
-import nl.fhict.s3.mastermindlogic.entity.EPinColour;
-import nl.fhict.s3.mastermindlogic.entity.Game;
-import nl.fhict.s3.mastermindlogic.entity.Row;
+import nl.fhict.s3.mastermindlogic.entity.*;
 
 
 @ServerEndpoint("/game")
@@ -79,7 +76,7 @@ public class GameEndpoint {
                     submitGuessOperation(gameId, session, message);
                     break;
                 case GET_EMPTY_ROW:
-                    getEmptyRowOperation(session);
+                    getEmptyRowOperation(gameId, session, message);
                     break;
                 default:
                     cannotParseMessage(serializedMessage);
@@ -102,6 +99,17 @@ public class GameEndpoint {
         return wsMessage;
     }
 
+    private void sendMessage(Session toSession, int playerId, UUID gameId, WebSocketMessageOperation operation, Object content) {
+        Gson gson = new Gson();
+        WebSocketMessage returnMessage = new WebSocketMessage();
+        returnMessage.setGameId(gameId);
+        returnMessage.setPlayerId(playerId);
+        returnMessage.setOperation(operation);
+        returnMessage.setContent(gson.toJson(content));
+        String jsonReturnMessage = gson.toJson(returnMessage);
+        toSession.getAsyncRemote().sendText(jsonReturnMessage);
+    }
+
     private void logMessage(String sessionId, String action, String message) {
         System.out.println(String.format("[session %s] %s: %s", sessionId, action, message));
     }
@@ -111,19 +119,25 @@ public class GameEndpoint {
     }
 
     private void registerGameOperation(Session session) {
-        Game game = new Game();
-        application.newGame(game);
+        Game game = application.getOpenGameOrNew();
+        int playerId = -1;
+        if(game.getPlayer1() == null) {
+            game.setPlayer1(new Player(0));
+            playerId = 0;
+        } else if(game.getPlayer2() == null) {
+            game.setPlayer2(new Player(1));
+            playerId = 1;
+        } else {
+            //TODO: error
+        }
+        
+        assert playerId != -1;
+
         games.put(game.getId(), new ArrayList<Session>());
         games.get(game.getId()).add(session);
         
-        // Return gameID to user
-        Gson gson = new Gson();
-        WebSocketMessage returnMessage = new WebSocketMessage();
-        returnMessage.setGameId(game.getId());
-        returnMessage.setOperation(WebSocketMessageOperation.REGISTER_GAME);
-        returnMessage.setContent(gson.toJson(game.getId().toString()));
-        String jsonReturnMessage = gson.toJson(returnMessage);
-        session.getAsyncRemote().sendText(jsonReturnMessage);
+        // Return gameId and playerId to user
+        sendMessage(session, playerId, game.getId(), WebSocketMessageOperation.REGISTER_GAME, game.getId().toString());
     }
 
     private void unregisterGameOperation(UUID gameId) {
@@ -134,6 +148,8 @@ public class GameEndpoint {
         if(games.get(gameId) != null) {
             Game game = application.getGameById(gameId);
             games.get(game.getId()).add(session);
+            
+            // TODO: return playerID to user
         }
     }
 
@@ -143,12 +159,16 @@ public class GameEndpoint {
 
     private void submitCodeOperation(UUID gameId, WebSocketMessage message, Session session) {
         Gson gson = new Gson();
-        // TODO: finish, make sure code gets set to right player
         if(games.get(gameId) != null) {
             int playerId = message.getPlayerId();
-            int opponentId = 1;
+            int opponentId = Math.abs(playerId-1);
             EPinColour[] code = gson.fromJson(message.getContent(), EPinColour[].class);
-            application.getGameById(gameId).getPlayer(opponentId).getBoard().setCode(code);
+            Player opponent = application.getGameById(gameId).getPlayer(opponentId);
+            if (opponent != null) {
+                opponent.getBoard().setCode(code);
+            } else {
+                logMessage(session.getId(), "error", "no opponent has joined yet");
+            }
         } else {
             logMessage(session.getId(), "error", "could not find game, gameId: " + gameId);
         }
@@ -157,37 +177,23 @@ public class GameEndpoint {
     private void submitGuessOperation(UUID gameId, Session session, WebSocketMessage message) {
         if(games.get(gameId) != null) {
             Gson gson = new Gson();
-            WebSocketMessage returnMessage = new WebSocketMessage();
-            returnMessage.setOperation(WebSocketMessageOperation.SUBMIT_GUESS);
-            returnMessage.setGameId(gameId);
-
             Row row = gson.fromJson(message.getContent(), Row.class);
             Game currentGame = application.getGameById(gameId);
             if (currentGame == null) {
                 logMessage(session.getId(), "error", "could not find game in app");
             } else {
                 Row returnRow = currentGame.getPlayer(message.getPlayerId()).getBoard().checkRow(row);
-                returnMessage.setContent(gson.toJson(returnRow));
-                String jsonReturnMessage = gson.toJson(returnMessage);
                 // for(Session s : games.get(gameId).getSessions()) {
                 //     s.getAsyncRemote().sendText(jsonReturnMessage);
                 // } // This is for the multiplayer, to be implemented
-                session.getAsyncRemote().sendText(jsonReturnMessage);
+                sendMessage(session, message.getPlayerId(), gameId, WebSocketMessageOperation.SUBMIT_GUESS, returnRow);
             }
-
-
         } else {
             logMessage(session.getId(), "error", "could not find game, gameId null: " + gameId);
         }
     }
 
-    private void getEmptyRowOperation(Session session) {
-        Gson gson = new Gson();
-        String emptyRow = gson.toJson(new Row(0));
-        WebSocketMessage message = new WebSocketMessage();
-        message.setOperation(WebSocketMessageOperation.GET_EMPTY_ROW);
-        message.setContent(emptyRow);
-        String jsonMessage = gson.toJson(message);
-        session.getAsyncRemote().sendText(jsonMessage);
+    private void getEmptyRowOperation(UUID gameId, Session session, WebSocketMessage message) {
+        sendMessage(session, message.getPlayerId(), gameId, WebSocketMessageOperation.GET_EMPTY_ROW, new Row(0));
     }
 }
