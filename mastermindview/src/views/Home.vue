@@ -22,7 +22,6 @@
 import Board from '@/components/Board.vue';
 import Colors from '@/components/Colors.vue';
 import OpponentBoard from '@/components/OpponentBoard.vue';
-import axios from 'axios';
 import Vue from 'vue';
 import VueSlideoutPanel from 'vue2-slideout-panel';
 import Instruction from '../components/Instruction.vue';
@@ -56,7 +55,6 @@ export default {
       SelectedSpot: null,
       currentRow: 'code',
       Row: {id: 10, code: [null, null, null, null], clues: [null, null, null, null]},
-      emptyRow: null,
       buttonIsShown: false,
       confirmGuessIsShown: false,
     }
@@ -75,7 +73,6 @@ export default {
         else if (mutation.type == "SOCKET_ONMESSAGE") {
           var message = state.socket.socket.message
           var parsedMessage = JSON.parse(message.content);
-          console.log(message.operation)
           switch(message.operation) {
             case "REGISTER_GAME":
               this.changeGameID(parsedMessage)
@@ -98,9 +95,7 @@ export default {
   beforeDestroy() {
     this.unsubscribe();
   },
-  
-  
-  methods: {
+    methods: {
     ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame', 'changeGameID', 'sendSubmitCode']),
     showPanel() {
       const panel1Handle = this.$showPanel({
@@ -117,7 +112,7 @@ export default {
         // .then(result => {
           
         // });
-    
+      
     },
     SelectSpot(obj){
       if (obj.$parent.RowId == this.currentRow){
@@ -132,35 +127,24 @@ export default {
       this.SelectedSpot.$data.Color = color;
     },
     SubmitCode() {
+      this.deselectSpot();
       var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
       var colors = [ 
       Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color];
       if(this.checkColorCode()==true)
       {
         this.sendSubmitCode(colors)
-        this.setNextRow();
-      }
+        this.setNextRow();      
+        }
       else
       {
         this.$fire({title:"Colour code input", text:"You haven't made a correct colour code!",type:'warning'});
       }
 
     },
-    PostGuess(){
-      console.log("Guess confirmed");
-      if(this.checkColorCode()==true)
-      {
-          axios.get('http://localhost:8080/emptyrow/').then( response => this.SubmitGuess(response.data)).catch(error => console.log(error));
-          console.log(this.Row.id);
-      }
-      else
-      {
-          this.$fire({title:"Colour code input", text:"You didn't have made your colour code!",type:'warning'});
-      }
-      
-    },
     SubmitGuess(){
-      this.Row = Object.assign({}, this.emptyRow); // copy empty row
+      this.deselectSpot();
+      this.Row = Object.assign({}, this.Row); // copy empty row
       var Row = this.$children[0].$children.find(child => {return child.RowId == this.currentRow});
       var colors = [ 
         Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color ];
@@ -196,7 +180,6 @@ export default {
       }
       if(this.Row.clues[0] != null){
         this.setNextRow();
-        this.SelectedSpot = null;
       }
     },
     LostGame() {
@@ -242,15 +225,13 @@ export default {
           break;
         case 'RowTen':
           this.currentRow = null;
-          this.SelectedSpot = null;
           this.LostGame();
           break;
         case null:
-          this.SelectedSpot = null;
           break;
       }
     },
-    checkColorCode:function() {
+    checkColorCode() {
       var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
       console.log(Row)
       var colors = [ 
@@ -270,10 +251,15 @@ export default {
     },
     leaveGame(){
       //leave websocket game
+    },
+    deselectSpot() {
+      if(this.SelectedSpot != null){
+          this.SelectedSpot.$data.Selected = false;
+        }
+      this.SelectedSpot = null;
     }
   }
 }
-
 </script>
 
 <style>
@@ -364,7 +350,7 @@ export default {
   transition: 0.2s;
 }
 
-.colorSpot .dot{
+.colorSpot .dot{  
   height: 50px;
   width: 50px;
   border-radius: 50%;
