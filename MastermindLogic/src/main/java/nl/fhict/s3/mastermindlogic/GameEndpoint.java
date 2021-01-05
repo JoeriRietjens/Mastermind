@@ -13,10 +13,7 @@ import javax.websocket.server.ServerEndpoint;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
-import nl.fhict.s3.mastermindlogic.entity.Application;
-import nl.fhict.s3.mastermindlogic.entity.EPinColour;
-import nl.fhict.s3.mastermindlogic.entity.Game;
-import nl.fhict.s3.mastermindlogic.entity.Row;
+import nl.fhict.s3.mastermindlogic.entity.*;
 
 
 @ServerEndpoint("/game")
@@ -111,8 +108,16 @@ public class GameEndpoint {
     }
 
     private void registerGameOperation(Session session) {
-        Game game = new Game();
-        application.newGame(game);
+        Game game = application.getOpenGame();
+        if(game.getPlayer1() == null){
+            game.setPlayer1(new Player(0));
+        }
+        else if(game.getPlayer2() == null){
+            game.setPlayer2(new Player(1));
+        }
+        else{
+            //TODO: error
+        }
         games.put(game.getId(), new ArrayList<Session>());
         games.get(game.getId()).add(session);
         
@@ -146,7 +151,7 @@ public class GameEndpoint {
         // TODO: finish, make sure code gets set to right player
         if(games.get(gameId) != null) {
             int playerId = message.getPlayerId();
-            int opponentId = 1;
+            int opponentId = Math.abs(playerId-1);
             EPinColour[] code = gson.fromJson(message.getContent(), EPinColour[].class);
             application.getGameById(gameId).getPlayer(opponentId).getBoard().setCode(code);
         } else {
