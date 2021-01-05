@@ -55,6 +55,7 @@ export default {
       currentRow: 'code',
       Row: {id: 10, code: [null, null, null, null], clues: [null, null, null, null]},
       emptyRow: null,
+      code: null
     }
   },
   computed: mapState(['socket']),
@@ -85,6 +86,9 @@ export default {
             case "SUBMIT_CODE":
               console.log(parsedMessage)
               break
+            case "GET_CODE":
+              this.code=parsedMessage;  
+              break;
           }
         }
       }
@@ -96,7 +100,7 @@ export default {
   
   
   methods: {
-    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame', 'changeGameID', 'sendSubmitCode']),
+    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame', 'changeGameID', 'sendSubmitCode','sendGetCode']),
     showPanel() {
       const panel1Handle = this.$showPanel({
         component : Instruction,
@@ -187,6 +191,7 @@ export default {
       }
       if(this.Row.clues[0] == 'BLACK' && this.Row.clues[1] == 'BLACK' && this.Row.clues[2] == 'BLACK' && this.Row.clues[3] == 'BLACK') {
         this.showWinMessage();
+        this.revealCode();
         this.currentRow = null;
       }
       if(this.Row.clues[0] != null){
@@ -206,6 +211,7 @@ export default {
           this.currentRow = 'RowOne';
           break;
         case 'RowOne':
+          this.sendGetCode();
           this.currentRow = 'RowTwo';
           break;
         case 'RowTwo':
@@ -236,6 +242,7 @@ export default {
           this.currentRow = null;
           this.SelectedSpot = null;
           this.showLostMessage();
+          this.revealCode();
           break;
         case null:
           this.SelectedSpot = null;
@@ -256,8 +263,19 @@ export default {
         }
       }
       return true;
+    
+    },
+    revealCode(){
+      var Row = this.$children[0].$children.find(child => {return child.RowId == 'code'});
+      Row.$children[0].Color=this.code[0];
+      Row.$children[1].Color=this.code[1];
+      Row.$children[2].Color=this.code[2];
+      Row.$children[3].Color=this.code[3];
+      
     }
+
   }
+  
 }
 
 </script>

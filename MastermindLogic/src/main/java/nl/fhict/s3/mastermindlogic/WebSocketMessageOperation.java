@@ -7,5 +7,6 @@ public enum WebSocketMessageOperation {
     LEAVE_GAME,
     SUBMIT_GUESS,
     SUBMIT_CODE,
-    GET_EMPTY_ROW
+    GET_EMPTY_ROW,
+    GET_CODE
 }

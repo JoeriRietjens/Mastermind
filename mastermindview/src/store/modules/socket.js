@@ -93,7 +93,24 @@ const actions = {
     },
     async changeGameID({ commit }, gameID) {
         commit('CHANGE_GAME_ID', gameID)
-    }
+    },
+    async sendGetCode({commit})
+        {
+            var message = {
+                operation: "GET_CODE",
+                gameId: localState.socket.currentGameId,
+                playerId: 0,
+                content: '' 
+            }
+
+            if(localState.socket.isConnected) {
+                Vue.prototype.$socket.send(JSON.stringify(message))
+                commit('SEND_MESSAGE', message)
+            } else {
+                commit('NOT_CONNECTED_ERROR')
+            }
+        }
+        
 }
 
 const mutations = {

@@ -81,6 +81,9 @@ public class GameEndpoint {
                 case GET_EMPTY_ROW:
                     getEmptyRowOperation(session);
                     break;
+                case GET_CODE:
+                    getCodeOperation(gameId,session, message.getPlayerId());
+                    break;
                 default:
                     cannotParseMessage(serializedMessage);
                     break;
@@ -167,6 +170,7 @@ public class GameEndpoint {
                 logMessage(session.getId(), "error", "could not find game in app");
             } else {
                 Row returnRow = currentGame.getPlayer(message.getPlayerId()).getBoard().checkRow(row);
+      
                 returnMessage.setContent(gson.toJson(returnRow));
                 String jsonReturnMessage = gson.toJson(returnMessage);
                 // for(Session s : games.get(gameId).getSessions()) {
@@ -178,6 +182,26 @@ public class GameEndpoint {
 
         } else {
             logMessage(session.getId(), "error", "could not find game, gameId null: " + gameId);
+        }
+    }
+    private void getCodeOperation (UUID gameId, Session session,int playerId)
+    {
+        if(games.get(gameId) != null) {
+            Gson gson = new Gson();
+            WebSocketMessage returnMessage = new WebSocketMessage();
+            returnMessage.setOperation(WebSocketMessageOperation.GET_CODE);
+            returnMessage.setGameId(gameId);
+            returnMessage.setPlayerId(playerId);
+
+            Game game= application.getGameById(gameId);
+
+            EPinColour[] code= game.getPlayer(playerId).getBoard().getCode();
+
+            String content =gson.toJson(code);
+
+            returnMessage.setContent(content);
+            String jsonReturnMessage = gson.toJson(returnMessage);
+            session.getAsyncRemote().sendText(jsonReturnMessage);
         }
     }
 
