@@ -76,7 +76,7 @@ public class GameEndpoint {
                     submitGuessOperation(gameId, session, message);
                     break;
                 case GET_EMPTY_ROW:
-                    getEmptyRowOperation(gameId, session);
+                    getEmptyRowOperation(gameId, session, message);
                     break;
                 default:
                     cannotParseMessage(serializedMessage);
@@ -99,10 +99,11 @@ public class GameEndpoint {
         return wsMessage;
     }
 
-    private void sendMessage(Session toSession, UUID gameId, WebSocketMessageOperation operation, Object content) {
+    private void sendMessage(Session toSession, int playerId, UUID gameId, WebSocketMessageOperation operation, Object content) {
         Gson gson = new Gson();
         WebSocketMessage returnMessage = new WebSocketMessage();
         returnMessage.setGameId(gameId);
+        returnMessage.setPlayerId(playerId);
         returnMessage.setOperation(operation);
         returnMessage.setContent(gson.toJson(content));
         String jsonReturnMessage = gson.toJson(returnMessage);
@@ -136,10 +137,10 @@ public class GameEndpoint {
         games.get(game.getId()).add(session);
         
         // Return gameID to user
-        sendMessage(session, game.getId(), WebSocketMessageOperation.REGISTER_GAME, game.getId().toString());
+        sendMessage(session, playerID, game.getId(), WebSocketMessageOperation.REGISTER_GAME, game.getId().toString());
         
         // return playerID to user
-        sendMessage(session, game.getId(), WebSocketMessageOperation.JOIN_GAME, Integer.toString(playerID));
+        sendMessage(session, playerID, game.getId(), WebSocketMessageOperation.JOIN_GAME, Integer.toString(playerID));
     }
 
     private void unregisterGameOperation(UUID gameId) {
@@ -188,14 +189,14 @@ public class GameEndpoint {
                 // for(Session s : games.get(gameId).getSessions()) {
                 //     s.getAsyncRemote().sendText(jsonReturnMessage);
                 // } // This is for the multiplayer, to be implemented
-                sendMessage(session, gameId, WebSocketMessageOperation.SUBMIT_GUESS, returnRow);
+                sendMessage(session, message.getPlayerId(), gameId, WebSocketMessageOperation.SUBMIT_GUESS, returnRow);
             }
         } else {
             logMessage(session.getId(), "error", "could not find game, gameId null: " + gameId);
         }
     }
 
-    private void getEmptyRowOperation(UUID gameId, Session session) {
-        sendMessage(session, gameId, WebSocketMessageOperation.GET_EMPTY_ROW, new Row(0));
+    private void getEmptyRowOperation(UUID gameId, Session session, WebSocketMessage message) {
+        sendMessage(session, message.getPlayerId(), gameId, WebSocketMessageOperation.GET_EMPTY_ROW, new Row(0));
     }
 }
