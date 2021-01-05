@@ -4,9 +4,7 @@ import nl.fhict.s3.mastermindlogic.entity.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MastermindLogicApplicationTests {
 	private Board board1;
@@ -18,8 +16,8 @@ public class MastermindLogicApplicationTests {
 	void setup() {
 		board1 = new Board(1);
 		Board board2 = new Board(2);
-		player1 = new Player(1, "JohnDoe", "secret", board1);
-		player2 = new Player(2, "JaneDoe", "secret", board2);
+		player1 = new Player(1);
+		player2 = new Player(2);
 	}
 
 	@Test

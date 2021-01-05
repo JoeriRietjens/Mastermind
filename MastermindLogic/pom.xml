@@ -66,6 +66,9 @@
 					<append>true</append>
 					<excludes>
 						<exclude>*MethodAccess</exclude>
+						<exclude>**/*Game.*</exclude>
+						<exclude>**/*Application.*</exclude>
+
 					</excludes>
 				</configuration>
 				<executions>
@@ -84,6 +87,8 @@
 						</goals>
 					</execution>
 				</executions>
+
+
 			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
