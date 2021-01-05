@@ -1,6 +1,6 @@
 <template>
   <div>
-      <span class="dot" v-on:click="SelectSpot" :id="SpotId" :selected="Selected"></span>
+      <span class="dot" v-on:click="SelectSpot" :id="SpotId"></span>
   </div>
 </template>
 
