@@ -75,7 +75,8 @@ public class GameEndpoint {
                     GameOperationHandler.getEmptyRowOperation(gameId, session, message);
                     break;
                 case GET_CODE:
-                    getCodeOperation(gameId,session, message.getPlayerId());
+                    GameOperationHandler.getCodeOperation(gameId,session, message.getPlayerId());
+
                     break;
                 default:
                     GameOperationHandler.cannotParseMessage(serializedMessage);

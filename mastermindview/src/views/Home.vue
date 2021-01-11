@@ -54,6 +54,7 @@ export default {
       SelectedSpot: null,
       currentRow: 'code',
       Row: {id: 10, code: [null, null, null, null], clues: [null, null, null, null]},
+      code: null,
       confirmGuessIsShown: false,
       confirmCodeIsShown: true,
       restartIsShown: false,
@@ -91,7 +92,7 @@ export default {
               console.log(parsedMessage)
               break
             case "GET_CODE":
-              this.code=parsedMessage;
+              this.code=parsedMessage;  
               break;
           }
         }
@@ -103,7 +104,7 @@ export default {
     this.unsubscribe();
   },
   methods: {
-    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame', 'changeGameID', 'changePlayerId', 'sendSubmitCode']),
+    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame', 'changeGameID', 'changePlayerId', 'sendSubmitCode','sendGetCode']),
     showPanel() {
       const panel1Handle = this.$showPanel({
         component : Instruction,
@@ -182,7 +183,10 @@ export default {
         Row.$children[7].Color = this.Row.clues[3];
       }
       if(this.Row.clues[0] == 'BLACK' && this.Row.clues[1] == 'BLACK' && this.Row.clues[2] == 'BLACK' && this.Row.clues[3] == 'BLACK') {
+        this.sendGetCode();
+        this.revealCode();
         this.WinGame();
+        
         this.currentRow = null;
       }
       if(this.Row.clues[0] != null){
@@ -192,11 +196,13 @@ export default {
     LostGame() {
       this.restartIsShown = true;
       this.confirmGuessIsShown = false;
+      
       this.showLostMessage();
     },
     WinGame() {
       this.restartIsShown = true;
       this.confirmGuessIsShown = false;
+     
       this.showWinMessage();
     },
     setNextRow(){
@@ -236,7 +242,10 @@ export default {
           break;
         case 'RowTen':
           this.currentRow = null;
+          this.sendGetCode();
+          this.revealCode();
           this.LostGame();
+           
           break;
         case null:
           break;
@@ -268,6 +277,14 @@ export default {
           this.SelectedSpot.$data.Selected = false;
         }
       this.SelectedSpot = null;
+    },
+     revealCode(){
+      var Row = this.$children[0].$children.find(child => {return child.RowId == 'code'});
+      Row.$children[0].Color=this.code[0];
+      Row.$children[1].Color=this.code[1];
+      Row.$children[2].Color=this.code[2];
+      Row.$children[3].Color=this.code[3];
+      
     }
 
   }
