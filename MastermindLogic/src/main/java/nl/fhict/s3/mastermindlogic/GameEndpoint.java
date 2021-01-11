@@ -170,7 +170,7 @@ public class GameEndpoint {
                 logMessage(session.getId(), "error", "could not find game in app");
             } else {
                 Row returnRow = currentGame.getPlayer(message.getPlayerId()).getBoard().checkRow(row);
-      
+
                 returnMessage.setContent(gson.toJson(returnRow));
                 String jsonReturnMessage = gson.toJson(returnMessage);
                 // for(Session s : games.get(gameId).getSessions()) {
