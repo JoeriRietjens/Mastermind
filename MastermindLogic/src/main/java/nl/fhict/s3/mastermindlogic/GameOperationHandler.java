@@ -84,7 +84,10 @@ public class GameOperationHandler {
     }
 
     public static void leaveGameOperation(UUID gameId, Session session) {
-        // TODO: implement leaving a game
+        if(games.get(gameId) != null) {
+            Game game = application.getGameById(gameId);
+            games.get(game.getId()).remove(session);
+        }
     }
 
     public static void restartGameOperation(UUID gameId) {

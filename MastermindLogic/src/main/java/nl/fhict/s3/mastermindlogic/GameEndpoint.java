@@ -83,39 +83,4 @@ public class GameEndpoint {
             }
         }
     }
-
-    /*private WebSocketMessage parseMessage(String serializedMessage) {
-        Gson gson = new Gson();
-        WebSocketMessage wsMessage = null;
-
-        try {
-            wsMessage = gson.fromJson(serializedMessage, WebSocketMessage.class);
-        } catch (JsonSyntaxException ex) {
-            cannotParseMessage(serializedMessage);
-            return null;
-        }
-
-        return wsMessage;
-    }
-
-    private void sendMessage(Session toSession, int playerId, UUID gameId, WebSocketMessageOperation operation, Object content) {
-        Gson gson = new Gson();
-        WebSocketMessage returnMessage = new WebSocketMessage();
-        returnMessage.setGameId(gameId);
-        returnMessage.setPlayerId(playerId);
-        returnMessage.setOperation(operation);
-        returnMessage.setContent(gson.toJson(content));
-        String jsonReturnMessage = gson.toJson(returnMessage);
-        toSession.getAsyncRemote().sendText(jsonReturnMessage);
-    }
-
-    private void logMessage(String sessionId, String action, String message) {
-        System.out.println(String.format("[session %s] %s: %s", sessionId, action, message));
-    }*/
-
-    private void cannotParseMessage(String message) {
-        System.err.println("[wsServer] cannot parse: " + message);
-    }
-
-
 }
