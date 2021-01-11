@@ -1,16 +1,16 @@
 <template>
     <div class="board" :id="BoardId">
         <Code v-on:SelectCodeSpot="SelectCodeSpot" class="row" RowId="code"></Code>
-        <BoardRow class="row" RowId="RowOne"></BoardRow>
-        <BoardRow class="row" RowId="RowOne"></BoardRow>
-        <BoardRow class="row" RowId="RowOne"></BoardRow>
-        <BoardRow class="row" RowId="RowOne"></BoardRow>
-        <BoardRow class="row" RowId="RowOne"></BoardRow>
-        <BoardRow class="row" RowId="RowOne"></BoardRow>
-        <BoardRow class="row" RowId="RowOne"></BoardRow>
-        <BoardRow class="row" RowId="RowOne"></BoardRow>
-        <BoardRow class="row" RowId="RowOne"></BoardRow>
-        <BoardRow class="row" RowId="RowOne"></BoardRow>
+        <BoardRow class="row" RowId="RowTen"></BoardRow>
+        <BoardRow class="row" RowId="RowNine"></BoardRow>
+        <BoardRow class="row" RowId="RowEight"></BoardRow>
+        <BoardRow class="row" RowId="RowSeven"></BoardRow>
+        <BoardRow class="row" RowId="RowSix"></BoardRow>
+        <BoardRow class="row" RowId="RowFive"></BoardRow>
+        <BoardRow class="row" RowId="RowFour"></BoardRow>
+        <BoardRow class="row" RowId="3"></BoardRow>
+        <BoardRow class="row" RowId="2"></BoardRow>
+        <BoardRow class="row" RowId="1"></BoardRow>
     </div>
 </template>
 

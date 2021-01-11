@@ -51,7 +51,8 @@ export default {
     return {
       SelectedSpot: null,
       currentRow: 'code',
-      Row: {id: 10, code: [null, null, null, null], clues: [null, null, null, null]},
+      Row: {id: 10, guess: [null, null, null, null], clues: [null, null, null, null]},
+      currentOpponentRow: 1,
     }
   },
   computed: mapState(['socket']),
@@ -77,7 +78,12 @@ export default {
               this.changePlayerId(parsedMessage)
               break
             case "SUBMIT_GUESS":
-              this.ChangeClues(parsedMessage)
+              if(message.playerId == state.socket.socket.currentPlayerId){
+                this.ChangeClues(parsedMessage)
+              }
+              else{
+                this.changeOpponentRow(parsedMessage);
+              }
               break
             case "GET_EMPTY_ROW":
               this.emptyRow = parsedMessage
@@ -129,7 +135,7 @@ export default {
       var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
       var colors = [ 
       Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color];
-      if(this.checkColorCode()==true)
+      if(this.checkColorCode() == true)
       {
         this.sendSubmitCode(colors)
         this.setNextRow();      
@@ -246,6 +252,28 @@ export default {
           this.SelectedSpot.$data.Selected = false;
         }
       this.SelectedSpot = null;
+    },
+    changeOpponentRow(filledRow){
+      var Row = this.$children[2].$children.find(child => {return child.RowId == this.currentOpponentRow});
+      
+      if(this.Row.clues[0] != 'BLANK') {
+        Row.$children[4].Color = filledRow.clues[0];
+      }
+      if(this.Row.clues[1] != 'BLANK') {
+        Row.$children[5].Color = filledRow.clues[1];
+      }
+      if(this.Row.clues[2] != 'BLANK') {
+        Row.$children[6].Color = filledRow.clues[2];
+      }
+      if(this.Row.clues[3] != 'BLANK') {
+        Row.$children[7].Color = filledRow.clues[3];
+      }
+
+      Row.$children[0].Color = filledRow.guess[0];
+      Row.$children[1].Color = filledRow.guess[1];
+      Row.$children[2].Color = filledRow.guess[2];
+      Row.$children[3].Color = filledRow.guess[3];
+
     }
   }
 }
