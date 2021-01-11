@@ -146,13 +146,8 @@ export default {
       if(this.checkColorCode() == true)
       {
         this.sendSubmitCode(colors)
-<<<<<<< Updated upstream
-        this.currentRow++;
-      }
-=======
         this.setNextRow();
         }
->>>>>>> Stashed changes
       else
       {
         this.$fire({title:"Colour code input", text:"You haven't made a correct colour code!",type:'warning'});
