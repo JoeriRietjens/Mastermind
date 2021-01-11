@@ -1,13 +1,13 @@
 <template>
     <div class="board" :id="BoardId">
-        <Code v-on:SelectCodeSpot="SelectCodeSpot" class="row" RowId="code"></Code>
-        <BoardRow class="row" RowId="RowTen"></BoardRow>
-        <BoardRow class="row" RowId="RowNine"></BoardRow>
-        <BoardRow class="row" RowId="RowEight"></BoardRow>
-        <BoardRow class="row" RowId="RowSeven"></BoardRow>
-        <BoardRow class="row" RowId="RowSix"></BoardRow>
-        <BoardRow class="row" RowId="RowFive"></BoardRow>
-        <BoardRow class="row" RowId="RowFour"></BoardRow>
+        <Code v-on:SelectCodeSpot="SelectCodeSpot" class="row" RowId="0"></Code>
+        <BoardRow class="row" RowId="10"></BoardRow>
+        <BoardRow class="row" RowId="9"></BoardRow>
+        <BoardRow class="row" RowId="8"></BoardRow>
+        <BoardRow class="row" RowId="7"></BoardRow>
+        <BoardRow class="row" RowId="6"></BoardRow>
+        <BoardRow class="row" RowId="5"></BoardRow>
+        <BoardRow class="row" RowId="4"></BoardRow>
         <BoardRow class="row" RowId="3"></BoardRow>
         <BoardRow class="row" RowId="2"></BoardRow>
         <BoardRow class="row" RowId="1"></BoardRow>

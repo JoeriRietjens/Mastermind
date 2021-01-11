@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       SelectedSpot: null,
-      currentRow: 'code',
+      currentRow: '0',
       Row: {id: 10, guess: [null, null, null, null], clues: [null, null, null, null]},
       currentOpponentRow: 1,
     }
@@ -132,14 +132,14 @@ export default {
     },
     SubmitCode() {
       this.deselectSpot();
-      var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
+      var Row = this.$children[2].$children.find(child => {return child.RowId == '0'});
       var colors = [ 
       Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color];
       if(this.checkColorCode() == true)
       {
         this.sendSubmitCode(colors)
-        this.setNextRow();      
-        }
+        this.currentRow++;
+      }
       else
       {
         this.$fire({title:"Colour code input", text:"You haven't made a correct colour code!",type:'warning'});
@@ -183,7 +183,11 @@ export default {
         this.currentRow = null;
       }
       if(this.Row.clues[0] != null){
-        this.setNextRow();
+        this.currentRow++;
+      }
+      if(this.currentRow == 11){
+        this.currentRow = null;
+        this.showLostMessage();
       }
     },
     LostGame() {
@@ -192,48 +196,8 @@ export default {
     WinGame() {
       this.showWinMessage();
     },
-    setNextRow(){
-      switch (this.currentRow){
-        case 'code':
-          this.currentRow = 'RowOne';
-          break;
-        case 'RowOne':
-          this.currentRow = 'RowTwo';
-          break;
-        case 'RowTwo':
-          this.currentRow = 'RowThree';
-          break;
-        case 'RowThree':
-          this.currentRow = 'RowFour';
-          break;
-        case 'RowFour':
-          this.currentRow = 'RowFive';
-          break;
-        case 'RowFive':
-          this.currentRow = 'RowSix';
-          break;
-        case 'RowSix':
-          this.currentRow = 'RowSeven';
-          break;
-        case 'RowSeven':
-          this.currentRow = 'RowEight';
-          break;
-        case 'RowEight':
-          this.currentRow = 'RowNine';
-          break;
-        case 'RowNine':
-          this.currentRow = 'RowTen';
-          break;
-        case 'RowTen':
-          this.currentRow = null;
-          this.showLostMessage();
-          break;
-        case null:
-          break;
-      }
-    },
     checkColorCode() {
-      var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
+      var Row = this.$children[2].$children.find(child => {return child.RowId == '0'});
       console.log(Row)
       var colors = [ 
         Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color 
@@ -274,6 +238,7 @@ export default {
       Row.$children[2].Color = filledRow.guess[2];
       Row.$children[3].Color = filledRow.guess[3];
 
+      this.currentOpponentRow++;
     }
   }
 }
