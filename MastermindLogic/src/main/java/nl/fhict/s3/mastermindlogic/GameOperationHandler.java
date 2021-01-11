@@ -87,6 +87,11 @@ public class GameOperationHandler {
         // TODO: implement leaving a game
     }
 
+    private void restartGameOperation(UUID gameId) {
+        Game game = application.getGameById(gameId);
+        game.restartGame();
+    }
+
     public static void submitCodeOperation(UUID gameId, WebSocketMessage message, Session session) {
         Gson gson = new Gson();
         if(games.get(gameId) != null) {
