@@ -15,11 +15,6 @@ public class Board implements IBoard {
         return id;
     }
 
-    public Board(int id, EPinColour[] code) {
-        this.id = id;
-        this.code = code;
-    }
-
     public Board() {
         id = 0;
     }
@@ -100,7 +95,4 @@ public class Board implements IBoard {
         return code;
     }
 
-    public Row[] getRows() {
-        return rows;
-    }
 }

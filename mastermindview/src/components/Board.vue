@@ -10,7 +10,7 @@
         <BoardRow class="row" RowId="RowEight" v-on:SelectSpot="SelectSpot"></BoardRow>
         <BoardRow class="row" RowId="RowNine" v-on:SelectSpot="SelectSpot"></BoardRow>
         <BoardRow class="row" RowId="RowTen" v-on:SelectSpot="SelectSpot"></BoardRow>
-        <Code class="row" id="code"></Code>
+        <Code class="row" RowId="code"></Code>
     </div>
 </template>
 
@@ -30,9 +30,6 @@ export default {
         }
     },
     props: ['BoardId'],
-    created: function () {
-        this.$store.commit('setPlayerBoard', {state: this.$store.state, board: this})
-    }
 }
 </script>
 

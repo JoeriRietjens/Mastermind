@@ -1,14 +1,15 @@
 <template>
   <div class="home">
-
     <h2 class="boardTitle"> Your own board </h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
-    <button v-on:click="SubmitCode" class="myButton">Confirm code</button>
-    <button v-on:click="PostGuess" class="myButton">Confirm guess</button>
+    <button v-show="confirmCodeIsShown" v-on:click="SubmitCode" class="myButton">Confirm code</button>
+    <button v-show="confirmGuessIsShown" v-on:click="SubmitGuess" class="myButton">Confirm guess</button>
     <button v-on:click="showPanel" class="myButton">Instructions</button>
+    <button v-show="restartIsShown" v-on:click="reloadPage" class="myButton">Restart game</button>
+    <button v-on:click="leaveGame" class="myButton">Leave game</button>
     <h2 class="boardTitle"> Your opponents board </h2>
-    <OpponentBoard v-on:SelectCodeSpot="SelectCodeSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
+    <OpponentBoard v-on:SelectCodeSpot="SelectSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
 
     <slideout-panel></slideout-panel>
     
@@ -20,25 +21,20 @@
 import Board from '@/components/Board.vue';
 import Colors from '@/components/Colors.vue';
 import OpponentBoard from '@/components/OpponentBoard.vue';
-import axios from 'axios';
 import Vue from 'vue';
 import VueSlideoutPanel from 'vue2-slideout-panel';
 import Instruction from '../components/Instruction.vue';
 import VueSimpleAlert from "vue-simple-alert";
+import { mapActions, mapState } from 'vuex';
 
 Vue.use(VueSlideoutPanel);
 Vue.use(VueSimpleAlert);
 
 export default {
-
-  created() {
-    this.$alert("Hello Player Please enter your colour code before you start.\n \nif you want to know how the game works please press on the Instruction button");
-  },
-
   name: 'Home',
   notifications: {
     showWinMessage: {
-      title: "win",
+      title: "won",
       message: "Player has won!",
       type: "info"
     },
@@ -56,90 +52,118 @@ export default {
   data() {
     return {
       SelectedSpot: null,
-      currentRow: 'RowOne',
+      currentRow: 'code',
       Row: {id: 10, code: [null, null, null, null], clues: [null, null, null, null]},
+      confirmGuessIsShown: false,
+      confirmCodeIsShown: true,
+      restartIsShown: false,
     }
   },
-
-  methods: {
-    showPanel() {
-    const panel1Handle = this.$showPanel({
-      component : Instruction,
-      openOn: 'left',
-      props: {
-        
-
-        //any data you want passed to your component
+  computed: mapState(['socket']),
+  created() {
+    this.$alert("Hello Player Please enter your colour code before you start.\n \nif you want to know how the game works please press on the Instruction button");
+    this.unsubscribe = this.$store.subscribe(
+      (mutation, state) => { 
+        if (mutation.type == "SOCKET_ONOPEN") {
+          if (state.socket.socket.isConnected) {
+            this.sendRegisterGame()
+            this.sendGetEmptyRow()
+          }
+        }
+        else if (mutation.type == "SOCKET_ONMESSAGE") {
+          var message = state.socket.socket.message
+          var parsedMessage = JSON.parse(message.content);
+          switch(message.operation) {
+            case "REGISTER_GAME":
+              this.changePlayerId(message.playerId)
+              this.changeGameID(parsedMessage)
+              break
+            case "JOIN_GAME":
+              this.changePlayerId(parsedMessage)
+              break
+            case "SUBMIT_GUESS":
+              this.ChangeClues(parsedMessage)
+              break
+            case "GET_EMPTY_ROW":
+              this.emptyRow = parsedMessage
+              break
+            case "SUBMIT_CODE":
+              console.log(parsedMessage)
+              break
+          }
+        }
       }
-    });
-    
-    panel1Handle.promise
-      // .then(result => {
-        
-      // });
-    
+    );
+    this.confirmGuessIsShown = false;
   },
+  beforeDestroy() {
+    this.unsubscribe();
+  },
+  methods: {
+    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame', 'changeGameID', 'changePlayerId', 'sendSubmitCode']),
+    showPanel() {
+      const panel1Handle = this.$showPanel({
+        component : Instruction,
+        openOn: 'left',
+        props: {
+          
 
+          //any data you want passed to your component
+        }
+      });
+      
+      panel1Handle.promise
+        // .then(result => {
+          
+        // });
+      
+    },
     SelectSpot(obj){
       if (obj.$parent.RowId == this.currentRow){
+        if(this.SelectedSpot != null){
+          this.SelectedSpot.$data.Selected = false;
+        }
         this.SelectedSpot = obj;
+        this.SelectedSpot.$data.Selected = true;
       }
     },
     ChangeColor(color){
       this.SelectedSpot.$data.Color = color;
     },
-    SelectCodeSpot(SelectCodeSpot) {
-      this.SelectedSpot = SelectCodeSpot;
-    },
     SubmitCode() {
+      this.deselectSpot();
       var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
       var colors = [ 
       Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color];
       if(this.checkColorCode()==true)
       {
-      axios.post('http://localhost:8080/code/submit/0/', colors).then().catch(error => console.log(error));
-      }
+        this.sendSubmitCode(colors)
+        this.setNextRow();      
+        }
       else
       {
-          this.$fire({title:"Colour code input", text:"You didn't have made your colour code!",type:'warning'});
+        this.$fire({title:"Colour code input", text:"You haven't made a correct colour code!",type:'warning'});
       }
 
     },
-    PostGuess(){
-      console.log("Guess confirmed");
-      if(this.checkColorCode()==true)
-      {
-          axios.get('http://localhost:8080/emptyrow/').then( response => this.SubmitGuess(response.data)).catch(error => console.log(error));
-          console.log(this.Row.id);
-      }
-      else
-      {
-          this.$fire({title:"Colour code input", text:"You didn't have made your colour code!",type:'warning'});
-      }
-      
-    },
-    SubmitGuess(response){
-      console.log(response);
-      this.Row = response;
+    SubmitGuess(){
+      this.deselectSpot();
+      this.Row = Object.assign({}, this.Row); // copy empty row
       var Row = this.$children[0].$children.find(child => {return child.RowId == this.currentRow});
       var colors = [ 
         Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color ];
       this.Row.guess = colors;
-      console.log(this.Row.code);
-            if(this.checkColorCode()==true)
+      if(this.checkColorCode()==true)
       {
-      axios.post('http://localhost:8080/guess/submit/1/', this.Row)
-        .then(response => this.ChangeClues(response.data))
-        .catch(error => console.log(error));
+        this.sendSubmitGuess(this.Row);
       }
       else
       {
         this.$fire({title:"Colour input", text:"some inputs don't have a colour!",type:'warning'});
       }
     },
-    ChangeClues(response){
-      this.Row = response;
-      console.log(response);
+    ChangeClues(filledRow){
+      this.Row = filledRow;
       var Row = this.$children[0].$children.find(child => {return child.RowId == this.currentRow});
       
       if(this.Row.clues[0] != 'BLANK') {
@@ -155,22 +179,30 @@ export default {
         Row.$children[7].Color = this.Row.clues[3];
       }
       if(this.Row.clues[0] == 'BLACK' && this.Row.clues[1] == 'BLACK' && this.Row.clues[2] == 'BLACK' && this.Row.clues[3] == 'BLACK') {
-        this.showWinMessage();
+        this.WinGame();
         this.currentRow = null;
       }
       if(this.Row.clues[0] != null){
         this.setNextRow();
-        this.SelectedSpot = null;
       }
     },
     LostGame() {
+      this.restartIsShown = true;
+      this.confirmGuessIsShown = false;
       this.showLostMessage();
     },
     WinGame() {
+      this.restartIsShown = true;
+      this.confirmGuessIsShown = false;
       this.showWinMessage();
     },
     setNextRow(){
       switch (this.currentRow){
+        case 'code':
+          this.confirmGuessIsShown = true;
+          this.confirmCodeIsShown = false;
+          this.currentRow = 'RowOne';
+          break;
         case 'RowOne':
           this.currentRow = 'RowTwo';
           break;
@@ -200,28 +232,38 @@ export default {
           break;
         case 'RowTen':
           this.currentRow = null;
-          this.SelectedSpot = null;
-          this.showLostMessage();
+          this.LostGame();
           break;
         case null:
-          this.SelectedSpot = null;
           break;
       }
     },
-    
-    checkColorCode:function() {
-      console.log("CheckColorCode");
-        var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
+    checkColorCode() {
+      var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
+      console.log(Row)
       var colors = [ 
-        Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color ];
-        for(var i=0;i<4;i++)
+        Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color 
+        ];
+      for(var i=0;i<4;i++)
+      {
+        if(colors[i]==null)
         {
-          if(colors[i]==null)
-          {
-            return false;
-          }
+          return false;
         }
-        return true;
+      }
+      return true;
+    },
+    reloadPage(){
+      window.location.reload()
+    },
+    leaveGame(){
+      //leave websocket game
+    },
+    deselectSpot() {
+      if(this.SelectedSpot != null){
+          this.SelectedSpot.$data.Selected = false;
+        }
+      this.SelectedSpot = null;
     }
   }
 }
@@ -304,6 +346,15 @@ export default {
   border-radius: 50%;
   display: inline-block;
   border: 3px groove rgb(10, 5, 5);
+}
+
+.selectedSpot {
+  border: 3px groove rgb(255, 255, 255);
+}
+
+.dot:hover {
+  background-color: rgb(60, 5, 5);
+  transition: 0.2s;
 }
 
 .colorSpot .dot{  

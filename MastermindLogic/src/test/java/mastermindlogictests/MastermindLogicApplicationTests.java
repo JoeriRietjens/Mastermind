@@ -1,17 +1,14 @@
-package nl.fhict.s3.mastermindlogic;
+package mastermindlogictests;
 
 import nl.fhict.s3.mastermindlogic.entity.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
-@SpringBootTest
-class MastermindLogicApplicationTests {
-
+public class MastermindLogicApplicationTests {
 	private Board board1;
 	private Player player1;
 	private Player player2;
