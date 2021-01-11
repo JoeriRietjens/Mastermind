@@ -1,17 +1,18 @@
 <template>
   <div class="home">
-
     <h2 class="boardTitle"> Your own board </h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
-    <button v-on:click="SubmitCode" class="myButton">Confirm code</button>
-    <button v-on:click="SubmitGuess" class="myButton">Confirm guess</button>
+    <button v-show="confirmCodeIsShown" v-on:click="SubmitCode" class="myButton">Confirm code</button>
+    <button v-show="confirmGuessIsShown" v-on:click="SubmitGuess" class="myButton">Confirm guess</button>
     <button v-on:click="showPanel" class="myButton">Instructions</button>
+    <button v-show="restartIsShown" v-on:click="reloadPage" class="myButton">Restart game</button>
+    <button v-on:click="leaveGame" class="myButton">Leave game</button>
     <h2 class="boardTitle"> Your opponents board </h2>
     <OpponentBoard v-on:SelectCodeSpot="SelectSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
 
     <slideout-panel></slideout-panel>
-    
+
   </div>
 </template>
 
@@ -20,7 +21,6 @@
 import Board from '@/components/Board.vue';
 import Colors from '@/components/Colors.vue';
 import OpponentBoard from '@/components/OpponentBoard.vue';
-import axios from 'axios';
 import Vue from 'vue';
 import VueSlideoutPanel from 'vue2-slideout-panel';
 import Instruction from '../components/Instruction.vue';
@@ -34,7 +34,7 @@ export default {
   name: 'Home',
   notifications: {
     showWinMessage: {
-      title: "win",
+      title: "won",
       message: "Player has won!",
       type: "info"
     },
@@ -54,15 +54,16 @@ export default {
       SelectedSpot: null,
       currentRow: 'code',
       Row: {id: 10, code: [null, null, null, null], clues: [null, null, null, null]},
-      emptyRow: null,
-      code: null
+      confirmGuessIsShown: false,
+      confirmCodeIsShown: true,
+      restartIsShown: false,
     }
   },
   computed: mapState(['socket']),
   created() {
     this.$alert("Hello Player Please enter your colour code before you start.\n \nif you want to know how the game works please press on the Instruction button");
     this.unsubscribe = this.$store.subscribe(
-      (mutation, state) => { 
+      (mutation, state) => {
         if (mutation.type == "SOCKET_ONOPEN") {
           if (state.socket.socket.isConnected) {
             this.sendRegisterGame()
@@ -72,10 +73,13 @@ export default {
         else if (mutation.type == "SOCKET_ONMESSAGE") {
           var message = state.socket.socket.message
           var parsedMessage = JSON.parse(message.content);
-          console.log(message.operation)
           switch(message.operation) {
             case "REGISTER_GAME":
+              this.changePlayerId(message.playerId)
               this.changeGameID(parsedMessage)
+              break
+            case "JOIN_GAME":
+              this.changePlayerId(parsedMessage)
               break
             case "SUBMIT_GUESS":
               this.ChangeClues(parsedMessage)
@@ -87,36 +91,35 @@ export default {
               console.log(parsedMessage)
               break
             case "GET_CODE":
-              this.code=parsedMessage;  
+              this.code=parsedMessage;
               break;
           }
         }
       }
     );
+    this.confirmGuessIsShown = false;
   },
   beforeDestroy() {
     this.unsubscribe();
   },
-  
-  
   methods: {
-    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame', 'changeGameID', 'sendSubmitCode','sendGetCode']),
+    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame', 'changeGameID', 'changePlayerId', 'sendSubmitCode']),
     showPanel() {
       const panel1Handle = this.$showPanel({
         component : Instruction,
         openOn: 'left',
         props: {
-          
+
 
           //any data you want passed to your component
         }
       });
-      
+
       panel1Handle.promise
         // .then(result => {
-          
+
         // });
-    
+
     },
     SelectSpot(obj){
       if (obj.$parent.RowId == this.currentRow){
@@ -131,37 +134,26 @@ export default {
       this.SelectedSpot.$data.Color = color;
     },
     SubmitCode() {
+      this.deselectSpot();
       var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
-      var colors = [ 
+      var colors = [
       Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color];
       if(this.checkColorCode()==true)
       {
         this.sendSubmitCode(colors)
         this.setNextRow();
-      }
+        }
       else
       {
         this.$fire({title:"Colour code input", text:"You haven't made a correct colour code!",type:'warning'});
       }
 
     },
-    PostGuess(){
-      console.log("Guess confirmed");
-      if(this.checkColorCode()==true)
-      {
-          axios.get('http://localhost:8080/emptyrow/').then( response => this.SubmitGuess(response.data)).catch(error => console.log(error));
-          console.log(this.Row.id);
-      }
-      else
-      {
-          this.$fire({title:"Colour code input", text:"You didn't have made your colour code!",type:'warning'});
-      }
-      
-    },
     SubmitGuess(){
-      this.Row = Object.assign({}, this.emptyRow); // copy empty row
+      this.deselectSpot();
+      this.Row = Object.assign({}, this.Row); // copy empty row
       var Row = this.$children[0].$children.find(child => {return child.RowId == this.currentRow});
-      var colors = [ 
+      var colors = [
         Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color ];
       this.Row.guess = colors;
       if(this.checkColorCode()==true)
@@ -176,7 +168,7 @@ export default {
     ChangeClues(filledRow){
       this.Row = filledRow;
       var Row = this.$children[0].$children.find(child => {return child.RowId == this.currentRow});
-      
+
       if(this.Row.clues[0] != 'BLANK') {
         Row.$children[4].Color = this.Row.clues[0];
       }
@@ -190,24 +182,28 @@ export default {
         Row.$children[7].Color = this.Row.clues[3];
       }
       if(this.Row.clues[0] == 'BLACK' && this.Row.clues[1] == 'BLACK' && this.Row.clues[2] == 'BLACK' && this.Row.clues[3] == 'BLACK') {
-        this.showWinMessage();
-        this.revealCode();
+        this.WinGame();
         this.currentRow = null;
       }
       if(this.Row.clues[0] != null){
         this.setNextRow();
-        this.SelectedSpot = null;
       }
     },
     LostGame() {
+      this.restartIsShown = true;
+      this.confirmGuessIsShown = false;
       this.showLostMessage();
     },
     WinGame() {
+      this.restartIsShown = true;
+      this.confirmGuessIsShown = false;
       this.showWinMessage();
     },
     setNextRow(){
       switch (this.currentRow){
         case 'code':
+          this.confirmGuessIsShown = true;
+          this.confirmCodeIsShown = false;
           this.currentRow = 'RowOne';
           break;
         case 'RowOne':
@@ -240,20 +236,17 @@ export default {
           break;
         case 'RowTen':
           this.currentRow = null;
-          this.SelectedSpot = null;
-          this.showLostMessage();
-          this.revealCode();
+          this.LostGame();
           break;
         case null:
-          this.SelectedSpot = null;
           break;
       }
     },
-    checkColorCode:function() {
+    checkColorCode() {
       var Row = this.$children[2].$children.find(child => {return child.RowId == 'code'});
       console.log(Row)
-      var colors = [ 
-        Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color 
+      var colors = [
+        Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color
         ];
       for(var i=0;i<4;i++)
       {
@@ -263,21 +256,23 @@ export default {
         }
       }
       return true;
-    
     },
-    revealCode(){
-      var Row = this.$children[0].$children.find(child => {return child.RowId == 'code'});
-      Row.$children[0].Color=this.code[0];
-      Row.$children[1].Color=this.code[1];
-      Row.$children[2].Color=this.code[2];
-      Row.$children[3].Color=this.code[3];
-      
+    reloadPage(){
+      window.location.reload()
+    },
+    leaveGame(){
+      //leave websocket game
+    },
+    deselectSpot() {
+      if(this.SelectedSpot != null){
+          this.SelectedSpot.$data.Selected = false;
+        }
+      this.SelectedSpot = null;
     }
 
   }
-  
-}
 
+}
 </script>
 
 <style>
