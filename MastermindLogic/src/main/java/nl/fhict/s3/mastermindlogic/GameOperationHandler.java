@@ -61,7 +61,9 @@ public class GameOperationHandler {
         
         assert playerId != -1;
 
-        games.put(game.getId(), new ArrayList<Session>());
+        if(!games.containsKey(game.getId())) {
+            games.put(game.getId(), new ArrayList<>());
+        }
         games.get(game.getId()).add(session);
         
         // Return gameId and playerId to user
@@ -111,10 +113,9 @@ public class GameOperationHandler {
                 logMessage(session.getId(), "error", "could not find game in app");
             } else {
                 Row returnRow = currentGame.getPlayer(message.getPlayerId()).getBoard().checkRow(row);
-                // for(Session s : games.get(gameId).getSessions()) {
-                //     s.getAsyncRemote().sendText(jsonReturnMessage);
-                // } // This is for the multiplayer, to be implemented
-                sendMessage(session, message.getPlayerId(), gameId, WebSocketMessageOperation.SUBMIT_GUESS, returnRow);
+                for(Session s : games.get(gameId)) {
+                    sendMessage(s, message.getPlayerId(), gameId, WebSocketMessageOperation.SUBMIT_GUESS, returnRow);
+                }
             }
         } else {
             logMessage(session.getId(), "error", "could not find game, gameId null: " + gameId);
