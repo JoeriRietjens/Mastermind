@@ -3,9 +3,11 @@
     <h2 class="boardTitle"> Your own board </h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
-    <button v-on:click="SubmitCode" class="myButton">Confirm code</button>
-    <button v-on:click="SubmitGuess" class="myButton">Confirm guess</button>
+    <button v-show="confirmCodeIsShown" v-on:click="SubmitCode" class="myButton">Confirm code</button>
+    <button v-show="confirmGuessIsShown" v-on:click="SubmitGuess" class="myButton">Confirm guess</button>
     <button v-on:click="showPanel" class="myButton">Instructions</button>
+    <button v-show="restartIsShown" v-on:click="reloadPage" class="myButton">Restart game</button>
+    <button v-on:click="leaveGame" class="myButton">Leave game</button>
     <h2 class="boardTitle"> Your opponents board </h2>
     <OpponentBoard v-on:SelectCodeSpot="SelectSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
 
@@ -32,7 +34,7 @@ export default {
   name: 'Home',
   notifications: {
     showWinMessage: {
-      title: "win",
+      title: "won",
       message: "Player has won!",
       type: "info"
     },
@@ -52,6 +54,9 @@ export default {
       SelectedSpot: null,
       currentRow: 'code',
       Row: {id: 10, code: [null, null, null, null], clues: [null, null, null, null]},
+      confirmGuessIsShown: false,
+      confirmCodeIsShown: true,
+      restartIsShown: false,
     }
   },
   computed: mapState(['socket']),
@@ -89,6 +94,7 @@ export default {
         }
       }
     );
+    this.confirmGuessIsShown = false;
   },
   beforeDestroy() {
     this.unsubscribe();
@@ -173,7 +179,7 @@ export default {
         Row.$children[7].Color = this.Row.clues[3];
       }
       if(this.Row.clues[0] == 'BLACK' && this.Row.clues[1] == 'BLACK' && this.Row.clues[2] == 'BLACK' && this.Row.clues[3] == 'BLACK') {
-        this.showWinMessage();
+        this.WinGame();
         this.currentRow = null;
       }
       if(this.Row.clues[0] != null){
@@ -181,14 +187,20 @@ export default {
       }
     },
     LostGame() {
+      this.restartIsShown = true;
+      this.confirmGuessIsShown = false;
       this.showLostMessage();
     },
     WinGame() {
+      this.restartIsShown = true;
+      this.confirmGuessIsShown = false;
       this.showWinMessage();
     },
     setNextRow(){
       switch (this.currentRow){
         case 'code':
+          this.confirmGuessIsShown = true;
+          this.confirmCodeIsShown = false;
           this.currentRow = 'RowOne';
           break;
         case 'RowOne':
@@ -220,7 +232,7 @@ export default {
           break;
         case 'RowTen':
           this.currentRow = null;
-          this.showLostMessage();
+          this.LostGame();
           break;
         case null:
           break;
@@ -240,6 +252,12 @@ export default {
         }
       }
       return true;
+    },
+    reloadPage(){
+      window.location.reload()
+    },
+    leaveGame(){
+      //leave websocket game
     },
     deselectSpot() {
       if(this.SelectedSpot != null){
