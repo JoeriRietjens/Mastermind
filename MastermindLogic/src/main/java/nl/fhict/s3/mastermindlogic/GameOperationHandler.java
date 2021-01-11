@@ -87,7 +87,7 @@ public class GameOperationHandler {
         // TODO: implement leaving a game
     }
 
-    private void restartGameOperation(UUID gameId) {
+    public static void restartGameOperation(UUID gameId) {
         Game game = application.getGameById(gameId);
         game.restartGame();
     }

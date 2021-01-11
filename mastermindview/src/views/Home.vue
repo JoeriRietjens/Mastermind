@@ -95,6 +95,9 @@ export default {
             case "SUBMIT_CODE":
               console.log(parsedMessage)
               break
+            case "LEAVE_GAME":
+              this.leaveGame(parsedMessage)
+              break
           }
         }
       }
@@ -105,7 +108,7 @@ export default {
     this.unsubscribe();
   },
   methods: {
-    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame', 'changeGameID', 'changePlayerId', 'sendSubmitCode']),
+    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame', 'changeGameID', 'changePlayerId', 'sendSubmitCode', 'leaveGame']),
     showPanel() {
       const panel1Handle = this.$showPanel({
         component : Instruction,
@@ -143,8 +146,13 @@ export default {
       if(this.checkColorCode() == true)
       {
         this.sendSubmitCode(colors)
+<<<<<<< Updated upstream
         this.currentRow++;
       }
+=======
+        this.setNextRow();
+        }
+>>>>>>> Stashed changes
       else
       {
         this.$fire({title:"Colour code input", text:"You haven't made a correct colour code!",type:'warning'});
@@ -229,7 +237,7 @@ export default {
       window.location.reload()
     },
     leaveGame(){
-      //leave websocket game
+      this.leaveGame();
     },
     deselectSpot() {
       if(this.SelectedSpot != null){

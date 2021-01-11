@@ -80,6 +80,8 @@ public class Board implements IBoard {
         }
     }
 
+
+
     private void sayClues(EClueColour[] clues) {
         for (int i = 0; i < clues.length; i++) {
             System.out.println("Colour: " + code[i]);
