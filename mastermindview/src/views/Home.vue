@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-
     <h2 class="boardTitle"> Your own board </h2>
     <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
@@ -76,7 +75,11 @@ export default {
           var parsedMessage = JSON.parse(message.content);
           switch(message.operation) {
             case "REGISTER_GAME":
+              this.changePlayerId(message.playerId)
               this.changeGameID(parsedMessage)
+              break
+            case "JOIN_GAME":
+              this.changePlayerId(parsedMessage)
               break
             case "SUBMIT_GUESS":
               this.ChangeClues(parsedMessage)
@@ -96,8 +99,8 @@ export default {
   beforeDestroy() {
     this.unsubscribe();
   },
-    methods: {
-    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame', 'changeGameID', 'sendSubmitCode']),
+  methods: {
+    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame', 'changeGameID', 'changePlayerId', 'sendSubmitCode']),
     showPanel() {
       const panel1Handle = this.$showPanel({
         component : Instruction,
