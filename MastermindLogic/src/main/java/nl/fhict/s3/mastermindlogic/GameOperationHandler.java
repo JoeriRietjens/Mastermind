@@ -68,6 +68,12 @@ public class GameOperationHandler {
         
         // Return gameId and playerId to user
         sendMessage(session, playerId, game.getId(), WebSocketMessageOperation.REGISTER_GAME, game.getId().toString());
+        for (Session s :
+                games.get(game.getId())) {
+            if(s != session){
+                sendMessage(s, playerId, game.getId(), WebSocketMessageOperation.JOIN_GAME, null);
+            }
+        }
     }
 
     public static void unregisterGameOperation(UUID gameId) {
@@ -97,7 +103,7 @@ public class GameOperationHandler {
             if (opponent != null) {
                 opponent.getBoard().setCode(code);
                 for(Session s : games.get(gameId)) {
-                    sendMessage(s, message.getPlayerId(), gameId, WebSocketMessageOperation.SUBMIT_GUESS, null);
+                    sendMessage(s, message.getPlayerId(), gameId, WebSocketMessageOperation.SUBMIT_CODE, null);
                 }
             } else {
                 logMessage(session.getId(), "error", "no opponent has joined yet");
