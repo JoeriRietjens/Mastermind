@@ -150,9 +150,9 @@ const mutations = {
     CHANGE_PLAYER_ID(state, playerId) {
         state.socket.currentPlayerId = playerId
     },
-    GET_CODE(state,playerId)
+    GET_CODE()
     {
-        state.socket.currentPlayerId=playerId;
+     
     }
 }
 
