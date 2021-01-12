@@ -58,6 +58,7 @@ export default {
       code: null,
 
       confirmCodeIsShown: true,
+      confirmGuessIsShown: false,
       restartIsShown: false,
 
       codeSubmitted: false,
@@ -126,7 +127,6 @@ export default {
         }
       }
     );
-    this.confirmGuessIsShown = false;
   },
   beforeDestroy() {
     this.unsubscribe();
@@ -171,7 +171,12 @@ export default {
       if(this.checkColorCode() == true)
       {
         this.sendSubmitCode(colors)
-        this.currentRow++;
+        this.currentRow++;   
+        if(this.currentRow == 1){
+        this.confirmGuessIsShown = true;
+        this.confirmCodeIsShown = false;
+        this.sendGetCode();
+        }
       }
       else
       {
@@ -216,11 +221,6 @@ export default {
       }
       if(this.Row.clues[0] != null){
         this.currentRow++;
-      }
-      if(this.currentRow == 1){
-        this.confirmGuessIsShown = true;
-        this.confirmCodeIsShown = false;
-        this.sendGetCode();
       }
       if(this.currentRow == 11){
         this.currentRow = null;
