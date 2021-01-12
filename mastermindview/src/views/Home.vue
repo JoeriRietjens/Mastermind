@@ -269,7 +269,7 @@ export default {
       this.SelectedSpot = null;
     },
      revealCode(){
-      var Row = this.$children[0].$children.find(child => {return child.RowId == 'code'});
+      var Row = this.$children[0].$children.find(child => {return child.RowId == 0});
       Row.$children[0].Color=this.code[0];
       Row.$children[1].Color=this.code[1];
       Row.$children[2].Color=this.code[2];
