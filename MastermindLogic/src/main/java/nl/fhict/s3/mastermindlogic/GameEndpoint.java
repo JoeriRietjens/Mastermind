@@ -24,7 +24,7 @@ public class GameEndpoint {
         players.add(session);
         GameOperationHandler.logMessage(session.getId(), "connected, #sessions: ", Integer.toString(players.size()));
     }
-    
+
     @OnMessage
     public void onMessage(String message, Session session) {
         GameOperationHandler.logMessage(session.getId(), "received", message);
@@ -73,6 +73,10 @@ public class GameEndpoint {
                     break;
                 case GET_EMPTY_ROW:
                     GameOperationHandler.getEmptyRowOperation(gameId, session, message);
+                    break;
+                case GET_CODE:
+                    GameOperationHandler.getCodeOperation(gameId,session, message.getPlayerId());
+
                     break;
                 default:
                     GameOperationHandler.cannotParseMessage(serializedMessage);

@@ -128,4 +128,25 @@ public class GameOperationHandler {
     public static void getEmptyRowOperation(UUID gameId, Session session, WebSocketMessage message) {
         sendMessage(session, message.getPlayerId(), gameId, WebSocketMessageOperation.GET_EMPTY_ROW, new Row(0));
     }
+
+    public static void getCodeOperation (UUID gameId, Session session,int playerId)
+    {
+        if(games.get(gameId) != null) {
+            Gson gson = new Gson();
+            WebSocketMessage returnMessage = new WebSocketMessage();
+            returnMessage.setOperation(WebSocketMessageOperation.GET_CODE);
+            returnMessage.setGameId(gameId);
+            returnMessage.setPlayerId(playerId);
+
+            Game game= application.getGameById(gameId);
+
+            EPinColour[] code= game.getPlayer(playerId).getBoard().getCode();
+
+            String content =gson.toJson(code);
+
+            returnMessage.setContent(content);
+            String jsonReturnMessage = gson.toJson(returnMessage);
+            session.getAsyncRemote().sendText(jsonReturnMessage);
+        }
+    }
 }

@@ -54,8 +54,10 @@ export default {
       SelectedSpot: null,
 
       currentRow: 0,
+      currentOpponentRow: 1,
       Row: {id: 10, guess: [null, null, null, null], clues: [null, null, null, null]},
       code: null,
+      confirmGuessIsShown: false,
 
       confirmCodeIsShown: true,
       confirmGuessIsShown: false,
@@ -121,8 +123,8 @@ export default {
               }
               break
             case "GET_CODE":
-              this.code=parsedMessage;  
-              break;
+              this.code=parsedMessage
+              break
           }
         }
       }
@@ -178,6 +180,7 @@ export default {
         this.sendGetCode();
         }
       }
+
       else
       {
         this.$fire({title:"Colour code input", text:"You haven't made a correct colour code!",type:'warning'});
@@ -230,6 +233,7 @@ export default {
     LostGame() {
       this.restartIsShown = true;
       this.confirmGuessIsShown = false;
+
       this.currentRow = null;
       this.revealCode();
       this.showLostMessage();
@@ -297,8 +301,11 @@ export default {
       Row.$children[3].Color = filledRow.guess[3];
 
       this.currentOpponentRow++;
+
     }
+
   }
+
 }
 </script>
 
