@@ -142,6 +142,9 @@ export default {
             case "LEAVE_GAME":
               this.leaveGame(parsedMessage)
               break
+            case "RESTART_GAME":
+              this.restartGame(parsedMessage)
+              break
             case "GET_CODE":
               this.code=parsedMessage
               break
@@ -154,7 +157,7 @@ export default {
     this.unsubscribe();
   },
   methods: {
-    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame', 'changeGameID', 'changePlayerId', 'sendSubmitCode', 'leaveGame','sendGetCode']),
+    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame', 'changeGameID', 'changePlayerId', 'sendSubmitCode', 'leaveGame','sendGetCode', 'restartGame']),
     showPanel() {
       const panel1Handle = this.$showPanel({
         component : Instruction,
@@ -279,11 +282,14 @@ export default {
       }
       return true;
     },
-    reloadPage(){
+    reloadPage() {
       window.location.reload()
     },
-    leaveGame(){
-      this.leaveGame();
+    LeaveGame() {
+      this.leaveGame()
+    },
+    RestartGame() {
+      this.restartGame()
     },
     deselectSpot() {
       if(this.SelectedSpot != null){
