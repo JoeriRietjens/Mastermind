@@ -68,6 +68,12 @@ public class GameOperationHandler {
         
         // Return gameId and playerId to user
         sendMessage(session, playerId, game.getId(), WebSocketMessageOperation.REGISTER_GAME, game.getId().toString());
+        for (Session s :
+                games.get(game.getId())) {
+            if(s != session){
+                sendMessage(s, playerId, game.getId(), WebSocketMessageOperation.JOIN_GAME, null);
+            }
+        }
     }
 
     public static void unregisterGameOperation(UUID gameId) {
