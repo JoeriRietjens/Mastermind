@@ -97,6 +97,12 @@ const actions = {
     },
     async changePlayerId({ commit }, playerId) {
         commit('CHANGE_PLAYER_ID', playerId)
+    },
+    async leaveGame({ commit }, playerId) {
+        commit('CHANGE_PLAYER_ID', playerId)
+    },
+    async restartGame({ commit }, playerId) {
+        commit('CHANGE_PLAYER_ID', playerId)
     }
 }
 

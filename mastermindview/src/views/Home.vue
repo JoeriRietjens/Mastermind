@@ -116,6 +116,7 @@ export default {
         props: {
           
 
+
           //any data you want passed to your component
         }
       });
@@ -146,7 +147,7 @@ export default {
       if(this.checkColorCode() == true)
       {
         this.sendSubmitCode(colors)
-        this.setNextRow();
+        this.currentRow++
         }
       else
       {
