@@ -307,8 +307,7 @@ export default {
       Row.$children[1].Color=this.code[1];
       Row.$children[2].Color=this.code[2];
       Row.$children[3].Color=this.code[3];
-      
-
+    },   
     changeOpponentRow(filledRow){
       var Row = this.$children[2].$children.find(child => {return child.RowId == this.currentOpponentRow});
       
