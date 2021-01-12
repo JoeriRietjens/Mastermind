@@ -57,7 +57,6 @@ export default {
       currentOpponentRow: 1,
       Row: {id: 10, guess: [null, null, null, null], clues: [null, null, null, null]},
       code: null,
-      confirmGuessIsShown: false,
 
       confirmCodeIsShown: true,
       confirmGuessIsShown: false,
@@ -175,9 +174,9 @@ export default {
         this.sendSubmitCode(colors)
         this.currentRow++;   
         if(this.currentRow == 1){
-        this.confirmGuessIsShown = true;
-        this.confirmCodeIsShown = false;
-        this.sendGetCode();
+          this.confirmGuessIsShown = true;
+          this.confirmCodeIsShown = false;
+          this.sendGetCode();
         }
       }
 
@@ -233,7 +232,6 @@ export default {
     LostGame() {
       this.restartIsShown = true;
       this.confirmGuessIsShown = false;
-
       this.currentRow = null;
       this.revealCode();
       this.showLostMessage();
