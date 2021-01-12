@@ -10,7 +10,6 @@ public class Player {
     public Player(int id) {
         this.id = id;
         board = new Board();
-        this.board.setCode(new EPinColour[]{EPinColour.WHITE, EPinColour.BLACK, EPinColour.RED, EPinColour.BLUE});
     }
 
     public final int getId() {
