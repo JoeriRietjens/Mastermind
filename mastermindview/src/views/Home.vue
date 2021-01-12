@@ -54,10 +54,12 @@ export default {
       SelectedSpot: null,
 
       currentRow: 0,
+      currentOpponentRow: 1,
       Row: {id: 10, guess: [null, null, null, null], clues: [null, null, null, null]},
       code: null,
 
       confirmCodeIsShown: true,
+      confirmGuessIsShown: false,
       restartIsShown: false,
 
       codeSubmitted: false,
@@ -82,9 +84,22 @@ export default {
             case "REGISTER_GAME":
               this.changePlayerId(message.playerId)
               this.changeGameID(parsedMessage)
+              if(message.playerId == 1){
+                this.currentRow = 0;
+              }
+              else {
+                this.currentRow = null;
+              }
               break
             case "JOIN_GAME":
-              this.changePlayerId(parsedMessage)
+              if(message.playerId != 0) {
+                this.$alert("An opponent has joined! Submit a code for your opponent.");
+                this.currentRow = 0;
+              }
+              else{
+                this.changePlayerId(parsedMessage);
+                this.currentRow = null;
+              }
               break
             case "SUBMIT_GUESS":
               if(message.playerId == state.socket.socket.currentPlayerId){
@@ -100,22 +115,27 @@ export default {
             case "SUBMIT_CODE":
               console.log(parsedMessage);
               if(message.playerId == state.socket.socket.currentPlayerId){
-                this.$alert("You have succesfully submitted your code.");
                 if(this.codeSubmitted){
                   this.currentRow = 1;
+                  this.$alert("You have succesfully submitted your code and you can start guessing!");
+                  this.sendGetCode();
+
                 }
                 else {
                   this.currentRow = null;
-                  this.$alert("Wait untill your opponent has set a code for you.")
+                  this.$alert("Your have succesfully submitted your code! Wait untill your opponent has set a code for you.")
                 }
               }
               else {
-                this.$alert("Your opponent has submitted a code for you to guess! You can start guessing!")
                 if(this.currentRow == null){
                   this.currentRow = 1;
+                  this.$alert("Your opponent has submitted a code for you to guess! You can start guessing!")
+                  this.sendGetCode();
+
                 }
                 else{
                   this.codeSubmitted = true;
+                  this.$alert("Your opponent has submitted a code for you! After submitting a code yourself, you can start guessing!")
                 }
               }
               break
@@ -123,13 +143,12 @@ export default {
               this.leaveGame(parsedMessage)
               break
             case "GET_CODE":
-              this.code=parsedMessage;  
-              break;
+              this.code=parsedMessage
+              break
           }
         }
       }
     );
-    this.confirmGuessIsShown = false;
   },
   beforeDestroy() {
     this.unsubscribe();
@@ -175,8 +194,13 @@ export default {
       if(this.checkColorCode() == true)
       {
         this.sendSubmitCode(colors)
-        this.currentRow++
+        this.currentRow++;   
+        if(this.currentRow == 1){
+          this.confirmGuessIsShown = true;
+          this.confirmCodeIsShown = false;
         }
+      }
+
       else
       {
         this.$fire({title:"Colour code input", text:"You haven't made a correct colour code!",type:'warning'});
@@ -220,11 +244,6 @@ export default {
       }
       if(this.Row.clues[0] != null){
         this.currentRow++;
-      }
-      if(this.currentRow == 1){
-        this.confirmGuessIsShown = true;
-        this.confirmCodeIsShown = false;
-        this.sendGetCode();
       }
       if(this.currentRow == 11){
         this.currentRow = null;
@@ -301,8 +320,11 @@ export default {
       Row.$children[3].Color = filledRow.guess[3];
 
       this.currentOpponentRow++;
+
     }
+
   }
+
 }
 </script>
 

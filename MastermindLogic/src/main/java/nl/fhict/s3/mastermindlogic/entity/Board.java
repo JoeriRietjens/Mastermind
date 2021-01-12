@@ -89,6 +89,7 @@ public class Board implements IBoard {
         }
     }
 
+
     public void setCode(EPinColour[] code) {
         this.code = code;
     }
