@@ -98,24 +98,24 @@ const actions = {
     async changePlayerId({ commit }, playerId) {
         commit('CHANGE_PLAYER_ID', playerId)
     },
-    async leaveGame({ commit }) {
+    async leaveGame({ commit }, gameId, playerId) {
         console.log('leaving game')
 
         var message = {
             operation: "LEAVE_GAME",
             gameId: localState.socket.currentGameId,
             playerId: localState.socket.currentPlayerId,
-            content: '' 
+            content: JSON.stringify(gameId, playerId)
         }
         commit('LEAVE_GAME', message)
     },
-    async restartGame({ commit }) {
+    async restartGame({ commit }, gameId) {
         console.log('restarting game')
 
         var message = {
             operation: "LEAVE_GAME",
             gameId: localState.socket.currentGameId,
-            content: '' 
+            content: JSON.stringify(gameId)
         }
         commit('RESTART_GAME', message)
     }
