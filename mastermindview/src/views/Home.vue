@@ -53,13 +53,17 @@ export default {
     return {
       SelectedSpot: null,
 
-      currentRow: '0',
+      currentRow: 0,
       currentOpponentRow: 1,
       Row: {id: 10, guess: [null, null, null, null], clues: [null, null, null, null]},
       code: null,
       confirmGuessIsShown: false,
+
       confirmCodeIsShown: true,
       restartIsShown: false,
+
+      codeSubmitted: false,
+      opponentJoined: false,
     }
   },
   computed: mapState(['socket']),
@@ -96,7 +100,26 @@ export default {
               this.emptyRow = parsedMessage
               break
             case "SUBMIT_CODE":
-              console.log(parsedMessage)
+              console.log(parsedMessage);
+              if(message.playerId == state.socket.socket.currentPlayerId){
+                this.$alert("You have succesfully submitted your code.");
+                if(this.codeSubmitted){
+                  this.currentRow = 1;
+                }
+                else {
+                  this.currentRow = null;
+                  this.$alert("Wait untill your opponent has set a code for you.")
+                }
+              }
+              else {
+                this.$alert("Your opponent has submitted a code for you to guess! You can start guessing!")
+                if(this.currentRow == null){
+                  this.currentRow = 1;
+                }
+                else{
+                  this.codeSubmitted = true;
+                }
+              }
               break
             case "GET_CODE":
               this.code=parsedMessage
@@ -144,9 +167,8 @@ export default {
     SubmitCode() {
       this.deselectSpot();
 
-      var Row = this.$children[2].$children.find(child => {return child.RowId == '0'});
+      var Row = this.$children[2].$children.find(child => {return child.RowId == 0});
       var colors = [
-
       Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color];
       if(this.checkColorCode() == true)
       {
@@ -196,8 +218,6 @@ export default {
         this.sendGetCode();
         this.revealCode();
         this.WinGame();
-        
-        this.currentRow = null;
       }
       if(this.Row.clues[0] != null){
         this.currentRow++;
@@ -205,6 +225,7 @@ export default {
       if(this.currentRow == 1){
         this.confirmGuessIsShown = true;
         this.confirmCodeIsShown = false;
+        this.sendGetCode();
       }
       if(this.currentRow == 11){
         this.currentRow = null;
@@ -216,12 +237,14 @@ export default {
       this.confirmGuessIsShown = false;
 
       this.currentRow = null;
-
+      this.revealCode();
       this.showLostMessage();
     },
     WinGame() {
       this.restartIsShown = true;
       this.confirmGuessIsShown = false;
+      this.currentRow = null;
+      this.revealCode();
       this.showWinMessage();
     },
     checkColorCode() {
@@ -251,9 +274,8 @@ export default {
         }
       this.SelectedSpot = null;
     },
-
      revealCode(){
-      var Row = this.$children[0].$children.find(child => {return child.RowId == '0'});
+      var Row = this.$children[0].$children.find(child => {return child.RowId == 0});
       Row.$children[0].Color=this.code[0];
       Row.$children[1].Color=this.code[1];
       Row.$children[2].Color=this.code[2];
