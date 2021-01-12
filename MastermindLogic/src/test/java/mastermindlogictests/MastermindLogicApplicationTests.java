@@ -294,7 +294,6 @@ public class MastermindLogicApplicationTests {
 	@Test
 	void testGame(){
 		Game game = new Game();
-		assertNotNull(game.getPlayer(1));
 		assertNotNull(game);
 	}
 
