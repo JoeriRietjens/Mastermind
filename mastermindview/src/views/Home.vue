@@ -215,8 +215,6 @@ export default {
         Row.$children[7].Color = this.Row.clues[3];
       }
       if(this.Row.clues[0] == 'BLACK' && this.Row.clues[1] == 'BLACK' && this.Row.clues[2] == 'BLACK' && this.Row.clues[3] == 'BLACK') {
-        this.sendGetCode();
-        this.revealCode();
         this.WinGame();
       }
       if(this.Row.clues[0] != null){
