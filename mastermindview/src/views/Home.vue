@@ -57,7 +57,6 @@ export default {
       currentOpponentRow: 1,
       Row: {id: 10, guess: [null, null, null, null], clues: [null, null, null, null]},
       code: null,
-      confirmGuessIsShown: false,
 
       confirmCodeIsShown: true,
       confirmGuessIsShown: false,
