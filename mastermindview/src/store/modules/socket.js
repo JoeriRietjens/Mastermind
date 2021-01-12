@@ -104,7 +104,7 @@ const actions = {
         var message = {
             operation: "GET_CODE",
             gameId: localState.socket.currentGameId,
-            playerId: 0,
+            playerId: localState.socket.currentPlayerId,
             content: '' 
         }
 
@@ -149,10 +149,6 @@ const mutations = {
     },
     CHANGE_PLAYER_ID(state, playerId) {
         state.socket.currentPlayerId = playerId
-    },
-    GET_CODE()
-    {
-     
     }
 }
 
