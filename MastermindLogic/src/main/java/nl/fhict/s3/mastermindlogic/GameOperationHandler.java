@@ -96,6 +96,9 @@ public class GameOperationHandler {
             Player opponent = application.getGameById(gameId).getPlayer(opponentId);
             if (opponent != null) {
                 opponent.getBoard().setCode(code);
+                for(Session s : games.get(gameId)) {
+                    sendMessage(s, message.getPlayerId(), gameId, WebSocketMessageOperation.SUBMIT_GUESS, null);
+                }
             } else {
                 logMessage(session.getId(), "error", "no opponent has joined yet");
             }
