@@ -24,7 +24,7 @@ const options = {
 };
 
 Vue.use(VueNotifications, options);
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 new Vue({
   router,
