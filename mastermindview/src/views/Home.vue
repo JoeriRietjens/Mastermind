@@ -84,12 +84,6 @@ export default {
   data() {
     return {
 
-      authenticated: false,
-      mockAccount: {
-      username: "joeri",
-      password: "password"
-                },
-
       SelectedSpot: null,
 
       currentRow: 0,
