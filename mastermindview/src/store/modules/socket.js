@@ -110,22 +110,23 @@ const actions = {
         }
 
         if(localState.socket.isConnected) {
-            Vue.prototype.$socket.send(message)
-            commit('LEAVE_GAME', message)
+            Vue.prototype.$socket.send(JSON.stringify(message))
+            commit('SEND_MESSAGE', message)
         }
     },
     async restartGame({ commit }, gameId) {
         console.log('restarting game')
 
         var message = {
-            operation: "LEAVE_GAME",
+            operation: "RESTART_GAME",
             gameId: localState.socket.currentGameId,
+            playerId: localState.socket.currentPlayerId,
             content: JSON.stringify(gameId)
         }
 
         if(localState.socket.isConnected) {
-            Vue.prototype.$socket.send(message)
-            commit('RESTART_GAME', message)
+            Vue.prototype.$socket.send(JSON.stringify(message))
+            commit('SEND_MESSAGE', message)
         }
     },
     async sendGetCode({commit})

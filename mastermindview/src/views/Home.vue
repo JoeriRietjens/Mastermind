@@ -140,10 +140,10 @@ export default {
               }
               break
             case "LEAVE_GAME":
-              this.leaveGame(parsedMessage)
+              
               break
             case "RESTART_GAME":
-              this.restartGame(parsedMessage)
+              
               break
             case "GET_CODE":
               this.code=parsedMessage
@@ -259,6 +259,7 @@ export default {
       this.currentRow = null;
       this.revealCode();
       this.showLostMessage();
+      this.restartIsShown = true;
     },
     WinGame() {
       this.restartIsShown = true;
@@ -266,6 +267,7 @@ export default {
       this.currentRow = null;
       this.revealCode();
       this.showWinMessage();
+      this.restartIsShown = true;
     },
     checkColorCode() {
       var Row = this.$children[2].$children.find(child => {return child.RowId == '0'});
@@ -284,12 +286,6 @@ export default {
     },
     reloadPage() {
       window.location.reload()
-    },
-    LeaveGame() {
-      this.leaveGame()
-    },
-    RestartGame() {
-      this.restartGame()
     },
     deselectSpot() {
       if(this.SelectedSpot != null){

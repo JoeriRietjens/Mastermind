@@ -63,7 +63,7 @@ public class GameEndpoint {
                     GameOperationHandler.joinGameOperation(gameId, session);
                     break;
                 case LEAVE_GAME:
-                    GameOperationHandler.leaveGameOperation(gameId, session);
+                    GameOperationHandler.leaveGameOperation(gameId, session, message.getPlayerId());
                     break;
                 case SUBMIT_CODE:
                     GameOperationHandler.submitCodeOperation(gameId, message, session);
@@ -75,7 +75,7 @@ public class GameEndpoint {
                     GameOperationHandler.getEmptyRowOperation(gameId, session, message);
                     break;
                 case RESTART_GAME:
-                    GameOperationHandler.restartGameOperation(gameId);
+                    GameOperationHandler.restartGameOperation(gameId, session, message.getPlayerId());
                     break;
                 case GET_CODE:
                     GameOperationHandler.getCodeOperation(gameId,session, message.getPlayerId());
