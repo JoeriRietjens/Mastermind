@@ -5,7 +5,7 @@ public class Player {
     private final int id;
     private String name;
     private String password;
-    private final Board board;
+    private Board board;
 
     public Player(int id) {
         this.id = id;
@@ -18,5 +18,9 @@ public class Player {
 
     public Board getBoard() {
         return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
     }
 }

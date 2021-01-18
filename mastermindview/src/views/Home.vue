@@ -139,6 +139,12 @@ export default {
                 }
               }
               break
+            case "LEAVE_GAME":
+              
+              break
+            case "RESTART_GAME":
+              
+              break
             case "GET_CODE":
               this.code=parsedMessage
               break
@@ -151,12 +157,13 @@ export default {
     this.unsubscribe();
   },
   methods: {
-    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame', 'changeGameID', 'changePlayerId', 'sendSubmitCode','sendGetCode']),
+    ...mapActions(['sendGetEmptyRow', 'sendSubmitGuess', 'sendRegisterGame', 'changeGameID', 'changePlayerId', 'sendSubmitCode', 'leaveGame','sendGetCode', 'restartGame']),
     showPanel() {
       const panel1Handle = this.$showPanel({
         component : Instruction,
         openOn: 'left',
         props: {
+
 
 
           //any data you want passed to your component
@@ -252,6 +259,7 @@ export default {
       this.currentRow = null;
       this.revealCode();
       this.showLostMessage();
+      this.restartIsShown = true;
     },
     WinGame() {
       this.restartIsShown = true;
@@ -259,6 +267,7 @@ export default {
       this.currentRow = null;
       this.revealCode();
       this.showWinMessage();
+      this.restartIsShown = true;
     },
     checkColorCode() {
       var Row = this.$children[2].$children.find(child => {return child.RowId == '0'});
@@ -275,11 +284,8 @@ export default {
       }
       return true;
     },
-    reloadPage(){
+    reloadPage() {
       window.location.reload()
-    },
-    leaveGame(){
-      //leave websocket game
     },
     deselectSpot() {
       if(this.SelectedSpot != null){
