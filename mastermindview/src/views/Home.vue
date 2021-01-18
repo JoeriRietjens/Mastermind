@@ -62,12 +62,7 @@ Vue.use(VueSlideoutPanel);
 Vue.use(VueSimpleAlert);
 
 export default {
-  authenticated: false,
-    mockAccount: {
-      username: "joeri",
-      password: "password"
-                },
-
+  
   name: 'Home',
   notifications: {
     showWinMessage: {
@@ -88,6 +83,13 @@ export default {
   },
   data() {
     return {
+
+      authenticated: false,
+      mockAccount: {
+      username: "joeri",
+      password: "password"
+                },
+
       SelectedSpot: null,
 
       currentRow: 0,

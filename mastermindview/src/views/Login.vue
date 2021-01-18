@@ -20,12 +20,15 @@
                 }
             }
         },
+        created(){
+            console.log(this.$parent.mockAccount.username)
+        },
         methods: {
             login() {
                 if(this.input.username != "" && this.input.password != "") {
                     if(this.input.username == this.$parent.mockAccount.username && this.input.password == this.$parent.mockAccount.password) {
                         this.$emit("authenticated", true);
-                        this.$router.replace({ name: "secure" });
+                        this.$router.replace({ name: "Home" });
                     } else {
                         console.log("The username and / or password is incorrect");
                     }
