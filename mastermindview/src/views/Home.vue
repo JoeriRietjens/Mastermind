@@ -6,7 +6,7 @@
     <button v-show="confirmCodeIsShown" v-on:click="SubmitCode" class="myButton">Confirm code</button>
     <button v-show="confirmGuessIsShown" v-on:click="SubmitGuess" class="myButton">Confirm guess</button>
     <button v-on:click="showPanel" class="myButton">Instructions</button>
-    <button v-show="restartIsShown" v-on:click="reloadPage" class="myButton">Restart game</button>
+    <button v-show="restartIsShown" v-on:click="restartGame" class="myButton">Restart game</button>
     <button v-on:click="leaveGame" class="myButton">Leave game</button>
     <h2 class="boardTitle"> Your opponents board </h2>
     <OpponentBoard v-on:SelectCodeSpot="SelectSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
@@ -52,6 +52,7 @@ export default {
   data() {
     return {
       SelectedSpot: null,
+      SpotColor: ' rgb(70, 7, 7)',
 
       currentRow: 0,
       currentOpponentRow: 1,
@@ -127,6 +128,7 @@ export default {
                 }
               }
               else {
+                this.codeSubmitted = true;
                 if(this.currentRow == null){
                   this.currentRow = 1;
                   this.$alert("Your opponent has submitted a code for you to guess! You can start guessing!")
@@ -134,16 +136,32 @@ export default {
 
                 }
                 else{
-                  this.codeSubmitted = true;
                   this.$alert("Your opponent has submitted a code for you! After submitting a code yourself, you can start guessing!")
                 }
               }
               break
             case "LEAVE_GAME":
-              
+              if(message.playerId == state.socket.socket.currentPlayerId){
+                this.reloadPage();
+              }
+              else{
+                if(this.codeSubmitted){            
+                  this.$alert("Your opponent left the game. Feel free to keep guessing yourself!");
+                }
+                else{
+                  this.reloadPage();
+                }
+              }
               break
             case "RESTART_GAME":
-              
+              if(message.playerId == state.socket.socket.currentPlayerId){
+                this.emptyPage();
+                this.currentRow = 0;
+                this.currentOpponentRow = 1;
+              }
+              else{
+                this.$alert("Your opponent wants to battle you again! And a new game has started. Don't want to play? Click on 'Leave game'.")
+              }
               break
             case "GET_CODE":
               this.code=parsedMessage
@@ -285,7 +303,15 @@ export default {
       return true;
     },
     reloadPage() {
-      window.location.reload()
+      window.location.reload();
+    },
+    emptyPage(){
+      var AllColorSpots = this.$el.querySelectorAll('span');
+      AllColorSpots.forEach(element => {
+        if(element.parentElement.parentElement.id != "colors") {
+          element.style.backgroundColor = this.SpotColor;
+        }
+      });
     },
     deselectSpot() {
       if(this.SelectedSpot != null){
@@ -321,6 +347,9 @@ export default {
       Row.$children[2].Color = filledRow.guess[2];
       Row.$children[3].Color = filledRow.guess[3];
 
+      if(filledRow.clues[0] == 'BLACK' && filledRow.clues[1] == 'BLACK' && filledRow.clues[2] == 'BLACK' && filledRow.clues[3] == 'BLACK') {
+        this.LostGame();
+      }
       this.currentOpponentRow++;
 
     }
