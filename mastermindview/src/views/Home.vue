@@ -271,7 +271,7 @@ export default {
     },
     checkColorCode() {
       var Row = this.$children[2].$children.find(child => {return child.RowId == '0'});
-      console.log(Row)
+      console.log("Player: "+Row)
       var colors = [
         Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color
         ];
@@ -302,19 +302,26 @@ export default {
     },   
     changeOpponentRow(filledRow){
       var Row = this.$children[2].$children.find(child => {return child.RowId == this.currentOpponentRow});
-      
-      if(this.Row.clues[0] != 'BLANK') {
+       console.log("OpponentRow: "+filledRow.clues)
+
+
+    if(filledRow.clues[0] != "BLANK") {
         Row.$children[4].Color = filledRow.clues[0];
+          console.log("FillClue: "+1);
       }
-      if(this.Row.clues[1] != 'BLANK') {
+      if(filledRow.clues[1] != "BLANK") {
         Row.$children[5].Color = filledRow.clues[1];
+        console.log("FillClue: "+2);
       }
-      if(this.Row.clues[2] != 'BLANK') {
+      if(filledRow.clues[2] != "BLANK") {
         Row.$children[6].Color = filledRow.clues[2];
+        console.log("FillClue: "+3);
       }
-      if(this.Row.clues[3] != 'BLANK') {
+      if(filledRow.clues[3] != "BLANK") {
         Row.$children[7].Color = filledRow.clues[3];
+        console.log("FillClue: "+4);
       }
+
 
       Row.$children[0].Color = filledRow.guess[0];
       Row.$children[1].Color = filledRow.guess[1];
@@ -326,7 +333,42 @@ export default {
     }
 
   }
+  /*
+        if(filledRow.clues[0] != "BLANK") {
+        Row.$children[4].Color = filledRow.clues[0];
+          console.log("FillClue: "+1);
+      }
+      if(filledRow.clues[1] != "BLANK") {
+        Row.$children[5].Color = filledRow.clues[1];
+        console.log("FillClue: "+2);
+      }
+      if(filledRow.clues[2] != "BLANK") {
+        Row.$children[6].Color = filledRow.clues[2];
+        console.log("FillClue: "+3);
+      }
+      if(filledRow.clues[3] != "BLANK") {
+        Row.$children[7].Color = filledRow.clues[3];
+        console.log("FillClue: "+4);
+      }
 
+
+            if(this.Row.clues[0] != "BLANK") {
+        Row.$children[4].Color = filledRow.clues[0];
+          console.log("FillClue: "+1);
+      }
+      if(this.Row.clues[1] != "BLANK") {
+        Row.$children[5].Color = filledRow.clues[1];
+        console.log("FillClue: "+2);
+      }
+      if(this.Row.clues[2] != "BLANK") {
+        Row.$children[6].Color = filledRow.clues[2];
+        console.log("FillClue: "+3);
+      }
+      if(this.Row.clues[3] != "BLANK") {
+        Row.$children[7].Color = filledRow.clues[3];
+        console.log("FillClue: "+4);
+      }
+  */
 }
 </script>
 
