@@ -25,6 +25,11 @@ public class Game {
         return null;
     }
 
+    public void restartGame() {
+        player1.setBoard(new Board());
+        player2.setBoard(new Board());
+    }
+
     public Player getPlayer1() {
         return player1;
     }
