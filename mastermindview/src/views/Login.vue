@@ -36,9 +36,10 @@ export default {
         // Retrieve user information
         const user = {username: this.input.username, password: this.input.password}
         const userString = JSON.stringify(user)
-        var resp = ''
-        this.axios.post('http://localhost:5001/login/', userString).then((response) => this.resp = response)
-        console.log(resp)
+        //var resp = ''
+        const headers = {'Content-Type': 'application/json'}
+        this.axios.post('http://localhost:5001/login/', userString, { headers: headers }).then(response => console.log(response.data))
+
         if (
           this.input.username == this.$parent.mockAccount.username &&
           this.input.password == this.$parent.mockAccount.password
