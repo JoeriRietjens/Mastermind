@@ -30,32 +30,15 @@ export default {
       },
     };
   },
-  computed: mapState(["socket"]),
-
-  created() {
-    console.log(this.$parent.mockAccount.username);
-    this.unsubscribe = this.$store.subscribe((mutation, state) => {
-      if (mutation.type == "SOCKET_ONOPEN") {
-        if (state.socket.socket.isConnected) {
-          //action on socket open
-        }
-      } else if (mutation.type == "SOCKET_ONMESSAGE") {
-        var message = state.socket.socket.message;
-        var parsedMessage = JSON.parse(message.content);
-        switch (message.operation) {
-          case "LOGIN":
-            console.log("Eeeey je bent ingelogd")
-            break;
-        }
-      }
-    });
-  },
-  beforeDestroy() {
-    this.unsubscribe();
-  },
   methods: {
     login() {
       if (this.input.username != "" && this.input.password != "") {
+        // Retrieve user information
+        const user = {username: this.input.username, password: this.input.password}
+        const userString = JSON.stringify(user)
+        var resp = ''
+        this.axios.post('http://localhost:5001/login/', userString).then((response) => this.resp = response)
+        console.log(resp)
         if (
           this.input.username == this.$parent.mockAccount.username &&
           this.input.password == this.$parent.mockAccount.password
