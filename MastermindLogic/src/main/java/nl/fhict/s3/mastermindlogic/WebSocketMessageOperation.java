@@ -8,5 +8,6 @@ public enum WebSocketMessageOperation {
     SUBMIT_GUESS,
     SUBMIT_CODE,
     GET_EMPTY_ROW,
+    RESTART_GAME,
     GET_CODE
 }

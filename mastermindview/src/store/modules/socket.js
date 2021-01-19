@@ -119,6 +119,36 @@ const actions = {
     async changePlayerId({ commit }, playerId) {
         commit('CHANGE_PLAYER_ID', playerId)
     },
+    async leaveGame({ commit }, gameId, playerId) {
+        console.log('leaving game')
+
+        var message = {
+            operation: "LEAVE_GAME",
+            gameId: localState.socket.currentGameId,
+            playerId: localState.socket.currentPlayerId,
+            content: JSON.stringify(gameId, playerId)
+        }
+
+        if(localState.socket.isConnected) {
+            Vue.prototype.$socket.send(JSON.stringify(message))
+            commit('SEND_MESSAGE', message)
+        }
+    },
+    async restartGame({ commit }, gameId) {
+        console.log('restarting game')
+
+        var message = {
+            operation: "RESTART_GAME",
+            gameId: localState.socket.currentGameId,
+            playerId: localState.socket.currentPlayerId,
+            content: JSON.stringify(gameId)
+        }
+
+        if(localState.socket.isConnected) {
+            Vue.prototype.$socket.send(JSON.stringify(message))
+            commit('SEND_MESSAGE', message)
+        }
+    },
     async sendGetCode({commit})
     {
         var message = {
@@ -169,6 +199,12 @@ const mutations = {
     },
     CHANGE_PLAYER_ID(state, playerId) {
         state.socket.currentPlayerId = playerId
+    },
+    LEAVE_GAME(state, gameId) {
+        state.socket.gameID = gameId
+    },
+    RESTART_GAME(state, gameId) {
+        state.socket.gameID = gameId
     }
 }
 
