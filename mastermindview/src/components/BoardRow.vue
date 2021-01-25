@@ -1,17 +1,17 @@
 <template>
     <div :id="RowId">
-        <ColorSpot v-on:SelectSpot="SelectSpot" SpotId="SpotOne" ref="ColorSpot"></ColorSpot>
-        <ColorSpot v-on:SelectSpot="SelectSpot" SpotId="SpotTwo" ref="ColorSpot"></ColorSpot>
-        <ColorSpot v-on:SelectSpot="SelectSpot" SpotId="SpotThree" ref="ColorSpot"></ColorSpot>
-        <ColorSpot v-on:SelectSpot="SelectSpot" SpotId="SpotFour" ref="ColorSpot"></ColorSpot>
+        <ColorSpot v-on:SelectSpot="SelectSpot" SpotId="SpotOne"></ColorSpot>
+        <ColorSpot v-on:SelectSpot="SelectSpot" SpotId="SpotTwo"></ColorSpot>
+        <ColorSpot v-on:SelectSpot="SelectSpot" SpotId="SpotThree"></ColorSpot>
+        <ColorSpot v-on:SelectSpot="SelectSpot" SpotId="SpotFour"></ColorSpot>
         <div class="Hints">
             <div class="topRow">
-            <HintSpot class="hintSpot" HintId="HintOne" ref="ColorSpot"></HintSpot>
-            <HintSpot class="hintSpot" HintId="HintTwo" ref="ColorSpot"></HintSpot>
+            <HintSpot class="hintSpot" HintId="HintOne"></HintSpot>
+            <HintSpot class="hintSpot" HintId="HintTwo"></HintSpot>
             </div>
             <div class="bottomRow">
-            <HintSpot class="hintSpot" HintId="HintThree" ref="ColorSpot"></HintSpot>
-            <HintSpot class="hintSpot" HintId="HintFour" ref="ColorSpot"></HintSpot>
+            <HintSpot class="hintSpot" HintId="HintThree"></HintSpot>
+            <HintSpot class="hintSpot" HintId="HintFour"></HintSpot>
             </div>
         </div>
     </div>
