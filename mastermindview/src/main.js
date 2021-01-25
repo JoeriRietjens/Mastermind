@@ -4,9 +4,6 @@ import router from './router'
 import { store } from './store'
 import VueNotifications from "vue-notifications";
 import miniToastr from "mini-toastr";
-import axios from 'axios'
-import VueAxios from 'vue-axios'
-
 const toastTypes = {
   success: "success",
   error: "error",
@@ -27,7 +24,6 @@ const options = {
 };
 
 Vue.use(VueNotifications, options);
-Vue.use(VueAxios, axios)
 Vue.config.productionTip = false;
 
 new Vue({

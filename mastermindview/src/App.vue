@@ -4,23 +4,9 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
-    <router-view />
+    <router-view/>
   </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      authenticated: false,
-      mockAccount: {
-        username: "joeri",
-        password: "password",
-      },
-    };
-  },
-};
-</script>
 
 <style>
 #app {
@@ -33,7 +19,7 @@ export default {
 
 #nav {
   padding: 30px;
-  display: none; /* REMOVE THIS TO SHOW NAVIGATION */
+  display: none; /* REMOVE THIS TO SHOW NAVIGATION */ 
 }
 
 #nav a {
