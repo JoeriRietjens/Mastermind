@@ -22,9 +22,7 @@
       Confirm guess
     </button>
     <button v-on:click="showPanel" class="myButton">Instructions</button>
-    <button v-show="restartIsShown" v-on:click="reloadPage" class="myButton">
-      Restart game
-    </button>
+    <button v-show="restartIsShown" v-on:click="restartGame" class="myButton">Restart game</button>
     <button v-on:click="leaveGame" class="myButton">Leave game</button>
     <h2 class="boardTitle">Your opponents board</h2>
     <OpponentBoard
@@ -85,6 +83,7 @@ export default {
     return {
 
       SelectedSpot: null,
+      SpotColor: ' rgb(70, 7, 7)',
 
       currentRow: 0,
       currentOpponentRow: 1,
@@ -102,7 +101,7 @@ export default {
 
   computed: mapState(['socket']),
   created() {
-    this.$alert("Hello Player Please enter your colour code before you start.\n \nif you want to know how the game works please press on the Instruction button");
+    this.$alert('Hello Player Please enter your colour code before you start.\n \nIf you want to know how the game works please press on the Instruction button');
     this.unsubscribe = this.$store.subscribe(
       (mutation, state) => {
         if (mutation.type == "SOCKET_ONOPEN") {
@@ -161,6 +160,7 @@ export default {
                 }
               }
               else {
+                this.codeSubmitted = true;
                 if(this.currentRow == null){
                   this.currentRow = 1;
                   this.$alert("Your opponent has submitted a code for you to guess! You can start guessing!")
@@ -168,16 +168,31 @@ export default {
 
                 }
                 else{
-                  this.codeSubmitted = true;
                   this.$alert("Your opponent has submitted a code for you! After submitting a code yourself, you can start guessing!")
                 }
               }
               break
             case "LEAVE_GAME":
-              
+              if(message.playerId == state.socket.socket.currentPlayerId){
+                this.reloadPage();
+              }
+              else{
+                if(this.codeSubmitted){            
+                  this.$alert("Your opponent left the game. Feel free to keep guessing yourself!");
+                }
+                else{
+                  this.reloadPage();
+                }
+              }
               break
             case "RESTART_GAME":
-              
+              if(message.playerId == state.socket.socket.currentPlayerId){
+                this.emptyPage();
+              }
+              else{
+                this.emptyPage();
+                this.$alert("Your opponent wants to battle you again! And a new game has started. Begin with submitting a new code! Don't want to play? Click on 'Leave game'.");
+              }
               break
             case "GET_CODE":
               this.code=parsedMessage
@@ -305,7 +320,7 @@ export default {
     },
     checkColorCode() {
       var Row = this.$children[2].$children.find(child => {return child.RowId == '0'});
-      console.log(Row)
+      console.log("Player: "+Row)
       var colors = [
         Row.$children[0].Color, Row.$children[1].Color, Row.$children[2].Color, Row.$children[3].Color
         ];
@@ -319,7 +334,290 @@ export default {
       return true;
     },
     reloadPage() {
-      window.location.reload()
+      window.location.reload();
+    },
+    emptyPage(){
+
+      var Rowo1 = this.$children[2].$children.find(child => {return child.RowId == 1});
+         
+      Rowo1.$children[4].Color = this.SpotColor;
+      Rowo1.$children[5].Color = this.SpotColor;
+      Rowo1.$children[6].Color = this.SpotColor;
+      Rowo1.$children[7].Color = this.SpotColor;
+      
+
+      Rowo1.$children[0].Color = this.SpotColor;
+      Rowo1.$children[1].Color = this.SpotColor;
+      Rowo1.$children[2].Color = this.SpotColor;
+      Rowo1.$children[3].Color = this.SpotColor;
+
+      var Rowo2 = this.$children[2].$children.find(child => {return child.RowId == 2});
+         
+      Rowo2.$children[4].Color = this.SpotColor;
+      Rowo2.$children[5].Color = this.SpotColor;
+      Rowo2.$children[6].Color = this.SpotColor;
+      Rowo2.$children[7].Color = this.SpotColor;
+      
+
+      Rowo2.$children[0].Color = this.SpotColor;
+      Rowo2.$children[1].Color = this.SpotColor;
+      Rowo2.$children[2].Color = this.SpotColor;
+      Rowo2.$children[3].Color = this.SpotColor;
+
+      var Rowo3 = this.$children[2].$children.find(child => {return child.RowId == 3});
+         
+      Rowo3.$children[4].Color = this.SpotColor;
+      Rowo3.$children[5].Color = this.SpotColor;
+      Rowo3.$children[6].Color = this.SpotColor;
+      Rowo3.$children[7].Color = this.SpotColor;
+      
+
+      Rowo3.$children[0].Color = this.SpotColor;
+      Rowo3.$children[1].Color = this.SpotColor;
+      Rowo3.$children[2].Color = this.SpotColor;
+      Rowo3.$children[3].Color = this.SpotColor;
+
+      var Rowo4 = this.$children[2].$children.find(child => {return child.RowId == 4});
+         
+      Rowo4.$children[4].Color = this.SpotColor;
+      Rowo4.$children[5].Color = this.SpotColor;
+      Rowo4.$children[6].Color = this.SpotColor;
+      Rowo4.$children[7].Color = this.SpotColor;
+      
+
+      Rowo4.$children[0].Color = this.SpotColor;
+      Rowo4.$children[1].Color = this.SpotColor;
+      Rowo4.$children[2].Color = this.SpotColor;
+      Rowo4.$children[3].Color = this.SpotColor;
+
+      var Rowo5 = this.$children[2].$children.find(child => {return child.RowId == 5});
+         
+      Rowo5.$children[4].Color = this.SpotColor;
+      Rowo5.$children[5].Color = this.SpotColor;
+      Rowo5.$children[6].Color = this.SpotColor;
+      Rowo5.$children[7].Color = this.SpotColor;
+      
+
+      Rowo5.$children[0].Color = this.SpotColor;
+      Rowo5.$children[1].Color = this.SpotColor;
+      Rowo5.$children[2].Color = this.SpotColor;
+      Rowo5.$children[3].Color = this.SpotColor;
+
+      var Rowo6 = this.$children[2].$children.find(child => {return child.RowId == 6});
+         
+      Rowo6.$children[4].Color = this.SpotColor;
+      Rowo6.$children[5].Color = this.SpotColor;
+      Rowo6.$children[6].Color = this.SpotColor;
+      Rowo6.$children[7].Color = this.SpotColor;
+      
+
+      Rowo6.$children[0].Color = this.SpotColor;
+      Rowo6.$children[1].Color = this.SpotColor;
+      Rowo6.$children[2].Color = this.SpotColor;
+      Rowo6.$children[3].Color = this.SpotColor;
+
+      var Rowo7 = this.$children[2].$children.find(child => {return child.RowId == 7});
+         
+      Rowo7.$children[4].Color = this.SpotColor;
+      Rowo7.$children[5].Color = this.SpotColor;
+      Rowo7.$children[6].Color = this.SpotColor;
+      Rowo7.$children[7].Color = this.SpotColor;
+      
+
+      Rowo7.$children[0].Color = this.SpotColor;
+      Rowo7.$children[1].Color = this.SpotColor;
+      Rowo7.$children[2].Color = this.SpotColor;
+      Rowo7.$children[3].Color = this.SpotColor;
+
+      var Rowo8 = this.$children[2].$children.find(child => {return child.RowId == 8});
+         
+      Rowo8.$children[4].Color = this.SpotColor;
+      Rowo8.$children[5].Color = this.SpotColor;
+      Rowo8.$children[6].Color = this.SpotColor;
+      Rowo8.$children[7].Color = this.SpotColor;
+      
+
+      Rowo8.$children[0].Color = this.SpotColor;
+      Rowo8.$children[1].Color = this.SpotColor;
+      Rowo8.$children[2].Color = this.SpotColor;
+      Rowo8.$children[3].Color = this.SpotColor;
+
+      var Rowo9 = this.$children[2].$children.find(child => {return child.RowId == 9});
+         
+      Rowo9.$children[4].Color = this.SpotColor;
+      Rowo9.$children[5].Color = this.SpotColor;
+      Rowo9.$children[6].Color = this.SpotColor;
+      Rowo9.$children[7].Color = this.SpotColor;
+      
+
+      Rowo9.$children[0].Color = this.SpotColor;
+      Rowo9.$children[1].Color = this.SpotColor;
+      Rowo9.$children[2].Color = this.SpotColor;
+      Rowo9.$children[3].Color = this.SpotColor;
+
+      var Rowo10 = this.$children[2].$children.find(child => {return child.RowId == 10});
+         
+      Rowo10.$children[4].Color = this.SpotColor;
+      Rowo10.$children[5].Color = this.SpotColor;
+      Rowo10.$children[6].Color = this.SpotColor;
+      Rowo10.$children[7].Color = this.SpotColor;
+      
+
+      Rowo10.$children[0].Color = this.SpotColor;
+      Rowo10.$children[1].Color = this.SpotColor;
+      Rowo10.$children[2].Color = this.SpotColor;
+      Rowo10.$children[3].Color = this.SpotColor;
+
+      var Rowo0 = this.$children[2].$children.find(child => {return child.RowId == 0});
+      
+      Rowo0.$children[0].Color = this.SpotColor;
+      Rowo0.$children[1].Color = this.SpotColor;
+      Rowo0.$children[2].Color = this.SpotColor;
+      Rowo0.$children[3].Color = this.SpotColor;
+
+      var Rowp0 = this.$children[0].$children.find(child => {return child.RowId == 0});      
+
+      Rowp0.$children[0].Color = this.SpotColor;
+      Rowp0.$children[1].Color = this.SpotColor;
+      Rowp0.$children[2].Color = this.SpotColor;
+      Rowp0.$children[3].Color = this.SpotColor;
+
+      var Row = this.$children[0].$children.find(child => {return child.RowId == 1});
+         
+      Row.$children[4].Color = this.SpotColor;
+      Row.$children[5].Color = this.SpotColor;
+      Row.$children[6].Color = this.SpotColor;
+      Row.$children[7].Color = this.SpotColor;
+      
+
+      Row.$children[0].Color = this.SpotColor;
+      Row.$children[1].Color = this.SpotColor;
+      Row.$children[2].Color = this.SpotColor;
+      Row.$children[3].Color = this.SpotColor;
+
+      Row = this.$children[0].$children.find(child => {return child.RowId == 2});
+         
+      Row.$children[4].Color = this.SpotColor;
+      Row.$children[5].Color = this.SpotColor;
+      Row.$children[6].Color = this.SpotColor;
+      Row.$children[7].Color = this.SpotColor;
+      
+
+      Row.$children[0].Color = this.SpotColor;
+      Row.$children[1].Color = this.SpotColor;
+      Row.$children[2].Color = this.SpotColor;
+      Row.$children[3].Color = this.SpotColor;
+
+      Row = this.$children[0].$children.find(child => {return child.RowId == 3});
+         
+      Row.$children[4].Color = this.SpotColor;
+      Row.$children[5].Color = this.SpotColor;
+      Row.$children[6].Color = this.SpotColor;
+      Row.$children[7].Color = this.SpotColor;
+      
+
+      Row.$children[0].Color = this.SpotColor;
+      Row.$children[1].Color = this.SpotColor;
+      Row.$children[2].Color = this.SpotColor;
+      Row.$children[3].Color = this.SpotColor;
+
+      Row = this.$children[0].$children.find(child => {return child.RowId == 4});
+         
+      Row.$children[4].Color = this.SpotColor;
+      Row.$children[5].Color = this.SpotColor;
+      Row.$children[6].Color = this.SpotColor;
+      Row.$children[7].Color = this.SpotColor;
+      
+
+      Row.$children[0].Color = this.SpotColor;
+      Row.$children[1].Color = this.SpotColor;
+      Row.$children[2].Color = this.SpotColor;
+      Row.$children[3].Color = this.SpotColor;
+
+      Row = this.$children[0].$children.find(child => {return child.RowId == 5});
+         
+      Row.$children[4].Color = this.SpotColor;
+      Row.$children[5].Color = this.SpotColor;
+      Row.$children[6].Color = this.SpotColor;
+      Row.$children[7].Color = this.SpotColor;
+      
+
+      Row.$children[0].Color = this.SpotColor;
+      Row.$children[1].Color = this.SpotColor;
+      Row.$children[2].Color = this.SpotColor;
+      Row.$children[3].Color = this.SpotColor;
+
+      Row = this.$children[0].$children.find(child => {return child.RowId == 6});
+         
+      Row.$children[4].Color = this.SpotColor;
+      Row.$children[5].Color = this.SpotColor;
+      Row.$children[6].Color = this.SpotColor;
+      Row.$children[7].Color = this.SpotColor;
+      
+
+      Row.$children[0].Color = this.SpotColor;
+      Row.$children[1].Color = this.SpotColor;
+      Row.$children[2].Color = this.SpotColor;
+      Row.$children[3].Color = this.SpotColor;
+
+      Row = this.$children[0].$children.find(child => {return child.RowId == 7});
+         
+      Row.$children[4].Color = this.SpotColor;
+      Row.$children[5].Color = this.SpotColor;
+      Row.$children[6].Color = this.SpotColor;
+      Row.$children[7].Color = this.SpotColor;
+      
+
+      Row.$children[0].Color = this.SpotColor;
+      Row.$children[1].Color = this.SpotColor;
+      Row.$children[2].Color = this.SpotColor;
+      Row.$children[3].Color = this.SpotColor;
+
+      Row = this.$children[0].$children.find(child => {return child.RowId == 8});
+         
+      Row.$children[4].Color = this.SpotColor;
+      Row.$children[5].Color = this.SpotColor;
+      Row.$children[6].Color = this.SpotColor;
+      Row.$children[7].Color = this.SpotColor;
+      
+
+      Row.$children[0].Color = this.SpotColor;
+      Row.$children[1].Color = this.SpotColor;
+      Row.$children[2].Color = this.SpotColor;
+      Row.$children[3].Color = this.SpotColor;
+
+      Row = this.$children[0].$children.find(child => {return child.RowId == 9});
+         
+      Row.$children[4].Color = this.SpotColor;
+      Row.$children[5].Color = this.SpotColor;
+      Row.$children[6].Color = this.SpotColor;
+      Row.$children[7].Color = this.SpotColor;
+      
+
+      Row.$children[0].Color = this.SpotColor;
+      Row.$children[1].Color = this.SpotColor;
+      Row.$children[2].Color = this.SpotColor;
+      Row.$children[3].Color = this.SpotColor;
+
+      Row = this.$children[0].$children.find(child => {return child.RowId == 10});
+         
+      Row.$children[4].Color = this.SpotColor;
+      Row.$children[5].Color = this.SpotColor;
+      Row.$children[6].Color = this.SpotColor;
+      Row.$children[7].Color = this.SpotColor;
+      
+
+      Row.$children[0].Color = this.SpotColor;
+      Row.$children[1].Color = this.SpotColor;
+      Row.$children[2].Color = this.SpotColor;
+      Row.$children[3].Color = this.SpotColor;
+      
+      this.currentRow = 0;
+      this.currentOpponentRow = 1;
+      this.confirmCodeIsShown = true;
+      this.confirmGuessIsShown = false;
+      this.restartIsShown = false;
+      this.codeSubmitted = false;
     },
     deselectSpot() {
       if(this.SelectedSpot != null){
@@ -336,31 +634,43 @@ export default {
     },   
     changeOpponentRow(filledRow){
       var Row = this.$children[2].$children.find(child => {return child.RowId == this.currentOpponentRow});
-      
-      if(this.Row.clues[0] != 'BLANK') {
+       console.log("OpponentRow: "+filledRow.clues)
+
+
+    if(filledRow.clues[0] != "BLANK") {
         Row.$children[4].Color = filledRow.clues[0];
+          console.log("FillClue: "+1);
       }
-      if(this.Row.clues[1] != 'BLANK') {
+      if(filledRow.clues[1] != "BLANK") {
         Row.$children[5].Color = filledRow.clues[1];
+        console.log("FillClue: "+2);
       }
-      if(this.Row.clues[2] != 'BLANK') {
+      if(filledRow.clues[2] != "BLANK") {
         Row.$children[6].Color = filledRow.clues[2];
+        console.log("FillClue: "+3);
       }
-      if(this.Row.clues[3] != 'BLANK') {
+      if(filledRow.clues[3] != "BLANK") {
         Row.$children[7].Color = filledRow.clues[3];
+        console.log("FillClue: "+4);
       }
+
 
       Row.$children[0].Color = filledRow.guess[0];
       Row.$children[1].Color = filledRow.guess[1];
       Row.$children[2].Color = filledRow.guess[2];
       Row.$children[3].Color = filledRow.guess[3];
 
+      if(filledRow.clues[0] == 'BLACK' && filledRow.clues[1] == 'BLACK' && filledRow.clues[2] == 'BLACK' && filledRow.clues[3] == 'BLACK') {
+        this.LostGame();  
+      }
       this.currentOpponentRow++;
+      if(this.currentOpponentRow == 11){
+        this.WinGame();
+      }
 
     }
 
   }
-
 }
 </script>
 

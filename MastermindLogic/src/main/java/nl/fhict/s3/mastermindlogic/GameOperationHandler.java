@@ -101,35 +101,6 @@ public class GameOperationHandler {
                 sendMessage(s, playerId, gameId, WebSocketMessageOperation.LEAVE_GAME, null);
             }
         }
-
-        Game game = application.getOpenGameOrNew();
-        playerId = -1;
-        if(game.getPlayer1() == null) {
-
-            game.setPlayer1(new Player(0));
-            playerId = 0;
-        } else if(game.getPlayer2() == null) {
-            game.setPlayer2(new Player(1));
-            playerId = 1;
-        } else {
-            //TODO: error
-        }
-
-        assert playerId != -1;
-
-        if(!games.containsKey(game.getId())) {
-            games.put(game.getId(), new ArrayList<>());
-        }
-        games.get(game.getId()).add(session);
-
-        // Return gameId and playerId to user
-        sendMessage(session, playerId, game.getId(), WebSocketMessageOperation.REGISTER_GAME, game.getId().toString());
-        for (Session s :
-                games.get(game.getId())) {
-            if(s != session){
-                sendMessage(s, playerId, game.getId(), WebSocketMessageOperation.JOIN_GAME, null);
-            }
-        }
     }
 
 
@@ -144,34 +115,6 @@ public class GameOperationHandler {
                 games.get(game.getId())) {
             if(s != session){
                 sendMessage(s, playerId, game.getId(), WebSocketMessageOperation.RESTART_GAME, null);
-            }
-        }
-
-        game = application.getOpenGameOrNew();
-        playerId = -1;
-        if(game.getPlayer1() == null) {
-            game.setPlayer1(new Player(0));
-            playerId = 0;
-        } else if(game.getPlayer2() == null) {
-            game.setPlayer2(new Player(1));
-            playerId = 1;
-        } else {
-            //TODO: error
-        }
-
-        assert playerId != -1;
-
-        if(!games.containsKey(game.getId())) {
-            games.put(game.getId(), new ArrayList<>());
-        }
-        games.get(game.getId()).add(session);
-
-        // Return gameId and playerId to user
-        sendMessage(session, playerId, game.getId(), WebSocketMessageOperation.REGISTER_GAME, game.getId().toString());
-        for (Session s :
-                games.get(game.getId())) {
-            if(s != session){
-                sendMessage(s, playerId, game.getId(), WebSocketMessageOperation.JOIN_GAME, null);
             }
         }
     }

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="colors">
         <ColorSpot class="colorSpot" color='LIME' SpotId="Lime" Button='true' v-on:SelectSpot="SelectColor"/>
         <ColorSpot class="colorSpot" color='YELLOW' SpotId="Yellow" Button='true' v-on:SelectSpot="SelectColor"/>
         <ColorSpot class="colorSpot" color='BLUE' SpotId="Blue" Button='true' v-on:SelectSpot="SelectColor"/>
