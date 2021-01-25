@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <h2 class="boardTitle"> Your own board </h2>
-    <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot" ref="Board"></Board>
+    <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
     <button v-show="confirmCodeIsShown" v-on:click="SubmitCode" class="myButton">Confirm code</button>
     <button v-show="confirmGuessIsShown" v-on:click="SubmitGuess" class="myButton">Confirm guess</button>
@@ -9,7 +9,7 @@
     <button v-show="restartIsShown" v-on:click="restartGame" class="myButton">Restart game</button>
     <button v-on:click="leaveGame" class="myButton">Leave game</button>
     <h2 class="boardTitle"> Your opponents board </h2>
-    <OpponentBoard v-on:SelectCodeSpot="SelectSpot" class="board" BoardId="OpponentBoard" ref="Board"></OpponentBoard>
+    <OpponentBoard v-on:SelectCodeSpot="SelectSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
 
     <slideout-panel></slideout-panel>
 
