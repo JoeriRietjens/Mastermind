@@ -12,9 +12,29 @@ const localState = {
     }
 }
 
+
 const getters = {}
 
 const actions = {
+
+    async sendLogin({commit}, userinput){
+        console.log('sending login')
+
+        var message = {
+            operation: "LOGIN",
+            gameId: localState.socket.currentGameId,
+            playerId: localState.socket.currentPlayerId,
+            content: JSON.stringify(userinput)
+        }
+
+        if(localState.socket.isConnected) {
+            Vue.prototype.$socket.send(JSON.stringify(message))
+            commit('SEND_MESSAGE', message)
+        } else {
+            commit('NOT_CONNECTED_ERROR')
+        }
+    },
+
     async sendRegisterGame({commit}) {
         console.log('registering game')
 
