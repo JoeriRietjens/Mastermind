@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class MastermindLogicApplicationTests {
+public class 	MastermindLogicApplicationTests {
 	private Board board1;
 	private Player player1;
 	private Player player2;
