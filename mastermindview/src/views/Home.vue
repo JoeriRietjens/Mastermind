@@ -1,47 +1,18 @@
 <template>
   <div class="home">
-    <h2 class="boardTitle">Your own board</h2>
-    <Board
-      class="board"
-      BoardId="PlayerBoard"
-      v-on:SelectSpot="SelectSpot"
-    ></Board>
+    <h2 class="boardTitle"> Your own board </h2>
+    <Board class="board" BoardId="PlayerBoard" v-on:SelectSpot="SelectSpot"></Board>
     <Colors v-on:SetColor="ChangeColor"></Colors>
-    <button
-      v-show="confirmCodeIsShown"
-      v-on:click="SubmitCode"
-      class="myButton"
-    >
-      Confirm code
-    </button>
-    <button
-      v-show="confirmGuessIsShown"
-      v-on:click="SubmitGuess"
-      class="myButton"
-    >
-      Confirm guess
-    </button>
+    <button v-show="confirmCodeIsShown" v-on:click="SubmitCode" class="myButton">Confirm code</button>
+    <button v-show="confirmGuessIsShown" v-on:click="SubmitGuess" class="myButton">Confirm guess</button>
     <button v-on:click="showPanel" class="myButton">Instructions</button>
     <button v-show="restartIsShown" v-on:click="restartGame" class="myButton">Restart game</button>
     <button v-on:click="leaveGame" class="myButton">Leave game</button>
-    <h2 class="boardTitle">Your opponents board</h2>
-    <OpponentBoard
-      v-on:SelectCodeSpot="SelectSpot"
-      class="board"
-      BoardId="OpponentBoard"
-    ></OpponentBoard>
+    <h2 class="boardTitle"> Your opponents board </h2>
+    <OpponentBoard v-on:SelectCodeSpot="SelectSpot" class="board" BoardId="OpponentBoard"></OpponentBoard>
 
     <slideout-panel></slideout-panel>
-    <div id="nav">
-      <router-link
-        v-if="authenticated"
-        to="/login"
-        v-on:click.native="logout()"
-        replace
-        >Logout</router-link
-      >
-    </div>
-    <router-view @authenticated="setAuthenticated" />
+
   </div>
 </template>
 
@@ -60,7 +31,6 @@ Vue.use(VueSlideoutPanel);
 Vue.use(VueSimpleAlert);
 
 export default {
-  
   name: 'Home',
   notifications: {
     showWinMessage: {
@@ -81,7 +51,6 @@ export default {
   },
   data() {
     return {
-
       SelectedSpot: null,
       SpotColor: ' rgb(70, 7, 7)',
 
@@ -98,7 +67,6 @@ export default {
       opponentJoined: false,
     }
   },
-
   computed: mapState(['socket']),
   created() {
     this.$alert('Hello Player Please enter your colour code before you start.\n \nIf you want to know how the game works please press on the Instruction button');
@@ -689,31 +657,31 @@ export default {
 }
 
 .myButton {
-  background-color: rgb(82, 11, 11);
-  border-radius: 6px;
-  border: 1px solid black;
-  display: inline-block;
-  cursor: pointer;
-  color: white;
-  font-family: Arial;
-  font-size: 15px;
-  font-weight: bold;
-  padding: 6px 24px;
+	background-color:	rgb(82, 11, 11);
+	border-radius:6px;
+	border:1px solid black;
+	display:inline-block;
+	cursor:pointer;
+	color:white;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
   margin-left: 10px;
   margin-top: 5px;
-  text-decoration: none;
+	text-decoration:none;
   height: 40px;
   transition: 0.2s;
 }
 
 .myButton:hover {
-  background-color: rgb(60, 5, 5);
+	background-color: rgb(60, 5, 5);
   transition: 0.2s;
 }
 
 .myButton:active {
-  position: relative;
-  top: 1px;
+	position:relative;
+	top:1px;
 }
 
 .homeElements {
@@ -726,21 +694,21 @@ export default {
 }
 
 .board {
-  border-style: ridge;
-  width: 750px;
-  height: 250px;
-  position: relative;
-  display: inline-block;
+    border-style: ridge;
+    width: 750px;
+    height: 250px;
+    position: relative;
+    display: inline-block;
 }
 
 .row {
-  position: relative;
-  display: inline-block;
-  padding: 5px 10px;
+    position: relative;
+    display: inline-block;
+    padding: 5px 10px;
 }
 
 #code {
-  top: -20px;
+    top: -20px;
 }
 
 .dot {
@@ -762,7 +730,7 @@ export default {
   transition: 0.2s;
 }
 
-.colorSpot .dot {
+.colorSpot .dot{
   height: 50px;
   width: 50px;
   border-radius: 50%;
