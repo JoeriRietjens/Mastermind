@@ -1,36 +1,36 @@
 package nl.fhict.s3.mastermindlogic;
 
-import java.util.Arrays;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import javax.websocket.server.ServerContainer;
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.websocket.jsr356.server.deploy.WebSocketServerContainerInitializer;
 
-@SpringBootApplication
 public class MastermindLogicApplication {
+	private static final int PORT = 8080;
 
 	public static void main(String[] args) {
-		SpringApplication.run(MastermindLogicApplication.class, args);
+		Server wsServer = new Server();
+        ServerConnector connector = new ServerConnector(wsServer);
+
+        connector.setPort(PORT);
+        wsServer.addConnector(connector);
+
+        ServletContextHandler wsContext = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        wsContext.setContextPath("/");
+        wsServer.setHandler(wsContext);
+
+        try {
+            ServerContainer wsContainer = WebSocketServerContainerInitializer.configureContext(wsContext);
+
+            wsContainer.addEndpoint(GameEndpoint.class);
+            wsServer.start();
+            wsServer.join();
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+        }
+
 	}
-
-	@Bean
-	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-		return args -> {
-
-			System.out.println("Let's inspect the beans provided by Spring Boot:");
-
-			String[] beanNames = ctx.getBeanDefinitionNames();
-			Arrays.sort(beanNames);
-			for (String beanName : beanNames) {
-				System.out.println(beanName);
-			}
-
-		};
-	}
-
 }
 

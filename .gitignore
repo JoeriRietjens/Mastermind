@@ -56,3 +56,4 @@ hs_err_pid*
 
 ### VS Code ###
 */.vscode/
+*/node_modules/

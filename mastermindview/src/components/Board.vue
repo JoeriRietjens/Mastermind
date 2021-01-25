@@ -1,16 +1,16 @@
 <template>
     <div class="board" :id="BoardId">
-        <BoardRow class="row" RowId="RowOne" v-on:SelectSpot="SelectSpot"></BoardRow>
-        <BoardRow class="row" RowId="RowTwo" v-on:SelectSpot="SelectSpot"></BoardRow>
-        <BoardRow class="row" RowId="RowThree" v-on:SelectSpot="SelectSpot"></BoardRow>
-        <BoardRow class="row" RowId="RowFour" v-on:SelectSpot="SelectSpot"></BoardRow>
-        <BoardRow class="row" RowId="RowFive" v-on:SelectSpot="SelectSpot"></BoardRow>
-        <BoardRow class="row" RowId="RowSix" v-on:SelectSpot="SelectSpot"></BoardRow>
-        <BoardRow class="row" RowId="RowSeven" v-on:SelectSpot="SelectSpot"></BoardRow>
-        <BoardRow class="row" RowId="RowEight" v-on:SelectSpot="SelectSpot"></BoardRow>
-        <BoardRow class="row" RowId="RowNine" v-on:SelectSpot="SelectSpot"></BoardRow>
-        <BoardRow class="row" RowId="RowTen" v-on:SelectSpot="SelectSpot"></BoardRow>
-        <Code class="row" id="code"></Code>
+        <BoardRow class="row" RowId="1" v-on:SelectSpot="SelectSpot"></BoardRow>
+        <BoardRow class="row" RowId="2" v-on:SelectSpot="SelectSpot"></BoardRow>
+        <BoardRow class="row" RowId="3" v-on:SelectSpot="SelectSpot"></BoardRow>
+        <BoardRow class="row" RowId="4" v-on:SelectSpot="SelectSpot"></BoardRow>
+        <BoardRow class="row" RowId="5" v-on:SelectSpot="SelectSpot"></BoardRow>
+        <BoardRow class="row" RowId="6" v-on:SelectSpot="SelectSpot"></BoardRow>
+        <BoardRow class="row" RowId="7" v-on:SelectSpot="SelectSpot"></BoardRow>
+        <BoardRow class="row" RowId="8" v-on:SelectSpot="SelectSpot"></BoardRow>
+        <BoardRow class="row" RowId="9" v-on:SelectSpot="SelectSpot"></BoardRow>
+        <BoardRow class="row" RowId="10" v-on:SelectSpot="SelectSpot"></BoardRow>
+        <Code class="row" RowId="0"></Code>
     </div>
 </template>
 
@@ -30,9 +30,6 @@ export default {
         }
     },
     props: ['BoardId'],
-    created: function () {
-        this.$store.commit('setPlayerBoard', {state: this.$store.state, board: this})
-    }
 }
 </script>
 
