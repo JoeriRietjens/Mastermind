@@ -15,6 +15,7 @@
         placeholder="Password"
       />
       <button type="button" v-on:click="login()">Sign In</button>
+      <p style="white-space: pre-line;">{{ message }}</p>
     </form>
   </div>
 </template>
@@ -28,29 +29,35 @@ export default {
         username: "",
         password: "",
       },
+      message: "",
     };
   },
   methods: {
-    login() {
+
+    async axiosLogin(userString){
+      const headers = {'Content-Type': 'application/json'}
+      return this.axios.post('http://localhost:5001/login/', userString, { headers: headers }).then(response => response.status)
+    },
+
+    async login() {
       if (this.input.username != "" && this.input.password != "") {
         // Retrieve user information
         const user = {username: this.input.username, password: this.input.password}
         const userString = JSON.stringify(user)
-        //var resp = ''
-        const headers = {'Content-Type': 'application/json'}
-        this.axios.post('http://localhost:5001/login/', userString, { headers: headers }).then(response => console.log(response.data))
+        var resp = await this.axiosLogin(userString)
 
-        if (
-          this.input.username == this.$parent.mockAccount.username &&
-          this.input.password == this.$parent.mockAccount.password
-        ) {
+        console.log(resp);
+
+        if (resp == 200) {
           this.$emit("authenticated", true);
           this.$router.replace({ name: "Home" });
         } else {
           console.log("The username and / or password is incorrect");
+          this.message = "The username and / or password is incorrect";
         }
       } else {
         console.log("A username and password must be present");
+        this.message = "A username and password must be present";
       }
     },
   },
