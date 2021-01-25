@@ -629,9 +629,12 @@ export default {
       Row.$children[3].Color = filledRow.guess[3];
 
       if(filledRow.clues[0] == 'BLACK' && filledRow.clues[1] == 'BLACK' && filledRow.clues[2] == 'BLACK' && filledRow.clues[3] == 'BLACK') {
-        this.LostGame();
+        this.LostGame();  
       }
       this.currentOpponentRow++;
+      if(this.currentOpponentRow == 11){
+        this.WinGame();
+      }
 
     }
 
